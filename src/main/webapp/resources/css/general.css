@@ -1,0 +1,26 @@
+table {
+    border: 0px;
+}
+
+table th {
+    background: #3e4344 ;
+    color: #fff;
+    height: 30px;
+}
+
+table tr {
+    background: #cecece;
+    height: 25px;
+}
+
+table td.id {
+    width: 25px;
+}
+
+table td.s {
+    width: 125px;
+}
+
+table td.l {
+    width: 250px;
+}
