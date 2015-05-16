@@ -17,6 +17,7 @@ public abstract class AbstractController<T> implements MessageSourceAware {
 
     static final Locale nl_BE = new Locale("nl", "BE");
 
+    static final String PARAM_ACTION_URL = "actionUrl";
     static final String PARAM_TITLE = "title";
     static final String PARAM_DESCRIPTION = "description";
     static final String PARAM_LIST_ITEMS = "listItems";
@@ -34,9 +35,10 @@ public abstract class AbstractController<T> implements MessageSourceAware {
     /**
      * list entities of type <T>.
      *
+     * @param request the servlet request
      * @return ModelAndView model and view
      */
-    public abstract ModelAndView list();
+    public abstract ModelAndView list(HttpServletRequest request);
 
     /**
      * do event on entity.
@@ -62,7 +64,7 @@ public abstract class AbstractController<T> implements MessageSourceAware {
                 mv = doSearch(request);
                 break;
             case EVENT_BACK:
-                mv = list();
+                mv = list(request);
                 break;
         }
         return mv;
@@ -101,17 +103,35 @@ public abstract class AbstractController<T> implements MessageSourceAware {
     public abstract ModelAndView doSearch(HttpServletRequest request);
 
     /**
+     * get the actionUrl for form submission.
+     *
+     * @param request the servlet request
+     * @return String the event url
+     */
+    public String getActionUrl(HttpServletRequest request) {
+        String eventUrl = request.getScheme();
+        eventUrl += "://";
+        eventUrl += request.getServerName();
+        eventUrl += ":";
+        eventUrl += request.getServerPort();
+        eventUrl += request.getContextPath();
+        return eventUrl;
+    }
+
+    /**
      * list entities of type <T>.
      *
+     * @param request     the servlet request
      * @param viewName    the viewName
      * @param title       the title
      * @param description the description
      * @param entities    the entities
      * @return ModelAndView model and view
      */
-    ModelAndView list(String viewName, String title, String description, List<T> entities) {
+    ModelAndView list(HttpServletRequest request, String viewName, String title, String description, List<T> entities) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName(viewName);
+        mv.getModel().put(PARAM_ACTION_URL, getActionUrl(request));
         mv.getModel().put(PARAM_TITLE, title);
         mv.getModel().put(PARAM_DESCRIPTION, description);
         mv.getModel().put(PARAM_LIST_ITEMS, entities);
@@ -121,15 +141,17 @@ public abstract class AbstractController<T> implements MessageSourceAware {
     /**
      * detail of an entity T.
      *
+     * @param request     the servlet request
      * @param viewName    the viewName
      * @param title       the title
      * @param description the description
      * @param entity      the entity
      * @return ModelAndView model and view
      */
-    ModelAndView detail(String viewName, String title, String description, T entity) {
+    ModelAndView detail(HttpServletRequest request, String viewName, String title, String description, T entity) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName(viewName);
+        mv.getModel().put(PARAM_ACTION_URL, getActionUrl(request));
         mv.getModel().put(PARAM_TITLE, title);
         mv.getModel().put(PARAM_DESCRIPTION, description);
         mv.getModel().put(PARAM_ENTITY, entity);

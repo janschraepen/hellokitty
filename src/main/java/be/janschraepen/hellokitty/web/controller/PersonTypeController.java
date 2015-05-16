@@ -36,8 +36,8 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
 
     @Override
     @RequestMapping("/person/type/list")
-    public ModelAndView list() {
-        return list(VIEW_LIST, TITLE, DESCRIPTION, personTypeService.findAllPersonTypes());
+    public ModelAndView list(HttpServletRequest request) {
+        return list(request, VIEW_LIST, TITLE, DESCRIPTION, personTypeService.findAllPersonTypes());
     }
 
     @Override
@@ -49,7 +49,7 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
     @Override
     public ModelAndView doSearch(HttpServletRequest request) {
         String searchFor = request.getParameter(PARAM_SEARCH);
-        return list(VIEW_LIST, TITLE, DESCRIPTION, personTypeService.findPersonTypes(searchFor));
+        return list(request, VIEW_LIST, TITLE, DESCRIPTION, personTypeService.findPersonTypes(searchFor));
     }
 
     @Override
@@ -66,7 +66,7 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
             title = personType.getShortCode() + " - " + personType.getName();
         }
 
-        return detail(VIEW_EDIT, title, DESCRIPTION, personType);
+        return detail(request, VIEW_EDIT, title, DESCRIPTION, personType);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
         personTypeService.savePersonType(personType);
 
         String title = personType.getShortCode() + " - " + personType.getName();
-        return detail(VIEW_EDIT, title, DESCRIPTION, personType);
+        return detail(request, VIEW_EDIT, title, DESCRIPTION, personType);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
         String uuid = request.getParameter(PARAM_UUID);
 
         personTypeService.deletePersonType(uuid);
-        return list(VIEW_LIST, TITLE, DESCRIPTION, personTypeService.findAllPersonTypes());
+        return list(request, VIEW_LIST, TITLE, DESCRIPTION, personTypeService.findAllPersonTypes());
     }
 
 }

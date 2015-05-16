@@ -24,7 +24,7 @@
                 <h4><fmt:message key="${description}" bundle="${lang}"/></h4>
             </div>
             <jsp:include page="./../error.jsp" />
-            <form action="http://localhost:8080/hellokitty/person/type/edit" method="POST">
+            <form action="${actionUrl}/person/type/edit" method="POST">
                 <input type="hidden" name="_event" value="" />
                 <input type="hidden" name="uuid" value="${entity.id}" />
 

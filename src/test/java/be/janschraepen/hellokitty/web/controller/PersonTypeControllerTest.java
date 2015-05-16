@@ -37,11 +37,13 @@ public class PersonTypeControllerTest {
 
     @Test
     public void testList() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+
         List<PersonTypeDTO> list = Arrays.asList(new PersonTypeDTO[]{ });
 
         when(personTypeService.findAllPersonTypes()).thenReturn(list);
 
-        ModelAndView mv = underTest.list();
+        ModelAndView mv = underTest.list(request);
         assertNotNull(mv);
         assertEquals("persontype/list", mv.getViewName());
         assertEquals("persontype.list.title", mv.getModel().get("title"));

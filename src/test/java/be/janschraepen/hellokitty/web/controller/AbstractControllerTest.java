@@ -21,7 +21,7 @@ public class AbstractControllerTest {
         underTest = new AbstractController<String>() {
 
             @Override
-            public ModelAndView list() {
+            public ModelAndView list(HttpServletRequest request) {
                 ModelAndView mv = new ModelAndView();
                 mv.setViewName("list");
                 return mv;
@@ -107,11 +107,31 @@ public class AbstractControllerTest {
     }
 
     @Test
+    public void testGetActionUrl() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setScheme("http");
+        request.setServerName("localhost");
+        request.setServerPort(80);
+        request.setContextPath("/context");
+
+        String actionUrl = underTest.getActionUrl(request);
+        assertNotNull(actionUrl);
+        assertEquals("http://localhost:80/context", actionUrl);
+    }
+
+    @Test
     public void testList() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setScheme("http");
+        request.setServerName("localhost");
+        request.setServerPort(80);
+        request.setContextPath("/context");
+
         List<String> list = Arrays.asList(new String[]{"arg"});
 
-        ModelAndView mv = underTest.list("viewName", "title", "description", list);
+        ModelAndView mv = underTest.list(request, "viewName", "title", "description", list);
         assertNotNull(mv);
+        assertEquals("http://localhost:80/context", mv.getModel().get("actionUrl"));
         assertEquals("viewName", mv.getViewName());
         assertEquals("title", mv.getModel().get("title"));
         assertEquals("description", mv.getModel().get("description"));
@@ -120,8 +140,15 @@ public class AbstractControllerTest {
 
     @Test
     public void testDetail() throws Exception {
-        ModelAndView mv = underTest.detail("viewName", "title", "description", "arg");
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setScheme("http");
+        request.setServerName("localhost");
+        request.setServerPort(80);
+        request.setContextPath("/context");
+
+        ModelAndView mv = underTest.detail(request, "viewName", "title", "description", "arg");
         assertNotNull(mv);
+        assertEquals("http://localhost:80/context", mv.getModel().get("actionUrl"));
         assertEquals("viewName", mv.getViewName());
         assertEquals("title", mv.getModel().get("title"));
         assertEquals("description", mv.getModel().get("description"));
