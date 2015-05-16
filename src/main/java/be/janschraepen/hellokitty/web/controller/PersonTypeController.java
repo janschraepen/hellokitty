@@ -21,6 +21,7 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
 
     static final String TITLE = "persontype.list.title";
     static final String DESCRIPTION = "persontype.list.description";
+    static final String TITLE_NEW = "persontype.detail.new";
 
     static final String VIEW_LIST = "persontype/list";
     static final String VIEW_EDIT = "persontype/edit";
@@ -59,7 +60,7 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
         String title;
         if (StringUtils.isBlank(uuid)) {
             personType = new PersonTypeDTO();
-            title = "NIEUW PERSOONTYPE";
+            title = messageSource.getMessage(TITLE_NEW, null, nl_BE);
         } else {
             personType = personTypeService.findPersonType(uuid);
             title = personType.getShortCode() + " - " + personType.getName();

@@ -1,16 +1,21 @@
 package be.janschraepen.hellokitty.web.controller;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.MessageSourceAware;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * AbstractController class. Used as base class for all existing
  * Controllers in the project.
  */
-public abstract class AbstractController<T> {
+public abstract class AbstractController<T> implements MessageSourceAware {
+
+    static final Locale nl_BE = new Locale("nl", "BE");
 
     static final String PARAM_TITLE = "title";
     static final String PARAM_DESCRIPTION = "description";
@@ -23,6 +28,8 @@ public abstract class AbstractController<T> {
     static final String EVENT_DELETE = "delete";
     static final String EVENT_SEARCH = "search";
     static final String EVENT_BACK = "back";
+
+    protected MessageSource messageSource;
 
     /**
      * list entities of type <T>.
@@ -127,6 +134,11 @@ public abstract class AbstractController<T> {
         mv.getModel().put(PARAM_DESCRIPTION, description);
         mv.getModel().put(PARAM_ENTITY, entity);
         return mv;
+    }
+
+    @Override
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
     }
 
 }

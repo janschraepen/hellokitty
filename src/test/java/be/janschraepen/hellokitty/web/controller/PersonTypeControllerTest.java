@@ -10,12 +10,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.context.MessageSource;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
@@ -23,6 +25,9 @@ import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PersonTypeControllerTest {
+
+    @Mock
+    private MessageSource messageSource;
 
     @Mock
     private PersonTypeService personTypeService;
@@ -63,7 +68,7 @@ public class PersonTypeControllerTest {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addParameter("uuid", "");
 
-        PersonTypeDTO entity = new PersonTypeDTO();
+        when(messageSource.getMessage("persontype.detail.new", null, new Locale("nl", "BE"))).thenReturn("NIEUW PERSOONTYPE");
 
         ModelAndView mv = underTest.doOpenEdit(request);
         assertNotNull(mv);
