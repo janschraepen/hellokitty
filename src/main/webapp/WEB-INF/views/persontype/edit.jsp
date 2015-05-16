@@ -1,13 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<fmt:setLocale value="nl"/>
+<fmt:setBundle basename="be.janschraepen.hellokitty.i18n.Label" var="lang"/>
+
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-        <title>Admin - Persoon Type</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title><fmt:message key="persontype.list.title" bundle="${lang}"/></title>
 
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="<c:url value="/resources/js/general.js" />" type="text/javascript"></script>
@@ -18,12 +21,14 @@
         <div class="entity">
             <div class="entity__title">
                 <h1>${title}</h1>
-                <h4>${description}</h4>
+                <h4><fmt:message key="${description}" bundle="${lang}"/></h4>
             </div>
-            <div class="entity__error">
-                ${errorMessage}
-            </div>
-            <form  action="http://localhost:8080/hellokitty/person/type/edit" method="POST">
+            <% if (request.getAttribute("errorMessage") != null) { %>
+                <div class="entity__error">
+                    <fmt:message key="${errorMessage}" bundle="${lang}"/>
+                </div>
+            <% } %>
+            <form action="http://localhost:8080/hellokitty/person/type/edit" method="POST">
                 <input type="hidden" name="_event" value="" />
                 <input type="hidden" name="uuid" value="${entity.id}" />
 
@@ -35,15 +40,11 @@
                 <div class="entity__form">
                     <table>
                         <tr>
-                            <th>CODE</th>
-                            <th>OMSCHRIJVING</th>
-                        </tr>
-                        <tr>
-                            <td class="lbl">CODE:</td>
+                            <td class="lbl"><fmt:message key="label.code" bundle="${lang}"/>:</td>
                             <td class="val"><input type="text" name="shortCode" value="${entity.shortCode}" /></td>
                         </tr>
                         <tr>
-                            <td class="lbl">NAME:</td>
+                            <td class="lbl"><fmt:message key="label.description" bundle="${lang}"/>:</td>
                             <td class="val"><input type="text" name="name" value="${entity.name}" /></td>
                         </tr>
                     </table>

@@ -39,7 +39,7 @@ public class PersonTypeControllerTest {
         ModelAndView mv = underTest.list();
         assertNotNull(mv);
         assertEquals("persontype/list", mv.getViewName());
-        assertEquals("PERSOON TYPES", mv.getModel().get("title"));
+        assertEquals("persontype.list.title", mv.getModel().get("title"));
         assertSame(list, mv.getModel().get("listItems"));
     }
 
@@ -54,7 +54,7 @@ public class PersonTypeControllerTest {
         ModelAndView mv = underTest.doSearch(request);
         assertNotNull(mv);
         assertEquals("persontype/list", mv.getViewName());
-        assertEquals("PERSOON TYPES", mv.getModel().get("title"));
+        assertEquals("persontype.list.title", mv.getModel().get("title"));
         assertEquals(list, mv.getModel().get("listItems"));
     }
 
@@ -121,7 +121,7 @@ public class PersonTypeControllerTest {
         ModelAndView mv = underTest.doDelete(request);
         assertNotNull(mv);
         assertEquals("persontype/list", mv.getViewName());
-        assertEquals("PERSOON TYPES", mv.getModel().get("title"));
+        assertEquals("persontype.list.title", mv.getModel().get("title"));
         assertEquals(list, mv.getModel().get("listItems"));
 
         ArgumentCaptor<String> s = ArgumentCaptor.forClass(String.class);

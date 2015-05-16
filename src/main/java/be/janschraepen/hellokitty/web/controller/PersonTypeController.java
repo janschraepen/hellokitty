@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class PersonTypeController extends AbstractController<PersonTypeDTO> {
 
-    static final String TITLE = "PERSOON TYPES";
-    static final String DESCRIPTION = "Beheerscherm voor de type personen die de toepassing ondersteund. etc.";
+    static final String TITLE = "persontype.list.title";
+    static final String DESCRIPTION = "persontype.list.description";
 
     static final String VIEW_LIST = "persontype/list";
     static final String VIEW_EDIT = "persontype/edit";
