@@ -23,11 +23,7 @@
                 <h1>${title}</h1>
                 <h4><fmt:message key="${description}" bundle="${lang}"/></h4>
             </div>
-            <% if (request.getAttribute("errorMessage") != null) { %>
-                <div class="entity__error">
-                    <fmt:message key="${errorMessage}" bundle="${lang}"/>
-                </div>
-            <% } %>
+            <jsp:include page="./../error.jsp" />
             <form action="http://localhost:8080/hellokitty/person/type/edit" method="POST">
                 <input type="hidden" name="_event" value="" />
                 <input type="hidden" name="uuid" value="${entity.id}" />
