@@ -58,18 +58,5 @@
                 </div>
             </form>
         </div>
-
-        <script type="text/javascript">
-
-            $('input[type="button"]').click(function (e) {
-                e.preventDefault();
-
-                var action = $(this).attr('action');
-                $('input[name="_event"]').val(action);
-                $('form').submit();
-            });
-
-        </script>
-
     </body>
 </html>
