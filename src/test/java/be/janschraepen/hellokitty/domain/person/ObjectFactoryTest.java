@@ -1,6 +1,6 @@
 package be.janschraepen.hellokitty.domain.person;
 
-import be.janschraepen.hellokitty.domain.persontype.*;
+import be.janschraepen.hellokitty.domain.persontype.PersonType;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 public class ObjectFactoryTest {
 
@@ -23,9 +22,6 @@ public class ObjectFactoryTest {
     public static final String LAST_NAME = "lastName";
     public static final String ADDRESS_LINE_1 = "addressLine1";
     public static final String ADDRESS_LINE_2 = "addressLine2";
-    public static final String TELEPHONE = "telephone";
-    public static final String GSM = "gsm";
-    public static final String EMAIL = "email";
 
     private ObjectFactory underTest;
 
@@ -53,9 +49,6 @@ public class ObjectFactoryTest {
         person.setLastName(LAST_NAME);
         person.setAddressLine1(ADDRESS_LINE_1);
         person.setAddressLine2(ADDRESS_LINE_2);
-        person.setTelephone(TELEPHONE);
-        person.setGsm(GSM);
-        person.setEmail(EMAIL);
 
         PersonDTO dto = underTest.createPersonDTO(person);
         assertNotNull(dto);
@@ -65,23 +58,17 @@ public class ObjectFactoryTest {
         assertEquals(LAST_NAME, dto.getLastName());
         assertEquals(ADDRESS_LINE_1, dto.getAddressLine1());
         assertEquals(ADDRESS_LINE_2, dto.getAddressLine2());
-        assertEquals(TELEPHONE, dto.getTelephone());
-        assertEquals(GSM, dto.getGsm());
-        assertEquals(EMAIL, dto.getEmail());
     }
 
     @Test
     public void testCreatePersonDTO_withParams() throws Exception {
-        PersonDTO dto = underTest.createPersonDTO("uuid", PERSONTYPE_ID, FIRST_NAME, LAST_NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TELEPHONE, GSM, EMAIL);
+        PersonDTO dto = underTest.createPersonDTO("uuid", PERSONTYPE_ID, FIRST_NAME, LAST_NAME, ADDRESS_LINE_1, ADDRESS_LINE_2);
         assertNotNull(dto);
         assertEquals(PERSONTYPE_ID, dto.getPersonTypeId());
         assertEquals(FIRST_NAME, dto.getFirstName());
         assertEquals(LAST_NAME, dto.getLastName());
         assertEquals(ADDRESS_LINE_1, dto.getAddressLine1());
         assertEquals(ADDRESS_LINE_2, dto.getAddressLine2());
-        assertEquals(TELEPHONE, dto.getTelephone());
-        assertEquals(GSM, dto.getGsm());
-        assertEquals(EMAIL, dto.getEmail());
     }
 
     @Test
@@ -97,9 +84,6 @@ public class ObjectFactoryTest {
         person.setLastName(LAST_NAME);
         person.setAddressLine1(ADDRESS_LINE_1);
         person.setAddressLine2(ADDRESS_LINE_2);
-        person.setTelephone(TELEPHONE);
-        person.setGsm(GSM);
-        person.setEmail(EMAIL);
 
         List<PersonDTO> dtos = underTest.createListPersonDTOs(Arrays.asList(new Person[]{person}));
         assertNotNull(dtos);
@@ -113,9 +97,6 @@ public class ObjectFactoryTest {
         assertEquals(LAST_NAME, dto.getLastName());
         assertEquals(ADDRESS_LINE_1, dto.getAddressLine1());
         assertEquals(ADDRESS_LINE_2, dto.getAddressLine2());
-        assertEquals(TELEPHONE, dto.getTelephone());
-        assertEquals(GSM, dto.getGsm());
-        assertEquals(EMAIL, dto.getEmail());
     }
 
     @Test

@@ -38,9 +38,6 @@ public final class ObjectFactory {
         dto.setLastName(p.getLastName());
         dto.setAddressLine1(p.getAddressLine1());
         dto.setAddressLine2(p.getAddressLine2());
-        dto.setTelephone(p.getTelephone());
-        dto.setGsm(p.getGsm());
-        dto.setEmail(p.getEmail());
         dto.setContacts(createListPersonContactDTOs(p.getContacts()));
         return dto;
     }
@@ -54,12 +51,9 @@ public final class ObjectFactory {
      * @param lastName     the lastName
      * @param addressLine1 the addressLine1
      * @param addressLine2 the addressLine2
-     * @param telephone    the telephone
-     * @param gsm          the gsm
-     * @param email        the email
      * @return PersonDTO object
      */
-    public PersonDTO createPersonDTO(String id, String personTypeId, String firstName, String lastName, String addressLine1, String addressLine2, String telephone, String gsm, String email) {
+    public PersonDTO createPersonDTO(String id, String personTypeId, String firstName, String lastName, String addressLine1, String addressLine2) {
         PersonDTO dto = new PersonDTO();
         dto.setId(id);
         dto.setPersonTypeId(personTypeId);
@@ -67,9 +61,6 @@ public final class ObjectFactory {
         dto.setLastName(lastName);
         dto.setAddressLine1(addressLine1);
         dto.setAddressLine2(addressLine2);
-        dto.setTelephone(telephone);
-        dto.setGsm(gsm);
-        dto.setEmail(email);
         return dto;
     }
 
@@ -105,10 +96,10 @@ public final class ObjectFactory {
     /**
      * Create PersonContactDTO object.
      *
-     * @param id           the uuid
-     * @param personId     the Person uuid
-     * @param type         the ContactType
-     * @param value        the value
+     * @param id       the uuid
+     * @param personId the Person uuid
+     * @param type     the ContactType
+     * @param value    the value
      * @return PersonContactDTO object
      */
     public PersonContactDTO createPersonContactDTO(String id, String personId, ContactType type, String value) {

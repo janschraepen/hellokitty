@@ -48,9 +48,6 @@ public class PersonServiceImplTest {
         assertEquals("lastName_1", dto.getLastName());
         assertEquals("addressLine1_1", dto.getAddressLine1());
         assertEquals("addressLine2_1", dto.getAddressLine2());
-        assertEquals("telephone_1", dto.getTelephone());
-        assertEquals("gsm_1", dto.getGsm());
-        assertEquals("email_1", dto.getEmail());
     }
 
     @Test
@@ -77,9 +74,6 @@ public class PersonServiceImplTest {
         assertEquals("lastName_2", list.get(0).getLastName());
         assertEquals("addressLine1_2", list.get(0).getAddressLine1());
         assertEquals("addressLine2_2", list.get(0).getAddressLine2());
-        assertEquals("telephone_2", list.get(0).getTelephone());
-        assertEquals("gsm_2", list.get(0).getGsm());
-        assertEquals("email_2", list.get(0).getEmail());
     }
 
     @Test
@@ -107,18 +101,12 @@ public class PersonServiceImplTest {
         assertEquals("lastName_1", list.get(0).getLastName());
         assertEquals("addressLine1_1", list.get(0).getAddressLine1());
         assertEquals("addressLine2_1", list.get(0).getAddressLine2());
-        assertEquals("telephone_1", list.get(0).getTelephone());
-        assertEquals("gsm_1", list.get(0).getGsm());
-        assertEquals("email_1", list.get(0).getEmail());
 
         assertEquals("personType-uuid", list.get(1).getPersonTypeId());
         assertEquals("firstName_2", list.get(1).getFirstName());
         assertEquals("lastName_2", list.get(1).getLastName());
         assertEquals("addressLine1_2", list.get(1).getAddressLine1());
         assertEquals("addressLine2_2", list.get(1).getAddressLine2());
-        assertEquals("telephone_2", list.get(1).getTelephone());
-        assertEquals("gsm_2", list.get(1).getGsm());
-        assertEquals("email_2", list.get(1).getEmail());
     }
 
     @Test
@@ -150,9 +138,6 @@ public class PersonServiceImplTest {
         assertEquals("lastName_3", arg.getLastName());
         assertEquals("addressLine1_3", arg.getAddressLine1());
         assertEquals("addressLine2_3", arg.getAddressLine2());
-        assertEquals("telephone_3", arg.getTelephone());
-        assertEquals("gsm_3", arg.getGsm());
-        assertEquals("email_3", arg.getEmail());
     }
 
     @Test
@@ -178,9 +163,6 @@ public class PersonServiceImplTest {
         assertEquals("lastName_4", arg.getLastName());
         assertEquals("addressLine1_3", arg.getAddressLine1());
         assertEquals("addressLine2_3", arg.getAddressLine2());
-        assertEquals("telephone_3", arg.getTelephone());
-        assertEquals("gsm_3", arg.getGsm());
-        assertEquals("email_3", arg.getEmail());
     }
 
     @Test
@@ -207,9 +189,6 @@ public class PersonServiceImplTest {
         assertEquals("lastName_3", arg.getLastName());
         assertEquals("addressLine1_3", arg.getAddressLine1());
         assertEquals("addressLine2_3", arg.getAddressLine2());
-        assertEquals("telephone_3", arg.getTelephone());
-        assertEquals("gsm_3", arg.getGsm());
-        assertEquals("email_3", arg.getEmail());
     }
 
     private PersonDTO createPersonDTO(String firstName, String lastName, String addressLine1, String addressLine2, String telephone, String gsm, String email) {
@@ -224,9 +203,6 @@ public class PersonServiceImplTest {
         dto.setLastName(lastName);
         dto.setAddressLine1(addressLine1);
         dto.setAddressLine2(addressLine2);
-        dto.setTelephone(telephone);
-        dto.setGsm(gsm);
-        dto.setEmail(email);
         return dto;
     }
 
@@ -247,9 +223,6 @@ public class PersonServiceImplTest {
         person.setLastName(lastName);
         person.setAddressLine1(addressLine1);
         person.setAddressLine2(addressLine2);
-        person.setTelephone(telephone);
-        person.setGsm(gsm);
-        person.setEmail(email);
         return person;
     }
 

@@ -23,12 +23,6 @@ public class PersonDTO implements Serializable {
 
     private String addressLine2;
 
-    private String telephone;
-
-    private String gsm;
-
-    private String email;
-
     private List<PersonContactDTO> contacts;
 
     // convenience attributes
@@ -42,7 +36,6 @@ public class PersonDTO implements Serializable {
     }
 
     /**
-     *
      * @return the id
      */
     public String getId() {
@@ -50,7 +43,6 @@ public class PersonDTO implements Serializable {
     }
 
     /**
-     *
      * @param id the id to set
      */
     public void setId(String id) {
@@ -58,7 +50,6 @@ public class PersonDTO implements Serializable {
     }
 
     /**
-     *
      * @return the personTypeId
      */
     public String getPersonTypeId() {
@@ -66,7 +57,6 @@ public class PersonDTO implements Serializable {
     }
 
     /**
-     *
      * @param personTypeId the personTypeId to set
      */
     public void setPersonTypeId(String personTypeId) {
@@ -74,7 +64,6 @@ public class PersonDTO implements Serializable {
     }
 
     /**
-     *
      * @return the firstName
      */
     public String getFirstName() {
@@ -82,7 +71,6 @@ public class PersonDTO implements Serializable {
     }
 
     /**
-     *
      * @param firstName the firstName to set
      */
     public void setFirstName(String firstName) {
@@ -90,7 +78,6 @@ public class PersonDTO implements Serializable {
     }
 
     /**
-     *
      * @return the lastName
      */
     public String getLastName() {
@@ -98,7 +85,6 @@ public class PersonDTO implements Serializable {
     }
 
     /**
-     *
      * @param lastName the lastName to set
      */
     public void setLastName(String lastName) {
@@ -106,7 +92,6 @@ public class PersonDTO implements Serializable {
     }
 
     /**
-     *
      * @return the addressLine1
      */
     public String getAddressLine1() {
@@ -114,7 +99,6 @@ public class PersonDTO implements Serializable {
     }
 
     /**
-     *
      * @param addressLine1 the addressLine1 to set
      */
     public void setAddressLine1(String addressLine1) {
@@ -122,7 +106,6 @@ public class PersonDTO implements Serializable {
     }
 
     /**
-     *
      * @return the addressLine2
      */
     public String getAddressLine2() {
@@ -130,63 +113,14 @@ public class PersonDTO implements Serializable {
     }
 
     /**
-     *
      * @param addressLine2 the addressLine2 to set
      */
     public void setAddressLine2(String addressLine2) {
         this.addressLine2 = addressLine2;
     }
 
-    /**
-     *
-     * @return the telephone
-     */
-    public String getTelephone() {
-        return telephone;
-    }
 
     /**
-     *
-     * @param telephone the telephone to set
-     */
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    /**
-     *
-     * @return the gsm
-     */
-    public String getGsm() {
-        return gsm;
-    }
-
-    /**
-     *
-     * @param gsm the gsm to set
-     */
-    public void setGsm(String gsm) {
-        this.gsm = gsm;
-    }
-
-    /**
-     *
-     * @return the email
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     *
-     * @param email the email to set
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    /**
-     *
      * @return the contacts
      */
     public List<PersonContactDTO> getContacts() {
@@ -194,7 +128,6 @@ public class PersonDTO implements Serializable {
     }
 
     /**
-     *
      * @param contacts the contacts to set
      */
     public void setContacts(List<PersonContactDTO> contacts) {
@@ -202,7 +135,6 @@ public class PersonDTO implements Serializable {
     }
 
     /**
-     *
      * @return the personType
      */
     public String getPersonType() {
@@ -210,7 +142,6 @@ public class PersonDTO implements Serializable {
     }
 
     /**
-     *
      * @param personType the personType to set
      */
     public void setPersonType(String personType) {

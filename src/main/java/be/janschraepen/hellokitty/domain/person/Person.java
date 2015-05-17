@@ -39,36 +39,10 @@ public class Person extends Entity {
     @Column(name = "ADDRESS_LINE_2")
     private String addressLine2;
 
-    @Column(name = "TELEPHONE")
-    private String telephone;
-
-    @Column(name = "GSM")
-    private String gsm;
-
-    @Column(name = "Email")
-    private String email;
-
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
     private List<PersonContact> contacts;
 
     /**
-     *
-     * @return the email
-     */
-    public String getEmail() {
-        return email;
-    }
-
-    /**
-     *
-     * @param email the email to set
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    /**
-     *
      * @return the personType
      */
     public PersonType getType() {
@@ -76,7 +50,6 @@ public class Person extends Entity {
     }
 
     /**
-     *
      * @param type the personType to set
      */
     public void setType(PersonType type) {
@@ -84,7 +57,6 @@ public class Person extends Entity {
     }
 
     /**
-     *
      * @return the firstName
      */
     public String getFirstName() {
@@ -92,7 +64,6 @@ public class Person extends Entity {
     }
 
     /**
-     *
      * @param firstName the firstName to set
      */
     public void setFirstName(String firstName) {
@@ -100,7 +71,6 @@ public class Person extends Entity {
     }
 
     /**
-     *
      * @return the lastName
      */
     public String getLastName() {
@@ -108,7 +78,6 @@ public class Person extends Entity {
     }
 
     /**
-     *
      * @param lastName the lastName to set
      */
     public void setLastName(String lastName) {
@@ -116,7 +85,6 @@ public class Person extends Entity {
     }
 
     /**
-     *
      * @return the addressLine1
      */
     public String getAddressLine1() {
@@ -124,7 +92,6 @@ public class Person extends Entity {
     }
 
     /**
-     *
      * @param addressLine1 the addressLine1 to set
      */
     public void setAddressLine1(String addressLine1) {
@@ -132,7 +99,6 @@ public class Person extends Entity {
     }
 
     /**
-     *
      * @return the addressLine2
      */
     public String getAddressLine2() {
@@ -140,7 +106,6 @@ public class Person extends Entity {
     }
 
     /**
-     *
      * @param addressLine2 the addressLine2 to set
      */
     public void setAddressLine2(String addressLine2) {
@@ -148,39 +113,6 @@ public class Person extends Entity {
     }
 
     /**
-     *
-     * @return the telephone
-     */
-    public String getTelephone() {
-        return telephone;
-    }
-
-    /**
-     *
-     * @param telephone the telephone to set
-     */
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    /**
-     *
-     * @return the gsm
-     */
-    public String getGsm() {
-        return gsm;
-    }
-
-    /**
-     *
-     * @param gsm the gsm to set
-     */
-    public void setGsm(String gsm) {
-        this.gsm = gsm;
-    }
-
-    /**
-     *
      * @return the contacts
      */
     public List<PersonContact> getContacts() {
@@ -188,7 +120,6 @@ public class Person extends Entity {
     }
 
     /**
-     *
      * @param contacts the contacts to set
      */
     public void setContacts(List<PersonContact> contacts) {
@@ -203,9 +134,6 @@ public class Person extends Entity {
                 ", lastName='" + lastName + '\'' +
                 ", addressLine1='" + addressLine1 + '\'' +
                 ", addressLine2='" + addressLine2 + '\'' +
-                ", telephone='" + telephone + '\'' +
-                ", gsm='" + gsm + '\'' +
-                ", email='" + email + '\'' +
                 ", contacts=" + contacts +
                 '}';
     }

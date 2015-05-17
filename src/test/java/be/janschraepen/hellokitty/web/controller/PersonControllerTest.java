@@ -94,9 +94,6 @@ public class PersonControllerTest {
         entity.setLastName("lastName");
         entity.setAddressLine1("addressLine1");
         entity.setAddressLine2("addressLine2");
-        entity.setTelephone("telephone");
-        entity.setGsm("gsm");
-        entity.setEmail("email");
 
         when(personService.findPerson("uuid")).thenReturn(entity);
 
@@ -127,9 +124,6 @@ public class PersonControllerTest {
         person.setLastName("lastName");
         person.setAddressLine1("addressLine1");
         person.setAddressLine2("addressLine2");
-        person.setTelephone("telephone");
-        person.setGsm("gsm");
-        person.setEmail("email");
 
         ArgumentCaptor<PersonDTO> p = ArgumentCaptor.forClass(PersonDTO.class);
         when(personService.savePerson(p.capture())).thenReturn(person);
@@ -148,9 +142,6 @@ public class PersonControllerTest {
         assertEquals("lastName", arg.getLastName());
         assertEquals("addressLine1", arg.getAddressLine1());
         assertEquals("addressLine2", arg.getAddressLine2());
-        assertEquals("telephone", arg.getTelephone());
-        assertEquals("gsm", arg.getGsm());
-        assertEquals("email", arg.getEmail());
     }
 
     @Test

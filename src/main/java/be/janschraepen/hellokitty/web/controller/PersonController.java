@@ -36,9 +36,6 @@ public class PersonController extends AbstractController<PersonDTO> {
     static final String PARAM_LASTNAME = "lastName";
     static final String PARAM_ADDRESSLINE1 = "addressLine1";
     static final String PARAM_ADDRESSLINE2 = "addressLine2";
-    static final String PARAM_TELEPHONE = "telephone";
-    static final String PARAM_GSM = "gsm";
-    static final String PARAM_EMAIL = "email";
 
     @Autowired
     private PersonService personService;
@@ -89,11 +86,8 @@ public class PersonController extends AbstractController<PersonDTO> {
         String lastName = request.getParameter(PARAM_LASTNAME);
         String addressLine1 = request.getParameter(PARAM_ADDRESSLINE1);
         String addressLine2 = request.getParameter(PARAM_ADDRESSLINE2);
-        String telephone = request.getParameter(PARAM_TELEPHONE);
-        String gsm = request.getParameter(PARAM_GSM);
-        String email = request.getParameter(PARAM_EMAIL);
 
-        PersonDTO person = ObjectFactory.getInstance().createPersonDTO(uuid, personTypeId, firstName, lastName, addressLine1, addressLine2, telephone, gsm, email);
+        PersonDTO person = ObjectFactory.getInstance().createPersonDTO(uuid, personTypeId, firstName, lastName, addressLine1, addressLine2);
         person = personService.savePerson(person);
 
         String title = person.getFirstName() + " - " + person.getLastName();

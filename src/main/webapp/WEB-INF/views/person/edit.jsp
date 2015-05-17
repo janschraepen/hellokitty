@@ -73,18 +73,6 @@
                                     <td class="lbl"><fmt:message key="label.addressLine2" bundle="${lang}"/>:</td>
                                     <td class="val"><input type="text" name="addressLine2" value="${entity.addressLine2}" /></td>
                                 </tr>
-                                <tr>
-                                    <td class="lbl"><fmt:message key="label.telephone" bundle="${lang}"/>:</td>
-                                    <td class="val"><input type="text" name="telephone" value="${entity.telephone}" /></td>
-                                </tr>
-                                <tr>
-                                    <td class="lbl"><fmt:message key="label.gsm" bundle="${lang}"/>:</td>
-                                    <td class="val"><input type="text" name="gsm" value="${entity.gsm}" /></td>
-                                </tr>
-                                <tr>
-                                    <td class="lbl"><fmt:message key="label.email" bundle="${lang}"/>:</td>
-                                    <td class="val"><input type="text" name="email" value="${entity.email}" /></td>
-                                </tr>
                             </table>
                         </div>
                     </form>
