@@ -1,15 +1,14 @@
-package be.janschraepen.hellokitty.services;
+package be.janschraepen.hellokitty.services.impl;
 
 import be.janschraepen.hellokitty.domain.persontype.PersonType;
 import be.janschraepen.hellokitty.domain.persontype.PersonTypeDTO;
 import be.janschraepen.hellokitty.repository.PersonTypeRepository;
-import org.junit.Before;
+import be.janschraepen.hellokitty.services.impl.PersonTypeServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Arrays;
@@ -25,6 +24,7 @@ public class PersonTypeServiceImplTest {
 
     public static final String SEARCH_FOR = "_2";
     public static final String UUID = "uuid";
+
     @Mock
     private PersonTypeRepository personTypeRepository;
 

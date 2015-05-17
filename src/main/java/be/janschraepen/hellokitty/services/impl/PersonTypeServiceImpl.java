@@ -1,9 +1,10 @@
-package be.janschraepen.hellokitty.services;
+package be.janschraepen.hellokitty.services.impl;
 
 import be.janschraepen.hellokitty.domain.persontype.ObjectFactory;
 import be.janschraepen.hellokitty.domain.persontype.PersonType;
 import be.janschraepen.hellokitty.domain.persontype.PersonTypeDTO;
 import be.janschraepen.hellokitty.repository.PersonTypeRepository;
+import be.janschraepen.hellokitty.services.PersonTypeService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,7 @@ public class PersonTypeServiceImpl implements PersonTypeService {
 
     @Override
     public void savePersonType(PersonTypeDTO dto) {
-        PersonType personType = null;
+        PersonType personType;
         if (StringUtils.isBlank(dto.getId())) {
             // save a new personType
             personType = new PersonType();

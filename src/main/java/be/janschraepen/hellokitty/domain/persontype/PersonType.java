@@ -5,6 +5,7 @@ import be.janschraepen.hellokitty.domain.*;
 import be.janschraepen.hellokitty.domain.Entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * PersonType Entity class. This class represents a PersonType with
@@ -16,9 +17,11 @@ public class PersonType extends Entity {
 
     private static final long serialVersionUID = 1L;
 
+    @NotNull
     @Column(name = "SHORT_CODE")
     private String shortCode;
 
+    @NotNull
     @Column(name = "NAME")
     private String name;
 

@@ -14,7 +14,7 @@ public interface PersonTypeService {
     /**
      * Find a PersonType with given uuid.
      * @param uuid the uuid to find
-     * @return PersonTypeDTO to found PersonType, or null if not found
+     * @return PersonTypeDTO the found PersonType, or null if not found
      */
     @Transactional(readOnly = true)
     PersonTypeDTO findPersonType(String uuid);
