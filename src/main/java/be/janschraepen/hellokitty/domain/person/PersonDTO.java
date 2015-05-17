@@ -1,6 +1,7 @@
 package be.janschraepen.hellokitty.domain.person;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Person Data Transfer Object. Used for transferring data
@@ -27,6 +28,8 @@ public class PersonDTO implements Serializable {
     private String gsm;
 
     private String email;
+
+    private List<PersonContactDTO> contacts;
 
     // convenience attributes
     private String personType;
@@ -180,6 +183,22 @@ public class PersonDTO implements Serializable {
      */
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    /**
+     *
+     * @return the contacts
+     */
+    public List<PersonContactDTO> getContacts() {
+        return contacts;
+    }
+
+    /**
+     *
+     * @param contacts the contacts to set
+     */
+    public void setContacts(List<PersonContactDTO> contacts) {
+        this.contacts = contacts;
     }
 
     /**

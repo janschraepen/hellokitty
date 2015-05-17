@@ -6,6 +6,7 @@ import be.janschraepen.hellokitty.domain.persontype.PersonType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * Person Entity class. This class represents a Person with attributes
@@ -46,6 +47,9 @@ public class Person extends Entity {
 
     @Column(name = "Email")
     private String email;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
+    private List<PersonContact> contacts;
 
     /**
      *
@@ -175,6 +179,22 @@ public class Person extends Entity {
         this.gsm = gsm;
     }
 
+    /**
+     *
+     * @return the contacts
+     */
+    public List<PersonContact> getContacts() {
+        return contacts;
+    }
+
+    /**
+     *
+     * @param contacts the contacts to set
+     */
+    public void setContacts(List<PersonContact> contacts) {
+        this.contacts = contacts;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
@@ -186,6 +206,7 @@ public class Person extends Entity {
                 ", telephone='" + telephone + '\'' +
                 ", gsm='" + gsm + '\'' +
                 ", email='" + email + '\'' +
+                ", contacts=" + contacts +
                 '}';
     }
 

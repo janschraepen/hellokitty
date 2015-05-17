@@ -32,7 +32,7 @@ public class PersonServiceImpl implements PersonService {
 
         PersonDTO p = null;
         if (person != null) {
-            p = ObjectFactory.getInstance().createDTO(person);
+            p = ObjectFactory.getInstance().createPersonDTO(person);
         }
         return p;
     }
@@ -40,17 +40,17 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public List<PersonDTO> findPersons(String searchFor) {
         List<Person> persons = personRepository.find(searchFor);
-        return ObjectFactory.getInstance().createListDTOs(persons);
+        return ObjectFactory.getInstance().createListPersonDTOs(persons);
     }
 
     @Override
     public List<PersonDTO> findAllPersons() {
         List<Person> persons = personRepository.findAll();
-        return ObjectFactory.getInstance().createListDTOs(persons);
+        return ObjectFactory.getInstance().createListPersonDTOs(persons);
     }
 
     @Override
-    public void savePerson(PersonDTO dto) {
+    public PersonDTO savePerson(PersonDTO dto) {
         Person person;
         if (StringUtils.isBlank(dto.getId())) {
             // save a new person
@@ -69,7 +69,9 @@ public class PersonServiceImpl implements PersonService {
         person.setTelephone(dto.getTelephone());
         person.setGsm(dto.getGsm());
         person.setEmail(dto.getEmail());
-        personRepository.saveAndFlush(person);
+
+        person = personRepository.saveAndFlush(person);
+        return ObjectFactory.getInstance().createPersonDTO(person);
     }
 
     @Override

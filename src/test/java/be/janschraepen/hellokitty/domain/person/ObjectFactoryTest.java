@@ -12,9 +12,13 @@ import static org.junit.Assert.assertEquals;
 
 public class ObjectFactoryTest {
 
-    private static final String PERSONTYPE_ID = "personType-uuid";
-    private static final String PERSONTYPE_SHORT_CODE = "shortCode";
-    private static final String PERSONTYPE_NAME = "name";
+    public static final String PERSONTYPE_ID = "personType-uuid";
+    public static final String PERSONTYPE_SHORT_CODE = "shortCode";
+    public static final String PERSONTYPE_NAME = "name";
+
+    public static final String PERSONCONTACT_ID = "personContact-uuid";
+    public static final String PERSONCONTACT_VALUE = "value";
+
     public static final String FIRST_NAME = "firstName";
     public static final String LAST_NAME = "lastName";
     public static final String ADDRESS_LINE_1 = "addressLine1";
@@ -37,7 +41,7 @@ public class ObjectFactoryTest {
     }
 
     @Test
-    public void testCreateDTO_withEntity() throws Exception {
+    public void testCreatePersonDTO_withEntity() throws Exception {
         PersonType personType = new PersonType();
         personType.setId(PERSONTYPE_ID);
         personType.setShortCode(PERSONTYPE_SHORT_CODE);
@@ -53,7 +57,7 @@ public class ObjectFactoryTest {
         person.setGsm(GSM);
         person.setEmail(EMAIL);
 
-        PersonDTO dto = underTest.createDTO(person);
+        PersonDTO dto = underTest.createPersonDTO(person);
         assertNotNull(dto);
         assertEquals(PERSONTYPE_ID, dto.getPersonTypeId());
         assertEquals(PERSONTYPE_NAME, dto.getPersonType());
@@ -67,8 +71,8 @@ public class ObjectFactoryTest {
     }
 
     @Test
-    public void testCreateDTO_withParams() throws Exception {
-        PersonDTO dto = underTest.createDTO("uuid", PERSONTYPE_ID, FIRST_NAME, LAST_NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TELEPHONE, GSM, EMAIL);
+    public void testCreatePersonDTO_withParams() throws Exception {
+        PersonDTO dto = underTest.createPersonDTO("uuid", PERSONTYPE_ID, FIRST_NAME, LAST_NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TELEPHONE, GSM, EMAIL);
         assertNotNull(dto);
         assertEquals(PERSONTYPE_ID, dto.getPersonTypeId());
         assertEquals(FIRST_NAME, dto.getFirstName());
@@ -81,7 +85,7 @@ public class ObjectFactoryTest {
     }
 
     @Test
-    public void testCreateListDTOs() throws Exception {
+    public void testCreateListPersonDTOs() throws Exception {
         PersonType personType = new PersonType();
         personType.setId(PERSONTYPE_ID);
         personType.setShortCode(PERSONTYPE_SHORT_CODE);
@@ -97,7 +101,7 @@ public class ObjectFactoryTest {
         person.setGsm(GSM);
         person.setEmail(EMAIL);
 
-        List<PersonDTO> dtos = underTest.createListDTOs(Arrays.asList(new Person[]{person}));
+        List<PersonDTO> dtos = underTest.createListPersonDTOs(Arrays.asList(new Person[]{person}));
         assertNotNull(dtos);
         assertEquals(1, dtos.size(), 0);
 
@@ -112,6 +116,65 @@ public class ObjectFactoryTest {
         assertEquals(TELEPHONE, dto.getTelephone());
         assertEquals(GSM, dto.getGsm());
         assertEquals(EMAIL, dto.getEmail());
+    }
+
+    @Test
+    public void testCreatePersonContactDTO_withEntity() throws Exception {
+        Person person = new Person();
+        person.setId("uuid");
+
+        PersonContact personContact = new PersonContact();
+        personContact.setId(PERSONCONTACT_ID);
+        personContact.setPerson(person);
+        personContact.setType(ContactType.EMAIL);
+        personContact.setValue(PERSONCONTACT_VALUE);
+
+        PersonContactDTO dto = underTest.createPersonContactDTO(personContact);
+        assertNotNull(dto);
+        assertEquals(PERSONCONTACT_ID, dto.getId());
+        assertEquals("uuid", dto.getPersonId());
+        assertEquals(ContactType.EMAIL, dto.getType());
+        assertEquals(PERSONCONTACT_VALUE, dto.getValue());
+    }
+
+    @Test
+    public void testCreatePersonContactDTO_withParams() throws Exception {
+        PersonContactDTO dto = underTest.createPersonContactDTO(PERSONCONTACT_ID, "uuid", ContactType.EMAIL, PERSONCONTACT_VALUE);
+        assertNotNull(dto);
+        assertEquals(PERSONCONTACT_ID, dto.getId());
+        assertEquals("uuid", dto.getPersonId());
+        assertEquals(ContactType.EMAIL, dto.getType());
+        assertEquals(PERSONCONTACT_VALUE, dto.getValue());
+    }
+
+    @Test
+    public void testCreateListPersonContactDTOs() throws Exception {
+        Person person = new Person();
+        person.setId("uuid");
+
+        PersonContact personContact = new PersonContact();
+        personContact.setId(PERSONCONTACT_ID);
+        personContact.setPerson(person);
+        personContact.setType(ContactType.EMAIL);
+        personContact.setValue(PERSONCONTACT_VALUE);
+
+        List<PersonContactDTO> dtos = underTest.createListPersonContactDTOs(Arrays.asList(new PersonContact[]{personContact}));
+        assertNotNull(dtos);
+        assertEquals(1, dtos.size(), 0);
+
+        PersonContactDTO dto = dtos.get(0);
+        assertNotNull(dto);
+        assertEquals(PERSONCONTACT_ID, dto.getId());
+        assertEquals("uuid", dto.getPersonId());
+        assertEquals(ContactType.EMAIL, dto.getType());
+        assertEquals(PERSONCONTACT_VALUE, dto.getValue());
+    }
+
+    @Test
+    public void testCreateListPersonContactDTOs_nullListReturnsEmptyList() throws Exception {
+        List<PersonContactDTO> dtos = underTest.createListPersonContactDTOs(null);
+        assertNotNull(dtos);
+        assertEquals(0, dtos.size(), 0);
     }
 
 }

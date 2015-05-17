@@ -93,8 +93,8 @@ public class PersonController extends AbstractController<PersonDTO> {
         String gsm = request.getParameter(PARAM_GSM);
         String email = request.getParameter(PARAM_EMAIL);
 
-        PersonDTO person = ObjectFactory.getInstance().createDTO(uuid, personTypeId, firstName, lastName, addressLine1, addressLine2, telephone, gsm, email);
-        personService.savePerson(person);
+        PersonDTO person = ObjectFactory.getInstance().createPersonDTO(uuid, personTypeId, firstName, lastName, addressLine1, addressLine2, telephone, gsm, email);
+        person = personService.savePerson(person);
 
         String title = person.getFirstName() + " - " + person.getLastName();
         return detail(request, VIEW_EDIT, title, DESCRIPTION, person);

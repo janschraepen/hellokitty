@@ -29,7 +29,7 @@ public final class ObjectFactory {
      * @param p the Person
      * @return PersonDTO object
      */
-    public PersonDTO createDTO(Person p) {
+    public PersonDTO createPersonDTO(Person p) {
         PersonDTO dto = new PersonDTO();
         dto.setId(p.getId());
         dto.setPersonTypeId(p.getType().getId());
@@ -41,6 +41,7 @@ public final class ObjectFactory {
         dto.setTelephone(p.getTelephone());
         dto.setGsm(p.getGsm());
         dto.setEmail(p.getEmail());
+        dto.setContacts(createListPersonContactDTOs(p.getContacts()));
         return dto;
     }
 
@@ -58,7 +59,7 @@ public final class ObjectFactory {
      * @param email        the email
      * @return PersonDTO object
      */
-    public PersonDTO createDTO(String id, String personTypeId, String firstName, String lastName, String addressLine1, String addressLine2, String telephone, String gsm, String email) {
+    public PersonDTO createPersonDTO(String id, String personTypeId, String firstName, String lastName, String addressLine1, String addressLine2, String telephone, String gsm, String email) {
         PersonDTO dto = new PersonDTO();
         dto.setId(id);
         dto.setPersonTypeId(personTypeId);
@@ -78,10 +79,59 @@ public final class ObjectFactory {
      * @param l the list of Persons
      * @return List<PersonDTO> a list of PersonDTOs
      */
-    public List<PersonDTO> createListDTOs(List<Person> l) {
+    public List<PersonDTO> createListPersonDTOs(List<Person> l) {
         List<PersonDTO> list = new ArrayList<>();
         for (Person p : l) {
-            list.add(createDTO(p));
+            list.add(createPersonDTO(p));
+        }
+        return list;
+    }
+
+    /**
+     * Create PersonContactDTO object.
+     *
+     * @param p the PersonContact
+     * @return PersonContactDTO object
+     */
+    public PersonContactDTO createPersonContactDTO(PersonContact p) {
+        PersonContactDTO dto = new PersonContactDTO();
+        dto.setId(p.getId());
+        dto.setPersonId(p.getPerson().getId());
+        dto.setType(p.getType());
+        dto.setValue(p.getValue());
+        return dto;
+    }
+
+    /**
+     * Create PersonContactDTO object.
+     *
+     * @param id           the uuid
+     * @param personId     the Person uuid
+     * @param type         the ContactType
+     * @param value        the value
+     * @return PersonContactDTO object
+     */
+    public PersonContactDTO createPersonContactDTO(String id, String personId, ContactType type, String value) {
+        PersonContactDTO dto = new PersonContactDTO();
+        dto.setId(id);
+        dto.setPersonId(personId);
+        dto.setType(type);
+        dto.setValue(value);
+        return dto;
+    }
+
+    /**
+     * Create List of PersonContactDTO objects.
+     *
+     * @param l the list of PersonContacts
+     * @return List<PersonContactDTO> a list of PersonContactDTOs
+     */
+    public List<PersonContactDTO> createListPersonContactDTOs(List<PersonContact> l) {
+        List<PersonContactDTO> list = new ArrayList<>();
+        if (l != null) {
+            for (PersonContact p : l) {
+                list.add(createPersonContactDTO(p));
+            }
         }
         return list;
     }

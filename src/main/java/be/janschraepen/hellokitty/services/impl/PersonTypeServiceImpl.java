@@ -45,7 +45,7 @@ public class PersonTypeServiceImpl implements PersonTypeService {
     }
 
     @Override
-    public void savePersonType(PersonTypeDTO dto) {
+    public PersonTypeDTO savePersonType(PersonTypeDTO dto) {
         PersonType personType;
         if (StringUtils.isBlank(dto.getId())) {
             // save a new personType
@@ -56,7 +56,9 @@ public class PersonTypeServiceImpl implements PersonTypeService {
         }
         personType.setShortCode(dto.getShortCode());
         personType.setName(dto.getName());
-        personTypeRepository.saveAndFlush(personType);
+
+        personType = personTypeRepository.saveAndFlush(personType);
+        return ObjectFactory.getInstance().createDTO(personType);
     }
 
     @Override

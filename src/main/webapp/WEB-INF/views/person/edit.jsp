@@ -90,7 +90,30 @@
                     </form>
                 </div>
                 <div id="tabs-contact">
-                    test
+                    <form action="${actionUrl}/person/edit" method="POST">
+                        <input type="hidden" name="_event" value="" />
+                        <input type="hidden" name="uuid" value="${entity.id}" />
+
+                        <div class="entity_actions">
+                            <input type="button" value="Terug" action="back" />
+                        </div>
+                        <div class="entity__form">
+                            <table>
+                                <tr>
+                                    <th></th>
+                                    <th><fmt:message key="table.header.contactType" bundle="${lang}"/></th>
+                                    <th><fmt:message key="table.header.value" bundle="${lang}"/></th>
+                                </tr>
+                                <c:forEach var="contact" items="${entity.contacts}">
+                                    <tr>
+                                        <td class="id"><input type="checkbox" name="uuid" value="${contact.id}" /></td>
+                                        <td class="s"><fmt:message key="${contact.type.labelKey}" bundle="${lang}"/></td>
+                                        <td class="l">${contact.value}</td>
+                                    </tr>
+                                </c:forEach>
+                            </table>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

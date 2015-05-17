@@ -36,9 +36,10 @@ public interface PersonTypeService {
     /**
      * Save/update a PersonType.
      * @param dto the personType to save/update
+     * @return PersonTypeDTO the saved instance
      */
     @Transactional
-    void savePersonType(PersonTypeDTO dto);
+    PersonTypeDTO savePersonType(PersonTypeDTO dto);
 
     /**
      * Delete a PersonType.

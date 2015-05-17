@@ -1,5 +1,6 @@
 package be.janschraepen.hellokitty.web.controller;
 
+import be.janschraepen.hellokitty.domain.person.Person;
 import be.janschraepen.hellokitty.domain.person.PersonDTO;
 import be.janschraepen.hellokitty.domain.persontype.PersonTypeDTO;
 import be.janschraepen.hellokitty.services.PersonService;
@@ -119,14 +120,25 @@ public class PersonControllerTest {
         request.addParameter("gsm", "gsm");
         request.addParameter("email", "email");
 
+        PersonDTO person = new PersonDTO();
+        person.setId("uuid");
+        person.setPersonTypeId("personType-uuid");
+        person.setFirstName("firstName");
+        person.setLastName("lastName");
+        person.setAddressLine1("addressLine1");
+        person.setAddressLine2("addressLine2");
+        person.setTelephone("telephone");
+        person.setGsm("gsm");
+        person.setEmail("email");
+
+        ArgumentCaptor<PersonDTO> p = ArgumentCaptor.forClass(PersonDTO.class);
+        when(personService.savePerson(p.capture())).thenReturn(person);
+
         ModelAndView mv = underTest.doSave(request);
         assertNotNull(mv);
         assertEquals("person/edit", mv.getViewName());
         assertEquals("firstName - lastName", mv.getModel().get("title"));
         assertNotNull(mv.getModel().get("entity"));
-
-        ArgumentCaptor<PersonDTO> p = ArgumentCaptor.forClass(PersonDTO.class);
-        verify(personService).savePerson(p.capture());
 
         PersonDTO arg = p.getValue();
         assertNotNull(arg);

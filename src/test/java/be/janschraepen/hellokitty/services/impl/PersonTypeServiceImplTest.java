@@ -104,31 +104,32 @@ public class PersonTypeServiceImplTest {
 
     @Test
     public void testSavePersonType_newInstance() throws Exception {
+        PersonType update = createPersonType(UUID, "shortCode_3", "name_3");
         PersonTypeDTO _new = createPersonTypeDTO("shortCode_3", "name_3");
 
-        underTest.savePersonType(_new);
-
         ArgumentCaptor<PersonType> p = ArgumentCaptor.forClass(PersonType.class);
-        verify(personTypeRepository).saveAndFlush(p.capture());
+        when(personTypeRepository.saveAndFlush(p.capture())).thenReturn(update);
+
+        underTest.savePersonType(_new);
 
         PersonType arg = p.getValue();
         assertNotNull(arg);
         assertEquals("shortCode_3", arg.getShortCode());
         assertEquals("name_3", arg.getName());
-
     }
 
     @Test
     public void testSavePersonType_existingInstance() throws Exception {
         PersonType toUpdate = createPersonType(UUID, "shortCode_3", "name_3");
+        PersonType update = createPersonType(UUID, "shortCode_3", "name_4");
         PersonTypeDTO updated = createPersonTypeDTO(UUID, "shortCode_3", "name_4");
 
         when(personTypeRepository.findById(UUID)).thenReturn(toUpdate);
 
-        underTest.savePersonType(updated);
-
         ArgumentCaptor<PersonType> p = ArgumentCaptor.forClass(PersonType.class);
-        verify(personTypeRepository).saveAndFlush(p.capture());
+        when(personTypeRepository.saveAndFlush(p.capture())).thenReturn(update);
+
+        underTest.savePersonType(updated);
 
         PersonType arg = p.getValue();
         assertNotNull(arg);

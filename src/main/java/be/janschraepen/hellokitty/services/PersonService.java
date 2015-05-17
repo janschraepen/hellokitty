@@ -40,9 +40,10 @@ public interface PersonService {
      * Save/update a Person.
      *
      * @param dto the person to save/update
+     * @return PersonDTO the saved instance
      */
     @Transactional
-    void savePerson(PersonDTO dto);
+    PersonDTO savePerson(PersonDTO dto);
 
     /**
      * Delete a Person.

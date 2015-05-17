@@ -11,7 +11,7 @@ $( document ).ready(function() {
 
         var action = $(this).attr('action');
         $('input[name="_event"]').val(action);
-        $('form').submit();
+        $(this).closest('form').submit();
     });
 
 });

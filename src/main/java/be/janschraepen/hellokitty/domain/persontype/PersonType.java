@@ -3,9 +3,12 @@ package be.janschraepen.hellokitty.domain.persontype;
 
 import be.janschraepen.hellokitty.domain.*;
 import be.janschraepen.hellokitty.domain.Entity;
+import be.janschraepen.hellokitty.domain.person.Person;
+import be.janschraepen.hellokitty.domain.person.PersonContact;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * PersonType Entity class. This class represents a PersonType with
@@ -24,6 +27,9 @@ public class PersonType extends Entity {
     @NotNull
     @Column(name = "NAME")
     private String name;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "type")
+    private List<Person> persons;
 
     /**
      *
@@ -57,12 +63,28 @@ public class PersonType extends Entity {
         this.name = name;
     }
 
+    /**
+     *
+     * @return the persons
+     */
+    public List<Person> getPersons() {
+        return persons;
+    }
+
+    /**
+     *
+     * @param persons the persons to set
+     */
+    public void setPersons(List<Person> persons) {
+        this.persons = persons;
+    }
+
     @Override
     public String toString() {
-        return "Product{" +
-                "id='" + getId() + '\'' +
-                ", shortCode='" + getShortCode() + '\'' +
-                ", name='" + getName() + '\'' +
+        return "PersonType{" +
+                "shortCode='" + shortCode + '\'' +
+                ", name='" + name + '\'' +
+                ", persons=" + persons +
                 '}';
     }
 

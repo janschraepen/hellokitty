@@ -132,15 +132,16 @@ public class PersonServiceImplTest {
 
     @Test
     public void testSavePerson_newInstance() throws Exception {
+        Person update = createPerson(UUID, "firstName_3", "lastName_3", "addressLine1_3", "addressLine2_3", "telephone_3", "gsm_3", "email_3");
         PersonDTO _new = createPersonDTO("firstName_3", "lastName_3", "addressLine1_3", "addressLine2_3", "telephone_3", "gsm_3", "email_3");
 
         PersonType personType = new PersonType();
         when(personTypeRepository.findById("personType-uuid")).thenReturn(personType);
 
-        underTest.savePerson(_new);
-
         ArgumentCaptor<Person> p = ArgumentCaptor.forClass(Person.class);
-        verify(personRepository).saveAndFlush(p.capture());
+        when(personRepository.saveAndFlush(p.capture())).thenReturn(update);
+
+        underTest.savePerson(_new);
 
         Person arg = p.getValue();
         assertNotNull(arg);
@@ -157,6 +158,7 @@ public class PersonServiceImplTest {
     @Test
     public void testSavePerson_existingInstance() throws Exception {
         Person toUpdate = createPerson(UUID, "firstName_3", "lastName_3", "addressLine1_3", "addressLine2_3", "telephone_3", "gsm_3", "email_3");
+        Person update = createPerson(UUID, "firstName_3", "lastName_4", "addressLine1_3", "addressLine2_3", "telephone_3", "gsm_3", "email_3");
         PersonDTO updated = createPersonDTO(UUID, "firstName_3", "lastName_4", "addressLine1_3", "addressLine2_3", "telephone_3", "gsm_3", "email_3");
 
         when(personRepository.findById(UUID)).thenReturn(toUpdate);
@@ -164,10 +166,10 @@ public class PersonServiceImplTest {
         PersonType personType = new PersonType();
         when(personTypeRepository.findById("personType-uuid")).thenReturn(personType);
 
-        underTest.savePerson(updated);
-
         ArgumentCaptor<Person> p = ArgumentCaptor.forClass(Person.class);
-        verify(personRepository).saveAndFlush(p.capture());
+        when(personRepository.saveAndFlush(p.capture())).thenReturn(update);
+
+        underTest.savePerson(updated);
 
         Person arg = p.getValue();
         assertNotNull(arg);
