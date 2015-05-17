@@ -12,9 +12,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><fmt:message key="persontype.list.title" bundle="${lang}"/></title>
 
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
         <script src="<c:url value="/resources/js/general.js" />" type="text/javascript"></script>
 
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <link href="<c:url value="/resources/css/general.css" />" rel="stylesheet" type="text/css" />
     </head>
     <body>
@@ -24,28 +26,35 @@
                 <h4><fmt:message key="${description}" bundle="${lang}"/></h4>
             </div>
             <jsp:include page="./../error.jsp" />
-            <form action="${actionUrl}/person/type/edit" method="POST">
-                <input type="hidden" name="_event" value="" />
-                <input type="hidden" name="uuid" value="${entity.id}" />
+            <div id="tabs">
+                <ul>
+                    <li><a href="#tabs-common"><fmt:message key="tabs.common" bundle="${lang}"/></a></li>
+                </ul>
+                <div id="tabs-common">
+                    <form action="${actionUrl}/person/type/edit" method="POST">
+                        <input type="hidden" name="_event" value="" />
+                        <input type="hidden" name="uuid" value="${entity.id}" />
 
-                <div class="entity_actions">
-                    <input type="button" value="Terug" action="back" />
-                    <input type="button" value="Bewaren" action="save" />
-                    <input type="button" value="Verwijderen" action="delete" />
+                        <div class="entity_actions">
+                            <input type="button" value="Terug" action="back" />
+                            <input type="button" value="Bewaren" action="save" />
+                            <input type="button" value="Verwijderen" action="delete" />
+                        </div>
+                        <div class="entity__form">
+                            <table>
+                                <tr>
+                                    <td class="lbl"><fmt:message key="label.code" bundle="${lang}"/>:</td>
+                                    <td class="val"><input type="text" name="shortCode" value="${entity.shortCode}" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="lbl"><fmt:message key="label.description" bundle="${lang}"/>:</td>
+                                    <td class="val"><input type="text" name="name" value="${entity.name}" /></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </form>
                 </div>
-                <div class="entity__form">
-                    <table>
-                        <tr>
-                            <td class="lbl"><fmt:message key="label.code" bundle="${lang}"/>:</td>
-                            <td class="val"><input type="text" name="shortCode" value="${entity.shortCode}" /></td>
-                        </tr>
-                        <tr>
-                            <td class="lbl"><fmt:message key="label.description" bundle="${lang}"/>:</td>
-                            <td class="val"><input type="text" name="name" value="${entity.name}" /></td>
-                        </tr>
-                    </table>
-                </div>
-            </form>
+            </div>
         </div>
     </body>
 </html>

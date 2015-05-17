@@ -1,3 +1,8 @@
+/* jQuery tabs */
+$(function() {
+    $('#tabs').tabs();
+});
+
 /* _event button */
 $( document ).ready(function() {
 
