@@ -56,6 +56,7 @@ public class ObjectFactoryTest {
         PersonDTO dto = underTest.createDTO(person);
         assertNotNull(dto);
         assertEquals(PERSONTYPE_ID, dto.getPersonTypeId());
+        assertEquals(PERSONTYPE_NAME, dto.getPersonType());
         assertEquals(FIRST_NAME, dto.getFirstName());
         assertEquals(LAST_NAME, dto.getLastName());
         assertEquals(ADDRESS_LINE_1, dto.getAddressLine1());
@@ -103,6 +104,7 @@ public class ObjectFactoryTest {
         PersonDTO dto = dtos.get(0);
         assertNotNull(dto);
         assertEquals(PERSONTYPE_ID, dto.getPersonTypeId());
+        assertEquals(PERSONTYPE_NAME, dto.getPersonType());
         assertEquals(FIRST_NAME, dto.getFirstName());
         assertEquals(LAST_NAME, dto.getLastName());
         assertEquals(ADDRESS_LINE_1, dto.getAddressLine1());

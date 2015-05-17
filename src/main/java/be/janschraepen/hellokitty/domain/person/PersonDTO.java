@@ -28,6 +28,9 @@ public class PersonDTO implements Serializable {
 
     private String email;
 
+    // convenience attributes
+    private String personType;
+
     /**
      * Instantiates a new PersonDTO.
      */
@@ -177,6 +180,22 @@ public class PersonDTO implements Serializable {
      */
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    /**
+     *
+     * @return the personType
+     */
+    public String getPersonType() {
+        return personType;
+    }
+
+    /**
+     *
+     * @param personType the personType to set
+     */
+    public void setPersonType(String personType) {
+        this.personType = personType;
     }
 
 }

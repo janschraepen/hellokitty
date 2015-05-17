@@ -55,6 +55,10 @@ public class AbstractControllerTest {
                 return mv;
             }
 
+            @Override
+            void addDetailModelParameters(ModelAndView mv) {
+                mv.getModel().put("test", "test");
+            }
         };
     }
 
@@ -153,6 +157,7 @@ public class AbstractControllerTest {
         assertEquals("title", mv.getModel().get("title"));
         assertEquals("description", mv.getModel().get("description"));
         assertEquals("arg", mv.getModel().get("entity"));
+        assertEquals("test", mv.getModel().get("test"));
     }
 
 }

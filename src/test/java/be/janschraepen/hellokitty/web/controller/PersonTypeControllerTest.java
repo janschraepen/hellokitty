@@ -123,7 +123,7 @@ public class PersonTypeControllerTest {
         request.addParameter("uuid", "uuid");
 
         List<PersonTypeDTO> list = Arrays.asList(new PersonTypeDTO[]{ });
-        when(personTypeService.findPersonTypes("searchFor")).thenReturn(list);
+        when(personTypeService.findAllPersonTypes()).thenReturn(list);
 
         ModelAndView mv = underTest.doDelete(request);
         assertNotNull(mv);

@@ -1,8 +1,5 @@
 package be.janschraepen.hellokitty.domain.person;
 
-import be.janschraepen.hellokitty.domain.persontype.PersonType;
-import be.janschraepen.hellokitty.domain.persontype.PersonTypeDTO;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +33,7 @@ public final class ObjectFactory {
         PersonDTO dto = new PersonDTO();
         dto.setId(p.getId());
         dto.setPersonTypeId(p.getType().getId());
+        dto.setPersonType(p.getType().getName());
         dto.setFirstName(p.getFirstName());
         dto.setLastName(p.getLastName());
         dto.setAddressLine1(p.getAddressLine1());

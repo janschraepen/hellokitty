@@ -155,7 +155,16 @@ public abstract class AbstractController<T> implements MessageSourceAware {
         mv.getModel().put(PARAM_TITLE, title);
         mv.getModel().put(PARAM_DESCRIPTION, description);
         mv.getModel().put(PARAM_ENTITY, entity);
+        addDetailModelParameters(mv);
         return mv;
+    }
+
+    /**
+     * Add additional Model params to the ModelAndView for detail page.
+     * @param mv model and view
+     */
+    void addDetailModelParameters(ModelAndView mv) {
+        // override when needed to pass along additional model paramters
     }
 
     @Override
