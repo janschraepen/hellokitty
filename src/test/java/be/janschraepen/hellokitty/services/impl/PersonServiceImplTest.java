@@ -1,8 +1,11 @@
 package be.janschraepen.hellokitty.services.impl;
 
+import be.janschraepen.hellokitty.domain.person.ContactType;
 import be.janschraepen.hellokitty.domain.person.Person;
+import be.janschraepen.hellokitty.domain.person.PersonContact;
 import be.janschraepen.hellokitty.domain.person.PersonDTO;
 import be.janschraepen.hellokitty.domain.persontype.PersonType;
+import be.janschraepen.hellokitty.repository.PersonContactRepository;
 import be.janschraepen.hellokitty.repository.PersonRepository;
 import be.janschraepen.hellokitty.repository.PersonTypeRepository;
 import org.junit.Test;
@@ -31,6 +34,9 @@ public class PersonServiceImplTest {
 
     @Mock
     private PersonTypeRepository personTypeRepository;
+
+    @Mock
+    private PersonContactRepository personContactRepository;
 
     @InjectMocks
     private PersonServiceImpl underTest = new PersonServiceImpl();
@@ -191,6 +197,30 @@ public class PersonServiceImplTest {
         assertEquals("addressLine2_3", arg.getAddressLine2());
     }
 
+    @Test
+    public void testDeletePersonContact_nonExistingInstance() throws Exception {
+        when(personRepository.findById(UUID)).thenReturn(null);
+
+        underTest.deletePersonContact(UUID);
+    }
+
+    @Test
+    public void testDeletePersonContact_existingInstance() throws Exception {
+        PersonContact toDelete = createPersonContact(UUID, ContactType.EMAIL, "email");
+
+        when(personContactRepository.findById(UUID)).thenReturn(toDelete);
+
+        underTest.deletePersonContact(UUID);
+
+        ArgumentCaptor<PersonContact> p = ArgumentCaptor.forClass(PersonContact.class);
+        verify(personContactRepository).delete(p.capture());
+
+        PersonContact arg = p.getValue();
+        assertNotNull(arg);
+        assertEquals(ContactType.EMAIL, arg.getType());
+        assertEquals("email", arg.getValue());
+    }
+
     private PersonDTO createPersonDTO(String firstName, String lastName, String addressLine1, String addressLine2, String telephone, String gsm, String email) {
         return createPersonDTO(null, firstName, lastName, addressLine1, addressLine2, telephone, gsm, email);
     }
@@ -224,6 +254,14 @@ public class PersonServiceImplTest {
         person.setAddressLine1(addressLine1);
         person.setAddressLine2(addressLine2);
         return person;
+    }
+
+    private PersonContact createPersonContact(String uuid, ContactType type, String value) {
+        PersonContact personContact = new PersonContact();
+        personContact.setId(uuid);
+        personContact.setType(type);
+        personContact.setValue(value);
+        return personContact;
     }
 
 }

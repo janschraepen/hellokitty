@@ -53,4 +53,12 @@ public interface PersonService {
     @Transactional
     void deletePerson(String uuid);
 
+    /**
+     * Delete a PersonContact.
+     *
+     * @param uuid the uuid to delete
+     */
+    @Transactional
+    void deletePersonContact(String uuid);
+
 }

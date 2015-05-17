@@ -26,7 +26,7 @@
                 <h4><fmt:message key="${description}" bundle="${lang}"/></h4>
             </div>
             <jsp:include page="./../error.jsp" />
-            <div id="tabs">
+            <div id="tabs" active-tab="<c:choose><c:when test="${activeTab != 0}">${activeTab}</c:when><c:otherwise>0</c:otherwise></c:choose>">
                 <ul>
                     <li><a href="#tabs-common"><fmt:message key="tabs.common" bundle="${lang}"/></a></li>
                     <li><a href="#tabs-contact"><fmt:message key="tabs.contact" bundle="${lang}"/></a></li>
@@ -84,6 +84,7 @@
 
                         <div class="entity_actions">
                             <input type="button" value="Terug" action="back" />
+                            <input type="button" value="Verwijderen" action="delete-contact" />
                         </div>
                         <div class="entity__form">
                             <table>
@@ -94,7 +95,7 @@
                                 </tr>
                                 <c:forEach var="contact" items="${entity.contacts}">
                                     <tr>
-                                        <td class="id"><input type="checkbox" name="uuid" value="${contact.id}" /></td>
+                                        <td class="id"><input type="checkbox" name="contact-uuid" value="${contact.id}" /></td>
                                         <td class="s"><fmt:message key="${contact.type.labelKey}" bundle="${lang}"/></td>
                                         <td class="l">${contact.value}</td>
                                     </tr>

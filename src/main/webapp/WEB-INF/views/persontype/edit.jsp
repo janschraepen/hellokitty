@@ -26,7 +26,7 @@
                 <h4><fmt:message key="${description}" bundle="${lang}"/></h4>
             </div>
             <jsp:include page="./../error.jsp" />
-            <div id="tabs">
+            <div id="tabs" active-tab="<c:choose><c:when test="${activeTab != 0}">${activeTab}</c:when><c:otherwise>0</c:otherwise></c:choose>">
                 <ul>
                     <li><a href="#tabs-common"><fmt:message key="tabs.common" bundle="${lang}"/></a></li>
                 </ul>

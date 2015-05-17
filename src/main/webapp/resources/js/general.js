@@ -1,6 +1,7 @@
 /* jQuery tabs */
 $(function() {
-    $('#tabs').tabs();
+    var activeTab = $('#tabs').attr('active-tab');
+    $('#tabs').tabs({active: activeTab});
 });
 
 /* _event button */

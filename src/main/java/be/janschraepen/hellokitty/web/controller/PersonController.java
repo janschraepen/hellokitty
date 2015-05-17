@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class PersonController extends AbstractController<PersonDTO> {
 
+    static final String EVENT_DELETE_CONTACT = "delete-contact";
+
     static final String TITLE = "person.list.title";
     static final String DESCRIPTION = "person.list.description";
     static final String TITLE_NEW = "person.detail.new";
@@ -37,6 +39,10 @@ public class PersonController extends AbstractController<PersonDTO> {
     static final String PARAM_ADDRESSLINE1 = "addressLine1";
     static final String PARAM_ADDRESSLINE2 = "addressLine2";
 
+    static final String PARAM_CONTACT_UUID = "contact-uuid";
+
+    static final String PARAM_ACTIVE_TAB = "activeTab";
+
     @Autowired
     private PersonService personService;
 
@@ -52,7 +58,13 @@ public class PersonController extends AbstractController<PersonDTO> {
     @Override
     @RequestMapping("/person/edit")
     public ModelAndView doEvent(@RequestParam String _event, HttpServletRequest request) {
-        return super.doEvent(_event, request);
+        ModelAndView mv = super.doEvent(_event, request);
+        switch (_event) {
+            case EVENT_DELETE_CONTACT:
+                mv = doDeleteContact(request);
+                break;
+        }
+        return mv;
     }
 
     @Override
@@ -90,8 +102,7 @@ public class PersonController extends AbstractController<PersonDTO> {
         PersonDTO person = ObjectFactory.getInstance().createPersonDTO(uuid, personTypeId, firstName, lastName, addressLine1, addressLine2);
         person = personService.savePerson(person);
 
-        String title = person.getFirstName() + " - " + person.getLastName();
-        return detail(request, VIEW_EDIT, title, DESCRIPTION, person);
+        return doOpenEdit(request);
     }
 
     @Override
@@ -100,6 +111,22 @@ public class PersonController extends AbstractController<PersonDTO> {
 
         personService.deletePerson(uuid);
         return list(request, VIEW_LIST, TITLE, DESCRIPTION, personService.findAllPersons());
+    }
+
+    /**
+     * delete entity PersonContact.
+     *
+     * @param request the servlet request
+     * @return ModelAndView model and view
+     */
+    public ModelAndView doDeleteContact(HttpServletRequest request) {
+        String uuid = request.getParameter(PARAM_CONTACT_UUID);
+
+        personService.deletePersonContact(uuid);
+
+        ModelAndView mv = doOpenEdit(request);
+        mv.getModel().put(PARAM_ACTIVE_TAB, 1);
+        return mv;
     }
 
     @Override

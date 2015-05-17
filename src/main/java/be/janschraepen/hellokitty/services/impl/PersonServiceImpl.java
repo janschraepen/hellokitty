@@ -2,8 +2,10 @@ package be.janschraepen.hellokitty.services.impl;
 
 import be.janschraepen.hellokitty.domain.person.ObjectFactory;
 import be.janschraepen.hellokitty.domain.person.Person;
+import be.janschraepen.hellokitty.domain.person.PersonContact;
 import be.janschraepen.hellokitty.domain.person.PersonDTO;
 import be.janschraepen.hellokitty.domain.persontype.PersonType;
+import be.janschraepen.hellokitty.repository.PersonContactRepository;
 import be.janschraepen.hellokitty.repository.PersonRepository;
 import be.janschraepen.hellokitty.repository.PersonTypeRepository;
 import be.janschraepen.hellokitty.services.PersonService;
@@ -25,6 +27,9 @@ public class PersonServiceImpl implements PersonService {
 
     @Autowired
     private PersonTypeRepository personTypeRepository;
+
+    @Autowired
+    private PersonContactRepository personContactRepository;
 
     @Override
     public PersonDTO findPerson(String uuid) {
@@ -76,6 +81,14 @@ public class PersonServiceImpl implements PersonService {
         Person person = personRepository.findById(uuid);
         if (person != null) {
             personRepository.delete(person);
+        }
+    }
+
+    @Override
+    public void deletePersonContact(String uuid) {
+        PersonContact personContact = personContactRepository.findById(uuid);
+        if (personContact != null) {
+            personContactRepository.delete(personContact);
         }
     }
 

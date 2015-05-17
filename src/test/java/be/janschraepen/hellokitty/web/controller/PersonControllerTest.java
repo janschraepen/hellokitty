@@ -125,6 +125,7 @@ public class PersonControllerTest {
         person.setAddressLine1("addressLine1");
         person.setAddressLine2("addressLine2");
 
+        when(personService.findPerson("uuid")).thenReturn(person);
         ArgumentCaptor<PersonDTO> p = ArgumentCaptor.forClass(PersonDTO.class);
         when(personService.savePerson(p.capture())).thenReturn(person);
 
@@ -160,6 +161,37 @@ public class PersonControllerTest {
 
         ArgumentCaptor<String> s = ArgumentCaptor.forClass(String.class);
         verify(personService).deletePerson(s.capture());
+
+        String arg = s.getValue();
+        assertNotNull(arg);
+        assertEquals("uuid", arg);
+    }
+
+    @Test
+    public void testDoDeleteContact() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addParameter("uuid", "uuid");
+        request.addParameter("contact-uuid", "uuid");
+
+        PersonDTO entity = new PersonDTO();
+        entity.setId("uuid");
+        entity.setPersonTypeId("personType-uuid");
+        entity.setFirstName("firstName");
+        entity.setLastName("lastName");
+        entity.setAddressLine1("addressLine1");
+        entity.setAddressLine2("addressLine2");
+
+        when(personService.findPerson("uuid")).thenReturn(entity);
+
+        ModelAndView mv = underTest.doDeleteContact(request);
+        assertNotNull(mv);
+        assertEquals("person/edit", mv.getViewName());
+        assertEquals("firstName - lastName", mv.getModel().get("title"));
+        assertNotNull(mv.getModel().get("entity"));
+        assertEquals(1, mv.getModel().get("activeTab"));
+
+        ArgumentCaptor<String> s = ArgumentCaptor.forClass(String.class);
+        verify(personService).deletePersonContact(s.capture());
 
         String arg = s.getValue();
         assertNotNull(arg);
