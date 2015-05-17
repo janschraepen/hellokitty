@@ -2,7 +2,6 @@ package be.janschraepen.hellokitty.web.controller;
 
 import be.janschraepen.hellokitty.domain.person.ObjectFactory;
 import be.janschraepen.hellokitty.domain.person.PersonDTO;
-import be.janschraepen.hellokitty.domain.persontype.PersonTypeDTO;
 import be.janschraepen.hellokitty.services.PersonService;
 import be.janschraepen.hellokitty.services.PersonTypeService;
 import org.apache.commons.lang3.StringUtils;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * PersonController class. Used for mapping request
