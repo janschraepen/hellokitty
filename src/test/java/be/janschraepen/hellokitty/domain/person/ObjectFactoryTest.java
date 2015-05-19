@@ -38,11 +38,6 @@ public class ObjectFactoryTest {
 
     @Test
     public void testCreatePersonDTO_withEntity() throws Exception {
-        PersonType personType = new PersonType();
-        personType.setId(PERSONTYPE_ID);
-        personType.setShortCode(PERSONTYPE_SHORT_CODE);
-        personType.setName(PERSONTYPE_NAME);
-
         Person person = new Person();
         person.setFirstName(FIRST_NAME);
         person.setLastName(LAST_NAME);
@@ -69,11 +64,6 @@ public class ObjectFactoryTest {
 
     @Test
     public void testCreateListPersonDTOs() throws Exception {
-        PersonType personType = new PersonType();
-        personType.setId(PERSONTYPE_ID);
-        personType.setShortCode(PERSONTYPE_SHORT_CODE);
-        personType.setName(PERSONTYPE_NAME);
-
         Person person = new Person();
         person.setFirstName(FIRST_NAME);
         person.setLastName(LAST_NAME);
