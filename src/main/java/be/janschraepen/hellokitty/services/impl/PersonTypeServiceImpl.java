@@ -69,4 +69,11 @@ public class PersonTypeServiceImpl implements PersonTypeService {
         }
     }
 
+    @Override
+    public void deletePersonTypes(String[] uuids) {
+        for (String uuid : uuids) {
+            deletePersonType(uuid);
+        }
+    }
+
 }

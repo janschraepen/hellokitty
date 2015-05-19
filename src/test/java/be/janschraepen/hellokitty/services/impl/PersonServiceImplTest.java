@@ -215,6 +215,25 @@ public class PersonServiceImplTest {
     }
 
     @Test
+    public void testDeletePersons_existingInstance() throws Exception {
+        Person toDelete = createPerson(UUID, "firstName_3", "lastName_3", "addressLine1_3", "addressLine2_3");
+
+        when(personRepository.findById(UUID)).thenReturn(toDelete);
+
+        underTest.deletePersons(new String[] {UUID});
+
+        ArgumentCaptor<Person> p = ArgumentCaptor.forClass(Person.class);
+        verify(personRepository).delete(p.capture());
+
+        Person arg = p.getValue();
+        assertNotNull(arg);
+        assertEquals("firstName_3", arg.getFirstName());
+        assertEquals("lastName_3", arg.getLastName());
+        assertEquals("addressLine1_3", arg.getAddressLine1());
+        assertEquals("addressLine2_3", arg.getAddressLine2());
+    }
+
+    @Test
     public void testDeletePersonContact_nonExistingInstance() throws Exception {
         when(personRepository.findById(UUID)).thenReturn(null);
 
@@ -228,6 +247,23 @@ public class PersonServiceImplTest {
         when(personContactRepository.findById(UUID)).thenReturn(toDelete);
 
         underTest.deletePersonContact(UUID);
+
+        ArgumentCaptor<PersonContact> p = ArgumentCaptor.forClass(PersonContact.class);
+        verify(personContactRepository).delete(p.capture());
+
+        PersonContact arg = p.getValue();
+        assertNotNull(arg);
+        assertEquals(ContactType.EMAIL, arg.getType());
+        assertEquals("email", arg.getValue());
+    }
+
+    @Test
+    public void testDeletePersonContacts_existingInstance() throws Exception {
+        PersonContact toDelete = createPersonContact(UUID, ContactType.EMAIL, "email");
+
+        when(personContactRepository.findById(UUID)).thenReturn(toDelete);
+
+        underTest.deletePersonContacts(new String[] {UUID});
 
         ArgumentCaptor<PersonContact> p = ArgumentCaptor.forClass(PersonContact.class);
         verify(personContactRepository).delete(p.capture());

@@ -161,6 +161,23 @@ public class PersonTypeServiceImplTest {
         assertEquals("name_3", arg.getName());
     }
 
+    @Test
+    public void testDeletePersonTypes_existingInstance() throws Exception {
+        PersonType toDelete = createPersonType(UUID, "shortCode_3", "name_3");
+
+        when(personTypeRepository.findById(UUID)).thenReturn(toDelete);
+
+        underTest.deletePersonTypes(new String[] {UUID});
+
+        ArgumentCaptor<PersonType> p = ArgumentCaptor.forClass(PersonType.class);
+        verify(personTypeRepository).delete(p.capture());
+
+        PersonType arg = p.getValue();
+        assertNotNull(arg);
+        assertEquals("shortCode_3", arg.getShortCode());
+        assertEquals("name_3", arg.getName());
+    }
+
     private PersonTypeDTO createPersonTypeDTO(String shortCode, String name) {
         return createPersonTypeDTO(null, shortCode, name);
     }

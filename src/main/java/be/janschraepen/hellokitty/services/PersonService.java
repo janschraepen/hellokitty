@@ -27,6 +27,7 @@ public interface PersonService {
      * @param searchFor the search criteria
      * @return List<PersonDTO> list of found persons
      */
+    @Transactional(readOnly = true)
     List<PersonDTO> findPersons(String searchFor);
 
     /**
@@ -55,6 +56,14 @@ public interface PersonService {
     void deletePerson(String uuid);
 
     /**
+     * Delete multiple Persons.
+     *
+     * @param uuids the uuids to delete
+     */
+    @Transactional
+    void deletePersons(String[] uuids);
+
+    /**
      * Save/update a PersonContact.
      *
      * @param dto the personContact to save/update
@@ -70,5 +79,13 @@ public interface PersonService {
      */
     @Transactional
     void deletePersonContact(String uuid);
+
+    /**
+     * Delete multiple PersonContacts.
+     *
+     * @param uuids the uuids to delete
+     */
+    @Transactional
+    void deletePersonContacts(String[] uuids);
 
 }

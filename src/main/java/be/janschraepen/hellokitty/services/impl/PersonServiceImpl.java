@@ -82,6 +82,13 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    public void deletePersons(String[] uuids) {
+        for (String uuid : uuids) {
+            deletePerson(uuid);
+        }
+    }
+
+    @Override
     public PersonContactDTO savePersonContact(PersonContactDTO dto) {
         PersonContact personContact = new PersonContact();
         personContact.setPerson(personRepository.findById(dto.getPersonId()));
@@ -97,6 +104,13 @@ public class PersonServiceImpl implements PersonService {
         PersonContact personContact = personContactRepository.findById(uuid);
         if (personContact != null) {
             personContactRepository.delete(personContact);
+        }
+    }
+
+    @Override
+    public void deletePersonContacts(String[] uuids) {
+        for (String uuid : uuids) {
+            deletePersonContact(uuid);
         }
     }
 

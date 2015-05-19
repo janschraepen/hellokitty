@@ -132,12 +132,12 @@ public class PersonTypeControllerTest {
         assertEquals("persontype.list.title", mv.getModel().get("title"));
         assertEquals(list, mv.getModel().get("listItems"));
 
-        ArgumentCaptor<String> s = ArgumentCaptor.forClass(String.class);
-        verify(personTypeService).deletePersonType(s.capture());
+        ArgumentCaptor<String[]> s = ArgumentCaptor.forClass(String[].class);
+        verify(personTypeService).deletePersonTypes(s.capture());
 
-        String arg = s.getValue();
+        String[] arg = s.getValue();
         assertNotNull(arg);
-        assertEquals("uuid", arg);
+        assertEquals("uuid", arg[0]);
     }
 
 }

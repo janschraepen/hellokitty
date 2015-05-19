@@ -159,12 +159,12 @@ public class PersonControllerTest {
         assertEquals("person.list.title", mv.getModel().get("title"));
         assertEquals(list, mv.getModel().get("listItems"));
 
-        ArgumentCaptor<String> s = ArgumentCaptor.forClass(String.class);
-        verify(personService).deletePerson(s.capture());
+        ArgumentCaptor<String[]> s = ArgumentCaptor.forClass(String[].class);
+        verify(personService).deletePersons(s.capture());
 
-        String arg = s.getValue();
+        String[] arg = s.getValue();
         assertNotNull(arg);
-        assertEquals("uuid", arg);
+        assertEquals("uuid", arg[0]);
     }
 
     @Test
@@ -190,12 +190,12 @@ public class PersonControllerTest {
         assertNotNull(mv.getModel().get("entity"));
         assertEquals(1, mv.getModel().get("activeTab"));
 
-        ArgumentCaptor<String> s = ArgumentCaptor.forClass(String.class);
-        verify(personService).deletePersonContact(s.capture());
+        ArgumentCaptor<String[]> s = ArgumentCaptor.forClass(String[].class);
+        verify(personService).deletePersonContacts(s.capture());
 
-        String arg = s.getValue();
+        String[] arg = s.getValue();
         assertNotNull(arg);
-        assertEquals("uuid", arg);
+        assertEquals("uuid", arg[0]);
     }
 
     @Test

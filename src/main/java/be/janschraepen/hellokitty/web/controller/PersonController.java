@@ -100,9 +100,9 @@ public class PersonController extends AbstractController<PersonDTO> {
 
     @Override
     public ModelAndView doDelete(HttpServletRequest request) {
-        String uuid = request.getParameter(RequestParameter.UUID);
+        String[] uuids = request.getParameterValues(RequestParameter.UUID);
 
-        personService.deletePerson(uuid);
+        personService.deletePersons(uuids);
         return list(request, VIEW_LIST, TITLE, DESCRIPTION, personService.findAllPersons());
     }
 
@@ -113,9 +113,9 @@ public class PersonController extends AbstractController<PersonDTO> {
      * @return ModelAndView model and view
      */
     public ModelAndView doDeleteContact(HttpServletRequest request) {
-        String uuid = request.getParameter(RequestParameter.CONTACT_UUID);
+        String[] uuids = request.getParameterValues(RequestParameter.CONTACT_UUID);
 
-        personService.deletePersonContact(uuid);
+        personService.deletePersonContacts(uuids);
 
         ModelAndView mv = doOpenEdit(request);
         mv.getModel().put(RequestParameter.ACTIVE_TAB, 1);

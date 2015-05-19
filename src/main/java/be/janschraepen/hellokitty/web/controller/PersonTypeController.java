@@ -80,9 +80,9 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
 
     @Override
     public ModelAndView doDelete(HttpServletRequest request) {
-        String uuid = request.getParameter(RequestParameter.UUID);
+        String[] uuids = request.getParameterValues(RequestParameter.UUID);
 
-        personTypeService.deletePersonType(uuid);
+        personTypeService.deletePersonTypes(uuids);
         return list(request, VIEW_LIST, TITLE, DESCRIPTION, personTypeService.findAllPersonTypes());
     }
 

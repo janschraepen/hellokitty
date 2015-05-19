@@ -24,6 +24,7 @@ public interface PersonTypeService {
      * @param searchFor the search criteria
      * @return List<PersonTypeDTO> list of found personTypes
      */
+    @Transactional(readOnly = true)
     List<PersonTypeDTO> findPersonTypes(String searchFor);
 
     /**
@@ -47,5 +48,12 @@ public interface PersonTypeService {
      */
     @Transactional
     void deletePersonType(String uuid);
+
+    /**
+     * Delete multiple PersonTypes.
+     * @param uuids the uuids to delete
+     */
+    @Transactional
+    void deletePersonTypes(String[] uuids);
 
 }
