@@ -3,6 +3,7 @@ package be.janschraepen.hellokitty.web.controller;
 import be.janschraepen.hellokitty.domain.persontype.ObjectFactory;
 import be.janschraepen.hellokitty.domain.persontype.PersonTypeDTO;
 import be.janschraepen.hellokitty.services.PersonTypeService;
+import be.janschraepen.hellokitty.web.RequestParameter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,11 +27,6 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
     static final String VIEW_LIST = "persontype/list";
     static final String VIEW_EDIT = "persontype/edit";
 
-    static final String PARAM_SEARCH = "search";
-    static final String PARAM_UUID = "uuid";
-    static final String PARAM_SHORT_CODE = "shortCode";
-    static final String PARAM_NAME = "name";
-
     @Autowired
     private PersonTypeService personTypeService;
 
@@ -48,13 +44,13 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
 
     @Override
     public ModelAndView doSearch(HttpServletRequest request) {
-        String searchFor = request.getParameter(PARAM_SEARCH);
+        String searchFor = request.getParameter(RequestParameter.SEARCH);
         return list(request, VIEW_LIST, TITLE, DESCRIPTION, personTypeService.findPersonTypes(searchFor));
     }
 
     @Override
     public ModelAndView doOpenEdit(HttpServletRequest request) {
-        String uuid = request.getParameter(PARAM_UUID);
+        String uuid = request.getParameter(RequestParameter.UUID);
 
         PersonTypeDTO personType;
         String title;
@@ -71,9 +67,9 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
 
     @Override
     public ModelAndView doSave(HttpServletRequest request) {
-        String uuid = request.getParameter(PARAM_UUID);
-        String shortCode = request.getParameter(PARAM_SHORT_CODE);
-        String name = request.getParameter(PARAM_NAME);
+        String uuid = request.getParameter(RequestParameter.UUID);
+        String shortCode = request.getParameter(RequestParameter.SHORT_CODE);
+        String name = request.getParameter(RequestParameter.NAME);
 
         PersonTypeDTO personType = ObjectFactory.getInstance().createDTO(uuid, shortCode, name);
         personTypeService.savePersonType(personType);
@@ -84,7 +80,7 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
 
     @Override
     public ModelAndView doDelete(HttpServletRequest request) {
-        String uuid = request.getParameter(PARAM_UUID);
+        String uuid = request.getParameter(RequestParameter.UUID);
 
         personTypeService.deletePersonType(uuid);
         return list(request, VIEW_LIST, TITLE, DESCRIPTION, personTypeService.findAllPersonTypes());

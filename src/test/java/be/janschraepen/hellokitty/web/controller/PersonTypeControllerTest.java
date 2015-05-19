@@ -2,6 +2,7 @@ package be.janschraepen.hellokitty.web.controller;
 
 import be.janschraepen.hellokitty.domain.persontype.PersonTypeDTO;
 import be.janschraepen.hellokitty.services.PersonTypeService;
+import be.janschraepen.hellokitty.web.RequestParameter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,7 +54,7 @@ public class PersonTypeControllerTest {
     @Test
     public void testDoSearch() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addParameter("search", "searchFor");
+        request.addParameter(RequestParameter.SEARCH, "searchFor");
 
         List<PersonTypeDTO> list = Arrays.asList(new PersonTypeDTO[]{ });
         when(personTypeService.findPersonTypes("searchFor")).thenReturn(list);
@@ -68,7 +69,7 @@ public class PersonTypeControllerTest {
     @Test
     public void testDoOpenEdit_new() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addParameter("uuid", "");
+        request.addParameter(RequestParameter.UUID, "");
 
         when(messageSource.getMessage("persontype.detail.new", null, new Locale("nl", "BE"))).thenReturn("NIEUW PERSOONTYPE");
 
@@ -82,7 +83,7 @@ public class PersonTypeControllerTest {
     @Test
     public void testDoOpenEdit_existing() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addParameter("uuid", "uuid");
+        request.addParameter(RequestParameter.UUID, "uuid");
 
         PersonTypeDTO entity = new PersonTypeDTO("uuid", "shortCode", "name");
         when(personTypeService.findPersonType("uuid")).thenReturn(entity);
@@ -97,9 +98,9 @@ public class PersonTypeControllerTest {
     @Test
     public void testDoSave() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addParameter("uuid", "uuid");
-        request.addParameter("shortCode", "shortCode");
-        request.addParameter("name", "name");
+        request.addParameter(RequestParameter.UUID, "uuid");
+        request.addParameter(RequestParameter.SHORT_CODE, "shortCode");
+        request.addParameter(RequestParameter.NAME, "name");
 
         ModelAndView mv = underTest.doSave(request);
         assertNotNull(mv);
@@ -120,7 +121,7 @@ public class PersonTypeControllerTest {
     @Test
     public void testDoDelete() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addParameter("uuid", "uuid");
+        request.addParameter(RequestParameter.UUID, "uuid");
 
         List<PersonTypeDTO> list = Arrays.asList(new PersonTypeDTO[]{ });
         when(personTypeService.findAllPersonTypes()).thenReturn(list);

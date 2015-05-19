@@ -7,6 +7,7 @@ import be.janschraepen.hellokitty.domain.person.PersonDTO;
 import be.janschraepen.hellokitty.domain.persontype.PersonTypeDTO;
 import be.janschraepen.hellokitty.services.PersonService;
 import be.janschraepen.hellokitty.services.PersonTypeService;
+import be.janschraepen.hellokitty.web.RequestParameter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -58,7 +59,7 @@ public class PersonControllerTest {
     @Test
     public void testDoSearch() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addParameter("search", "searchFor");
+        request.addParameter(RequestParameter.SEARCH, "searchFor");
 
         List<PersonDTO> list = Arrays.asList(new PersonDTO[]{ });
         when(personService.findPersons("searchFor")).thenReturn(list);
@@ -73,7 +74,7 @@ public class PersonControllerTest {
     @Test
     public void testDoOpenEdit_new() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addParameter("uuid", "");
+        request.addParameter(RequestParameter.UUID, "");
 
         when(messageSource.getMessage("person.detail.new", null, new Locale("nl", "BE"))).thenReturn("NIEUW PERSOON");
 
@@ -87,7 +88,7 @@ public class PersonControllerTest {
     @Test
     public void testDoOpenEdit_existing() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addParameter("uuid", "uuid");
+        request.addParameter(RequestParameter.UUID, "uuid");
 
         PersonDTO entity = new PersonDTO();
         entity.setId("uuid");
@@ -109,15 +110,12 @@ public class PersonControllerTest {
     @Test
     public void testDoSave() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addParameter("uuid", "uuid");
-        request.addParameter("personTypeId", "personType-uuid");
-        request.addParameter("firstName", "firstName");
-        request.addParameter("lastName", "lastName");
-        request.addParameter("addressLine1", "addressLine1");
-        request.addParameter("addressLine2", "addressLine2");
-        request.addParameter("telephone", "telephone");
-        request.addParameter("gsm", "gsm");
-        request.addParameter("email", "email");
+        request.addParameter(RequestParameter.UUID, "uuid");
+        request.addParameter(RequestParameter.PERSON_TYPE_ID, "personType-uuid");
+        request.addParameter(RequestParameter.FIRSTNAME, "firstName");
+        request.addParameter(RequestParameter.LASTNAME, "lastName");
+        request.addParameter(RequestParameter.ADDRESSLINE1, "addressLine1");
+        request.addParameter(RequestParameter.ADDRESSLINE2, "addressLine2");
 
         PersonDTO person = new PersonDTO();
         person.setId("uuid");
@@ -150,7 +148,7 @@ public class PersonControllerTest {
     @Test
     public void testDoDelete() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addParameter("uuid", "uuid");
+        request.addParameter(RequestParameter.UUID, "uuid");
 
         List<PersonDTO> list = Arrays.asList(new PersonDTO[]{ });
         when(personService.findAllPersons()).thenReturn(list);
@@ -172,8 +170,8 @@ public class PersonControllerTest {
     @Test
     public void testDoDeleteContact() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addParameter("uuid", "uuid");
-        request.addParameter("contact-uuid", "uuid");
+        request.addParameter(RequestParameter.UUID, "uuid");
+        request.addParameter(RequestParameter.CONTACT_UUID, "uuid");
 
         PersonDTO entity = new PersonDTO();
         entity.setId("uuid");
@@ -203,10 +201,9 @@ public class PersonControllerTest {
     @Test
     public void testDoSaveContact() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addParameter("uuid", "uuid");
-        request.addParameter("contactType", "CELLULAR");
-        request.addParameter("contactValue", "value");
-
+        request.addParameter(RequestParameter.UUID, "uuid");
+        request.addParameter(RequestParameter.CONTACT_TYPE, "CELLULAR");
+        request.addParameter(RequestParameter.CONTACT_VALUE, "value");
 
         PersonDTO entity = new PersonDTO();
         entity.setId("uuid");

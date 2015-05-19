@@ -1,5 +1,6 @@
 package be.janschraepen.hellokitty.web.controller;
 
+import be.janschraepen.hellokitty.web.Event;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -65,7 +66,7 @@ public class AbstractControllerTest {
     @Test
     public void testDoEvent_new() throws Exception {
         HttpServletRequest request = new MockHttpServletRequest();
-        ModelAndView mv = underTest.doEvent("new", request);
+        ModelAndView mv = underTest.doEvent(Event.NEW, request);
         assertNotNull(mv);
         assertEquals("open_edit", mv.getViewName());
     }
@@ -73,7 +74,7 @@ public class AbstractControllerTest {
     @Test
     public void testDoEvent_edit() throws Exception {
         HttpServletRequest request = new MockHttpServletRequest();
-        ModelAndView mv = underTest.doEvent("edit", request);
+        ModelAndView mv = underTest.doEvent(Event.EDIT, request);
         assertNotNull(mv);
         assertEquals("open_edit", mv.getViewName());
     }
@@ -81,7 +82,7 @@ public class AbstractControllerTest {
     @Test
     public void testDoEvent_save() throws Exception {
         HttpServletRequest request = new MockHttpServletRequest();
-        ModelAndView mv = underTest.doEvent("save", request);
+        ModelAndView mv = underTest.doEvent(Event.SAVE, request);
         assertNotNull(mv);
         assertEquals("save", mv.getViewName());
     }
@@ -89,7 +90,7 @@ public class AbstractControllerTest {
     @Test
     public void testDoEvent_delete() throws Exception {
         HttpServletRequest request = new MockHttpServletRequest();
-        ModelAndView mv = underTest.doEvent("delete", request);
+        ModelAndView mv = underTest.doEvent(Event.DELETE, request);
         assertNotNull(mv);
         assertEquals("delete", mv.getViewName());
     }
@@ -97,7 +98,7 @@ public class AbstractControllerTest {
     @Test
     public void testDoEvent_search() throws Exception {
         HttpServletRequest request = new MockHttpServletRequest();
-        ModelAndView mv = underTest.doEvent("search", request);
+        ModelAndView mv = underTest.doEvent(Event.SEARCH, request);
         assertNotNull(mv);
         assertEquals("search", mv.getViewName());
     }
@@ -105,7 +106,7 @@ public class AbstractControllerTest {
     @Test
     public void testDoEvent_back() throws Exception {
         HttpServletRequest request = new MockHttpServletRequest();
-        ModelAndView mv = underTest.doEvent("back", request);
+        ModelAndView mv = underTest.doEvent(Event.BACK, request);
         assertNotNull(mv);
         assertEquals("list", mv.getViewName());
     }

@@ -6,6 +6,8 @@ import be.janschraepen.hellokitty.domain.person.PersonContactDTO;
 import be.janschraepen.hellokitty.domain.person.PersonDTO;
 import be.janschraepen.hellokitty.services.PersonService;
 import be.janschraepen.hellokitty.services.PersonTypeService;
+import be.janschraepen.hellokitty.web.Event;
+import be.janschraepen.hellokitty.web.RequestParameter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,32 +25,12 @@ import java.util.Arrays;
 @Controller
 public class PersonController extends AbstractController<PersonDTO> {
 
-    static final String EVENT_DELETE_CONTACT = "delete-contact";
-    static final String EVENT_ADD_CONTACT = "add-contact";
-
     static final String TITLE = "person.list.title";
     static final String DESCRIPTION = "person.list.description";
     static final String TITLE_NEW = "person.detail.new";
 
     static final String VIEW_LIST = "person/list";
     static final String VIEW_EDIT = "person/edit";
-
-    static final String PARAM_PERSONTYPES = "personTypes";
-    static final String PARAM_CONTACTTYPES = "contactTypes";
-
-    static final String PARAM_SEARCH = "search";
-    static final String PARAM_UUID = "uuid";
-    static final String PARAM_PERSON_TYPE_ID = "personTypeId";
-    static final String PARAM_FIRSTNAME = "firstName";
-    static final String PARAM_LASTNAME = "lastName";
-    static final String PARAM_ADDRESSLINE1 = "addressLine1";
-    static final String PARAM_ADDRESSLINE2 = "addressLine2";
-
-    static final String PARAM_CONTACT_UUID = "contact-uuid";
-    static final String PARAM_CONTACT_TYPE = "contactType";
-    static final String PARAM_CONTACT_VALUE = "contactValue";
-
-    static final String PARAM_ACTIVE_TAB = "activeTab";
 
     @Autowired
     private PersonService personService;
@@ -67,10 +49,10 @@ public class PersonController extends AbstractController<PersonDTO> {
     public ModelAndView doEvent(@RequestParam String _event, HttpServletRequest request) {
         ModelAndView mv = super.doEvent(_event, request);
         switch (_event) {
-            case EVENT_DELETE_CONTACT:
+            case Event.DELETE_CONTACT:
                 mv = doDeleteContact(request);
                 break;
-            case EVENT_ADD_CONTACT:
+            case Event.ADD_CONTACT:
                 mv = doSaveContact(request);
                 break;
         }
@@ -79,13 +61,13 @@ public class PersonController extends AbstractController<PersonDTO> {
 
     @Override
     public ModelAndView doSearch(HttpServletRequest request) {
-        String searchFor = request.getParameter(PARAM_SEARCH);
+        String searchFor = request.getParameter(RequestParameter.SEARCH);
         return list(request, VIEW_LIST, TITLE, DESCRIPTION, personService.findPersons(searchFor));
     }
 
     @Override
     public ModelAndView doOpenEdit(HttpServletRequest request) {
-        String uuid = request.getParameter(PARAM_UUID);
+        String uuid = request.getParameter(RequestParameter.UUID);
 
         PersonDTO person;
         String title;
@@ -102,12 +84,12 @@ public class PersonController extends AbstractController<PersonDTO> {
 
     @Override
     public ModelAndView doSave(HttpServletRequest request) {
-        String uuid = request.getParameter(PARAM_UUID);
-        String personTypeId = request.getParameter(PARAM_PERSON_TYPE_ID);
-        String firstName = request.getParameter(PARAM_FIRSTNAME);
-        String lastName = request.getParameter(PARAM_LASTNAME);
-        String addressLine1 = request.getParameter(PARAM_ADDRESSLINE1);
-        String addressLine2 = request.getParameter(PARAM_ADDRESSLINE2);
+        String uuid = request.getParameter(RequestParameter.UUID);
+        String personTypeId = request.getParameter(RequestParameter.PERSON_TYPE_ID);
+        String firstName = request.getParameter(RequestParameter.FIRSTNAME);
+        String lastName = request.getParameter(RequestParameter.LASTNAME);
+        String addressLine1 = request.getParameter(RequestParameter.ADDRESSLINE1);
+        String addressLine2 = request.getParameter(RequestParameter.ADDRESSLINE2);
 
         PersonDTO person = ObjectFactory.getInstance().createPersonDTO(uuid, personTypeId, firstName, lastName, addressLine1, addressLine2);
         person = personService.savePerson(person);
@@ -118,7 +100,7 @@ public class PersonController extends AbstractController<PersonDTO> {
 
     @Override
     public ModelAndView doDelete(HttpServletRequest request) {
-        String uuid = request.getParameter(PARAM_UUID);
+        String uuid = request.getParameter(RequestParameter.UUID);
 
         personService.deletePerson(uuid);
         return list(request, VIEW_LIST, TITLE, DESCRIPTION, personService.findAllPersons());
@@ -131,37 +113,38 @@ public class PersonController extends AbstractController<PersonDTO> {
      * @return ModelAndView model and view
      */
     public ModelAndView doDeleteContact(HttpServletRequest request) {
-        String uuid = request.getParameter(PARAM_CONTACT_UUID);
+        String uuid = request.getParameter(RequestParameter.CONTACT_UUID);
 
         personService.deletePersonContact(uuid);
 
         ModelAndView mv = doOpenEdit(request);
-        mv.getModel().put(PARAM_ACTIVE_TAB, 1);
+        mv.getModel().put(RequestParameter.ACTIVE_TAB, 1);
         return mv;
     }
 
     /**
      * save entity PersonContact
+     *
      * @param request the servlet request
      * @return ModelAndView model and view
      */
     public ModelAndView doSaveContact(HttpServletRequest request) {
-        String uuid = request.getParameter(PARAM_UUID);
-        String contactType = request.getParameter(PARAM_CONTACT_TYPE);
-        String contactValue = request.getParameter(PARAM_CONTACT_VALUE);
+        String uuid = request.getParameter(RequestParameter.UUID);
+        String contactType = request.getParameter(RequestParameter.CONTACT_TYPE);
+        String contactValue = request.getParameter(RequestParameter.CONTACT_VALUE);
 
         PersonContactDTO personContact = ObjectFactory.getInstance().createPersonContactDTO(uuid, ContactType.valueOf(contactType), contactValue);
-        personContact = personService.savePersonContact(personContact);
+        personService.savePersonContact(personContact);
 
         ModelAndView mv = doOpenEdit(request);
-        mv.getModel().put(PARAM_ACTIVE_TAB, 1);
+        mv.getModel().put(RequestParameter.ACTIVE_TAB, 1);
         return mv;
     }
 
     @Override
     void addDetailModelParameters(ModelAndView mv) {
-        mv.getModel().put(PARAM_PERSONTYPES, personTypeService.findAllPersonTypes());
-        mv.getModel().put(PARAM_CONTACTTYPES, Arrays.asList(ContactType.values()));
+        mv.getModel().put(RequestParameter.PERSONTYPES, personTypeService.findAllPersonTypes());
+        mv.getModel().put(RequestParameter.CONTACTTYPES, Arrays.asList(ContactType.values()));
     }
 
 }
