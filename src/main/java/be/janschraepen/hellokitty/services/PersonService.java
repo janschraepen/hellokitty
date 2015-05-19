@@ -1,5 +1,6 @@
 package be.janschraepen.hellokitty.services;
 
+import be.janschraepen.hellokitty.domain.person.PersonContactDTO;
 import be.janschraepen.hellokitty.domain.person.PersonDTO;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,6 +53,15 @@ public interface PersonService {
      */
     @Transactional
     void deletePerson(String uuid);
+
+    /**
+     * Save/update a PersonContact.
+     *
+     * @param dto the personContact to save/update
+     * @return PersonContactDTO the saved instance
+     */
+    @Transactional
+    PersonContactDTO savePersonContact(PersonContactDTO dto);
 
     /**
      * Delete a PersonContact.

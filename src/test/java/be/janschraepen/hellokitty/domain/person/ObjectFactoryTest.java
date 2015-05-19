@@ -120,9 +120,8 @@ public class ObjectFactoryTest {
 
     @Test
     public void testCreatePersonContactDTO_withParams() throws Exception {
-        PersonContactDTO dto = underTest.createPersonContactDTO(PERSONCONTACT_ID, "uuid", ContactType.EMAIL, PERSONCONTACT_VALUE);
+        PersonContactDTO dto = underTest.createPersonContactDTO("uuid", ContactType.EMAIL, PERSONCONTACT_VALUE);
         assertNotNull(dto);
-        assertEquals(PERSONCONTACT_ID, dto.getId());
         assertEquals("uuid", dto.getPersonId());
         assertEquals(ContactType.EMAIL, dto.getType());
         assertEquals(PERSONCONTACT_VALUE, dto.getValue());

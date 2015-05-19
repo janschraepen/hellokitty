@@ -1,9 +1,6 @@
 package be.janschraepen.hellokitty.services.impl;
 
-import be.janschraepen.hellokitty.domain.person.ObjectFactory;
-import be.janschraepen.hellokitty.domain.person.Person;
-import be.janschraepen.hellokitty.domain.person.PersonContact;
-import be.janschraepen.hellokitty.domain.person.PersonDTO;
+import be.janschraepen.hellokitty.domain.person.*;
 import be.janschraepen.hellokitty.domain.persontype.PersonType;
 import be.janschraepen.hellokitty.repository.PersonContactRepository;
 import be.janschraepen.hellokitty.repository.PersonRepository;
@@ -82,6 +79,17 @@ public class PersonServiceImpl implements PersonService {
         if (person != null) {
             personRepository.delete(person);
         }
+    }
+
+    @Override
+    public PersonContactDTO savePersonContact(PersonContactDTO dto) {
+        PersonContact personContact = new PersonContact();
+        personContact.setPerson(personRepository.findById(dto.getPersonId()));
+        personContact.setType(dto.getType());
+        personContact.setValue(dto.getValue());
+
+        personContact = personContactRepository.saveAndFlush(personContact);
+        return ObjectFactory.getInstance().createPersonContactDTO(personContact);
     }
 
     @Override

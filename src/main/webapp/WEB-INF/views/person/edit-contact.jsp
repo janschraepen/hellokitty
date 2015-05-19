@@ -11,6 +11,18 @@
     <input type="hidden" name="_event" value="" />
     <input type="hidden" name="uuid" value="${entity.id}" />
 
+    <div class="entity_contact">
+        <div>
+            <select name="contactType">
+                <option value="-1"></option>
+                <c:forEach items="${contactTypes}" var="contactType">
+                    <option value="${contactType.name()}"><fmt:message key="${contactType.labelKey}" bundle="${lang}"/></option>
+                </c:forEach>
+            </select>
+            <input type="text" name="contactValue" value="" />
+            <input type="button" value="Toevoegen" action="add-contact" />
+        </div>
+    </div>
     <div class="entity_actions">
         <input type="button" value="Terug" action="back" />
         <input type="button" value="Verwijderen" action="delete-contact" />

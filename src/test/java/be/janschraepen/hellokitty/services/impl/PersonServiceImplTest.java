@@ -1,9 +1,6 @@
 package be.janschraepen.hellokitty.services.impl;
 
-import be.janschraepen.hellokitty.domain.person.ContactType;
-import be.janschraepen.hellokitty.domain.person.Person;
-import be.janschraepen.hellokitty.domain.person.PersonContact;
-import be.janschraepen.hellokitty.domain.person.PersonDTO;
+import be.janschraepen.hellokitty.domain.person.*;
 import be.janschraepen.hellokitty.domain.persontype.PersonType;
 import be.janschraepen.hellokitty.repository.PersonContactRepository;
 import be.janschraepen.hellokitty.repository.PersonRepository;
@@ -43,7 +40,7 @@ public class PersonServiceImplTest {
 
     @Test
     public void testFindPerson() throws Exception {
-        Person person_1 = createPerson("firstName_1", "lastName_1", "addressLine1_1", "addressLine2_1", "telephone_1", "gsm_1", "email_1");
+        Person person_1 = createPerson("firstName_1", "lastName_1", "addressLine1_1", "addressLine2_1");
 
         when(personRepository.findById(UUID)).thenReturn(person_1);
 
@@ -66,8 +63,8 @@ public class PersonServiceImplTest {
 
     @Test
     public void testFindPersons() throws Exception {
-        Person person_1 = createPerson("firstName_1", "lastName_1", "addressLine1_1", "addressLine2_1", "telephone_1", "gsm_1", "email_1");
-        Person person_2 = createPerson("firstName_2", "lastName_2", "addressLine1_2", "addressLine2_2", "telephone_2", "gsm_2", "email_2");
+        Person person_1 = createPerson("firstName_1", "lastName_1", "addressLine1_1", "addressLine2_1");
+        Person person_2 = createPerson("firstName_2", "lastName_2", "addressLine1_2", "addressLine2_2");
 
         when(personRepository.find(SEARCH_FOR)).thenReturn(Arrays.asList(person_2));
 
@@ -93,8 +90,8 @@ public class PersonServiceImplTest {
 
     @Test
     public void testFindAllPersons() throws Exception {
-        Person person_1 = createPerson("firstName_1", "lastName_1", "addressLine1_1", "addressLine2_1", "telephone_1", "gsm_1", "email_1");
-        Person person_2 = createPerson("firstName_2", "lastName_2", "addressLine1_2", "addressLine2_2", "telephone_2", "gsm_2", "email_2");
+        Person person_1 = createPerson("firstName_1", "lastName_1", "addressLine1_1", "addressLine2_1");
+        Person person_2 = createPerson("firstName_2", "lastName_2", "addressLine1_2", "addressLine2_2");
 
         when(personRepository.findAll()).thenReturn(Arrays.asList(person_1, person_2));
 
@@ -126,8 +123,8 @@ public class PersonServiceImplTest {
 
     @Test
     public void testSavePerson_newInstance() throws Exception {
-        Person update = createPerson(UUID, "firstName_3", "lastName_3", "addressLine1_3", "addressLine2_3", "telephone_3", "gsm_3", "email_3");
-        PersonDTO _new = createPersonDTO("firstName_3", "lastName_3", "addressLine1_3", "addressLine2_3", "telephone_3", "gsm_3", "email_3");
+        Person update = createPerson(UUID, "firstName_3", "lastName_3", "addressLine1_3", "addressLine2_3");
+        PersonDTO _new = createPersonDTO("firstName_3", "lastName_3", "addressLine1_3", "addressLine2_3");
 
         PersonType personType = new PersonType();
         when(personTypeRepository.findById("personType-uuid")).thenReturn(personType);
@@ -148,9 +145,9 @@ public class PersonServiceImplTest {
 
     @Test
     public void testSavePerson_existingInstance() throws Exception {
-        Person toUpdate = createPerson(UUID, "firstName_3", "lastName_3", "addressLine1_3", "addressLine2_3", "telephone_3", "gsm_3", "email_3");
-        Person update = createPerson(UUID, "firstName_3", "lastName_4", "addressLine1_3", "addressLine2_3", "telephone_3", "gsm_3", "email_3");
-        PersonDTO updated = createPersonDTO(UUID, "firstName_3", "lastName_4", "addressLine1_3", "addressLine2_3", "telephone_3", "gsm_3", "email_3");
+        Person toUpdate = createPerson(UUID, "firstName_3", "lastName_3", "addressLine1_3", "addressLine2_3");
+        Person update = createPerson(UUID, "firstName_3", "lastName_4", "addressLine1_3", "addressLine2_3");
+        PersonDTO updated = createPersonDTO(UUID, "firstName_3", "lastName_4", "addressLine1_3", "addressLine2_3");
 
         when(personRepository.findById(UUID)).thenReturn(toUpdate);
 
@@ -179,8 +176,28 @@ public class PersonServiceImplTest {
     }
 
     @Test
+    public void testSavePersonContact_newInstance() throws Exception {
+        PersonContact update = createPersonContact(UUID, ContactType.EMAIL, "value");
+        PersonContactDTO _new = createPersonContactDTO("uuid", ContactType.EMAIL, "value");
+
+        Person person = new Person();
+        when(personRepository.findById("uuid")).thenReturn(person);
+
+        ArgumentCaptor<PersonContact> p = ArgumentCaptor.forClass(PersonContact.class);
+        when(personContactRepository.saveAndFlush(p.capture())).thenReturn(update);
+
+        underTest.savePersonContact(_new);
+
+        PersonContact arg = p.getValue();
+        assertNotNull(arg);
+        assertSame(person, arg.getPerson());
+        assertEquals(ContactType.EMAIL, arg.getType());
+        assertEquals("value", arg.getValue());
+    }
+
+    @Test
     public void testDeletePerson_existingInstance() throws Exception {
-        Person toDelete = createPerson(UUID, "firstName_3", "lastName_3", "addressLine1_3", "addressLine2_3", "telephone_3", "gsm_3", "email_3");
+        Person toDelete = createPerson(UUID, "firstName_3", "lastName_3", "addressLine1_3", "addressLine2_3");
 
         when(personRepository.findById(UUID)).thenReturn(toDelete);
 
@@ -221,11 +238,11 @@ public class PersonServiceImplTest {
         assertEquals("email", arg.getValue());
     }
 
-    private PersonDTO createPersonDTO(String firstName, String lastName, String addressLine1, String addressLine2, String telephone, String gsm, String email) {
-        return createPersonDTO(null, firstName, lastName, addressLine1, addressLine2, telephone, gsm, email);
+    private PersonDTO createPersonDTO(String firstName, String lastName, String addressLine1, String addressLine2) {
+        return createPersonDTO(null, firstName, lastName, addressLine1, addressLine2);
     }
 
-    private PersonDTO createPersonDTO(String uuid, String firstName, String lastName, String addressLine1, String addressLine2, String telephone, String gsm, String email) {
+    private PersonDTO createPersonDTO(String uuid, String firstName, String lastName, String addressLine1, String addressLine2) {
         PersonDTO dto = new PersonDTO();
         dto.setId(uuid);
         dto.setPersonTypeId("personType-uuid");
@@ -236,11 +253,11 @@ public class PersonServiceImplTest {
         return dto;
     }
 
-    private Person createPerson(String firstName, String lastName, String addressLine1, String addressLine2, String telephone, String gsm, String email) {
-        return createPerson(null, firstName, lastName, addressLine1, addressLine2, telephone, gsm, email);
+    private Person createPerson(String firstName, String lastName, String addressLine1, String addressLine2) {
+        return createPerson(null, firstName, lastName, addressLine1, addressLine2);
     }
 
-    private Person createPerson(String uuid, String firstName, String lastName, String addressLine1, String addressLine2, String telephone, String gsm, String email) {
+    private Person createPerson(String uuid, String firstName, String lastName, String addressLine1, String addressLine2) {
         PersonType personType = new PersonType();
         personType.setId("personType-uuid");
         personType.setShortCode("shortCode");
@@ -257,8 +274,19 @@ public class PersonServiceImplTest {
     }
 
     private PersonContact createPersonContact(String uuid, ContactType type, String value) {
+        Person person = new Person();
+
         PersonContact personContact = new PersonContact();
         personContact.setId(uuid);
+        personContact.setPerson(person);
+        personContact.setType(type);
+        personContact.setValue(value);
+        return personContact;
+    }
+
+    private PersonContactDTO createPersonContactDTO(String uuid, ContactType type, String value) {
+        PersonContactDTO personContact = new PersonContactDTO();
+        personContact.setPersonId(uuid);
         personContact.setType(type);
         personContact.setValue(value);
         return personContact;

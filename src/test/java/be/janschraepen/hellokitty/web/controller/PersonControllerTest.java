@@ -1,6 +1,8 @@
 package be.janschraepen.hellokitty.web.controller;
 
+import be.janschraepen.hellokitty.domain.person.ContactType;
 import be.janschraepen.hellokitty.domain.person.Person;
+import be.janschraepen.hellokitty.domain.person.PersonContactDTO;
 import be.janschraepen.hellokitty.domain.person.PersonDTO;
 import be.janschraepen.hellokitty.domain.persontype.PersonTypeDTO;
 import be.janschraepen.hellokitty.services.PersonService;
@@ -196,6 +198,41 @@ public class PersonControllerTest {
         String arg = s.getValue();
         assertNotNull(arg);
         assertEquals("uuid", arg);
+    }
+
+    @Test
+    public void testDoSaveContact() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addParameter("uuid", "uuid");
+        request.addParameter("contactType", "CELLULAR");
+        request.addParameter("contactValue", "value");
+
+
+        PersonDTO entity = new PersonDTO();
+        entity.setId("uuid");
+        entity.setPersonTypeId("personType-uuid");
+        entity.setFirstName("firstName");
+        entity.setLastName("lastName");
+        entity.setAddressLine1("addressLine1");
+        entity.setAddressLine2("addressLine2");
+
+        when(personService.findPerson("uuid")).thenReturn(entity);
+
+        ModelAndView mv = underTest.doSaveContact(request);
+        assertNotNull(mv);
+        assertEquals("person/edit", mv.getViewName());
+        assertEquals("firstName - lastName", mv.getModel().get("title"));
+        assertNotNull(mv.getModel().get("entity"));
+        assertEquals(1, mv.getModel().get("activeTab"));
+
+        ArgumentCaptor<PersonContactDTO> p = ArgumentCaptor.forClass(PersonContactDTO.class);
+        verify(personService).savePersonContact(p.capture());
+
+        PersonContactDTO arg = p.getValue();
+        assertNotNull(arg);
+        assertEquals("uuid", arg.getPersonId());
+        assertEquals(ContactType.CELLULAR, arg.getType());
+        assertEquals("value", arg.getValue());
     }
 
     @Test

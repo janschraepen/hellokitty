@@ -97,15 +97,13 @@ public final class ObjectFactory {
      * Create PersonContactDTO object.
      *
      * @param id       the uuid
-     * @param personId the Person uuid
      * @param type     the ContactType
      * @param value    the value
      * @return PersonContactDTO object
      */
-    public PersonContactDTO createPersonContactDTO(String id, String personId, ContactType type, String value) {
+    public PersonContactDTO createPersonContactDTO(String id, ContactType type, String value) {
         PersonContactDTO dto = new PersonContactDTO();
-        dto.setId(id);
-        dto.setPersonId(personId);
+        dto.setPersonId(id);
         dto.setType(type);
         dto.setValue(value);
         return dto;
