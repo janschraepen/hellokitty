@@ -1,10 +1,8 @@
 package be.janschraepen.hellokitty.services.impl;
 
 import be.janschraepen.hellokitty.domain.person.*;
-import be.janschraepen.hellokitty.domain.persontype.PersonType;
 import be.janschraepen.hellokitty.repository.PersonContactRepository;
 import be.janschraepen.hellokitty.repository.PersonRepository;
-import be.janschraepen.hellokitty.repository.PersonTypeRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -30,9 +28,6 @@ public class PersonServiceImplTest {
     private PersonRepository personRepository;
 
     @Mock
-    private PersonTypeRepository personTypeRepository;
-
-    @Mock
     private PersonContactRepository personContactRepository;
 
     @InjectMocks
@@ -46,7 +41,6 @@ public class PersonServiceImplTest {
 
         PersonDTO dto = underTest.findPerson(UUID);
         assertNotNull(dto);
-        assertEquals("personType-uuid", dto.getPersonTypeId());
         assertEquals("firstName_1", dto.getFirstName());
         assertEquals("lastName_1", dto.getLastName());
         assertEquals("addressLine1_1", dto.getAddressLine1());
@@ -72,7 +66,6 @@ public class PersonServiceImplTest {
         assertNotNull(list);
         assertEquals(1, list.size());
 
-        assertEquals("personType-uuid", list.get(0).getPersonTypeId());
         assertEquals("firstName_2", list.get(0).getFirstName());
         assertEquals("lastName_2", list.get(0).getLastName());
         assertEquals("addressLine1_2", list.get(0).getAddressLine1());
@@ -99,13 +92,11 @@ public class PersonServiceImplTest {
         assertNotNull(list);
         assertEquals(2, list.size());
 
-        assertEquals("personType-uuid", list.get(0).getPersonTypeId());
         assertEquals("firstName_1", list.get(0).getFirstName());
         assertEquals("lastName_1", list.get(0).getLastName());
         assertEquals("addressLine1_1", list.get(0).getAddressLine1());
         assertEquals("addressLine2_1", list.get(0).getAddressLine2());
 
-        assertEquals("personType-uuid", list.get(1).getPersonTypeId());
         assertEquals("firstName_2", list.get(1).getFirstName());
         assertEquals("lastName_2", list.get(1).getLastName());
         assertEquals("addressLine1_2", list.get(1).getAddressLine1());
@@ -126,9 +117,6 @@ public class PersonServiceImplTest {
         Person update = createPerson(UUID, "firstName_3", "lastName_3", "addressLine1_3", "addressLine2_3");
         PersonDTO _new = createPersonDTO("firstName_3", "lastName_3", "addressLine1_3", "addressLine2_3");
 
-        PersonType personType = new PersonType();
-        when(personTypeRepository.findById("personType-uuid")).thenReturn(personType);
-
         ArgumentCaptor<Person> p = ArgumentCaptor.forClass(Person.class);
         when(personRepository.saveAndFlush(p.capture())).thenReturn(update);
 
@@ -136,7 +124,6 @@ public class PersonServiceImplTest {
 
         Person arg = p.getValue();
         assertNotNull(arg);
-        assertSame(personType, arg.getType());
         assertEquals("firstName_3", arg.getFirstName());
         assertEquals("lastName_3", arg.getLastName());
         assertEquals("addressLine1_3", arg.getAddressLine1());
@@ -151,9 +138,6 @@ public class PersonServiceImplTest {
 
         when(personRepository.findById(UUID)).thenReturn(toUpdate);
 
-        PersonType personType = new PersonType();
-        when(personTypeRepository.findById("personType-uuid")).thenReturn(personType);
-
         ArgumentCaptor<Person> p = ArgumentCaptor.forClass(Person.class);
         when(personRepository.saveAndFlush(p.capture())).thenReturn(update);
 
@@ -161,7 +145,6 @@ public class PersonServiceImplTest {
 
         Person arg = p.getValue();
         assertNotNull(arg);
-        assertSame(personType, arg.getType());
         assertEquals("firstName_3", arg.getFirstName());
         assertEquals("lastName_4", arg.getLastName());
         assertEquals("addressLine1_3", arg.getAddressLine1());
@@ -220,7 +203,7 @@ public class PersonServiceImplTest {
 
         when(personRepository.findById(UUID)).thenReturn(toDelete);
 
-        underTest.deletePersons(new String[] {UUID});
+        underTest.deletePersons(new String[]{UUID});
 
         ArgumentCaptor<Person> p = ArgumentCaptor.forClass(Person.class);
         verify(personRepository).delete(p.capture());
@@ -263,7 +246,7 @@ public class PersonServiceImplTest {
 
         when(personContactRepository.findById(UUID)).thenReturn(toDelete);
 
-        underTest.deletePersonContacts(new String[] {UUID});
+        underTest.deletePersonContacts(new String[]{UUID});
 
         ArgumentCaptor<PersonContact> p = ArgumentCaptor.forClass(PersonContact.class);
         verify(personContactRepository).delete(p.capture());
@@ -281,7 +264,6 @@ public class PersonServiceImplTest {
     private PersonDTO createPersonDTO(String uuid, String firstName, String lastName, String addressLine1, String addressLine2) {
         PersonDTO dto = new PersonDTO();
         dto.setId(uuid);
-        dto.setPersonTypeId("personType-uuid");
         dto.setFirstName(firstName);
         dto.setLastName(lastName);
         dto.setAddressLine1(addressLine1);
@@ -294,14 +276,8 @@ public class PersonServiceImplTest {
     }
 
     private Person createPerson(String uuid, String firstName, String lastName, String addressLine1, String addressLine2) {
-        PersonType personType = new PersonType();
-        personType.setId("personType-uuid");
-        personType.setShortCode("shortCode");
-        personType.setName("name");
-
         Person person = new Person();
         person.setId(uuid);
-        person.setType(personType);
         person.setFirstName(firstName);
         person.setLastName(lastName);
         person.setAddressLine1(addressLine1);

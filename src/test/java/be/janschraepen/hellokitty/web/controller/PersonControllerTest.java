@@ -92,7 +92,6 @@ public class PersonControllerTest {
 
         PersonDTO entity = new PersonDTO();
         entity.setId("uuid");
-        entity.setPersonTypeId("personType-uuid");
         entity.setFirstName("firstName");
         entity.setLastName("lastName");
         entity.setAddressLine1("addressLine1");
@@ -111,7 +110,6 @@ public class PersonControllerTest {
     public void testDoSave() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addParameter(RequestParameter.UUID, "uuid");
-        request.addParameter(RequestParameter.PERSON_TYPE_ID, "personType-uuid");
         request.addParameter(RequestParameter.FIRSTNAME, "firstName");
         request.addParameter(RequestParameter.LASTNAME, "lastName");
         request.addParameter(RequestParameter.ADDRESSLINE1, "addressLine1");
@@ -119,7 +117,6 @@ public class PersonControllerTest {
 
         PersonDTO person = new PersonDTO();
         person.setId("uuid");
-        person.setPersonTypeId("personType-uuid");
         person.setFirstName("firstName");
         person.setLastName("lastName");
         person.setAddressLine1("addressLine1");
@@ -138,7 +135,6 @@ public class PersonControllerTest {
         PersonDTO arg = p.getValue();
         assertNotNull(arg);
         assertEquals("uuid", arg.getId());
-        assertEquals("personType-uuid", arg.getPersonTypeId());
         assertEquals("firstName", arg.getFirstName());
         assertEquals("lastName", arg.getLastName());
         assertEquals("addressLine1", arg.getAddressLine1());
@@ -175,7 +171,6 @@ public class PersonControllerTest {
 
         PersonDTO entity = new PersonDTO();
         entity.setId("uuid");
-        entity.setPersonTypeId("personType-uuid");
         entity.setFirstName("firstName");
         entity.setLastName("lastName");
         entity.setAddressLine1("addressLine1");
@@ -207,7 +202,6 @@ public class PersonControllerTest {
 
         PersonDTO entity = new PersonDTO();
         entity.setId("uuid");
-        entity.setPersonTypeId("personType-uuid");
         entity.setFirstName("firstName");
         entity.setLastName("lastName");
         entity.setAddressLine1("addressLine1");

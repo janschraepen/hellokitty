@@ -19,11 +19,6 @@ public class Person extends Entity {
     private static final long serialVersionUID = 1L;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "PERSON_TYPE_ID")
-    private PersonType type;
-
-    @NotNull
     @Column(name = "FIRST_NAME")
     private String firstName;
 
@@ -41,20 +36,6 @@ public class Person extends Entity {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
     private List<PersonContact> contacts;
-
-    /**
-     * @return the personType
-     */
-    public PersonType getType() {
-        return type;
-    }
-
-    /**
-     * @param type the personType to set
-     */
-    public void setType(PersonType type) {
-        this.type = type;
-    }
 
     /**
      * @return the firstName
@@ -129,8 +110,7 @@ public class Person extends Entity {
     @Override
     public String toString() {
         return "Person{" +
-                "type=" + type +
-                ", firstName='" + firstName + '\'' +
+                "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", addressLine1='" + addressLine1 + '\'' +
                 ", addressLine2='" + addressLine2 + '\'' +

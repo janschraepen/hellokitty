@@ -44,7 +44,6 @@ public class ObjectFactoryTest {
         personType.setName(PERSONTYPE_NAME);
 
         Person person = new Person();
-        person.setType(personType);
         person.setFirstName(FIRST_NAME);
         person.setLastName(LAST_NAME);
         person.setAddressLine1(ADDRESS_LINE_1);
@@ -52,8 +51,6 @@ public class ObjectFactoryTest {
 
         PersonDTO dto = underTest.createPersonDTO(person);
         assertNotNull(dto);
-        assertEquals(PERSONTYPE_ID, dto.getPersonTypeId());
-        assertEquals(PERSONTYPE_NAME, dto.getPersonType());
         assertEquals(FIRST_NAME, dto.getFirstName());
         assertEquals(LAST_NAME, dto.getLastName());
         assertEquals(ADDRESS_LINE_1, dto.getAddressLine1());
@@ -62,9 +59,8 @@ public class ObjectFactoryTest {
 
     @Test
     public void testCreatePersonDTO_withParams() throws Exception {
-        PersonDTO dto = underTest.createPersonDTO("uuid", PERSONTYPE_ID, FIRST_NAME, LAST_NAME, ADDRESS_LINE_1, ADDRESS_LINE_2);
+        PersonDTO dto = underTest.createPersonDTO("uuid", FIRST_NAME, LAST_NAME, ADDRESS_LINE_1, ADDRESS_LINE_2);
         assertNotNull(dto);
-        assertEquals(PERSONTYPE_ID, dto.getPersonTypeId());
         assertEquals(FIRST_NAME, dto.getFirstName());
         assertEquals(LAST_NAME, dto.getLastName());
         assertEquals(ADDRESS_LINE_1, dto.getAddressLine1());
@@ -79,7 +75,6 @@ public class ObjectFactoryTest {
         personType.setName(PERSONTYPE_NAME);
 
         Person person = new Person();
-        person.setType(personType);
         person.setFirstName(FIRST_NAME);
         person.setLastName(LAST_NAME);
         person.setAddressLine1(ADDRESS_LINE_1);
@@ -91,8 +86,6 @@ public class ObjectFactoryTest {
 
         PersonDTO dto = dtos.get(0);
         assertNotNull(dto);
-        assertEquals(PERSONTYPE_ID, dto.getPersonTypeId());
-        assertEquals(PERSONTYPE_NAME, dto.getPersonType());
         assertEquals(FIRST_NAME, dto.getFirstName());
         assertEquals(LAST_NAME, dto.getLastName());
         assertEquals(ADDRESS_LINE_1, dto.getAddressLine1());

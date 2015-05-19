@@ -13,8 +13,6 @@ public class PersonDTO implements Serializable {
 
     private String id;
 
-    private String personTypeId;
-
     private String firstName;
 
     private String lastName;
@@ -24,9 +22,6 @@ public class PersonDTO implements Serializable {
     private String addressLine2;
 
     private List<PersonContactDTO> contacts;
-
-    // convenience attributes
-    private String personType;
 
     /**
      * Instantiates a new PersonDTO.
@@ -47,20 +42,6 @@ public class PersonDTO implements Serializable {
      */
     public void setId(String id) {
         this.id = id;
-    }
-
-    /**
-     * @return the personTypeId
-     */
-    public String getPersonTypeId() {
-        return personTypeId;
-    }
-
-    /**
-     * @param personTypeId the personTypeId to set
-     */
-    public void setPersonTypeId(String personTypeId) {
-        this.personTypeId = personTypeId;
     }
 
     /**
@@ -119,7 +100,6 @@ public class PersonDTO implements Serializable {
         this.addressLine2 = addressLine2;
     }
 
-
     /**
      * @return the contacts
      */
@@ -132,20 +112,6 @@ public class PersonDTO implements Serializable {
      */
     public void setContacts(List<PersonContactDTO> contacts) {
         this.contacts = contacts;
-    }
-
-    /**
-     * @return the personType
-     */
-    public String getPersonType() {
-        return personType;
-    }
-
-    /**
-     * @param personType the personType to set
-     */
-    public void setPersonType(String personType) {
-        this.personType = personType;
     }
 
 }

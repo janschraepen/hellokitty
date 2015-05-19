@@ -85,13 +85,12 @@ public class PersonController extends AbstractController<PersonDTO> {
     @Override
     public ModelAndView doSave(HttpServletRequest request) {
         String uuid = request.getParameter(RequestParameter.UUID);
-        String personTypeId = request.getParameter(RequestParameter.PERSON_TYPE_ID);
         String firstName = request.getParameter(RequestParameter.FIRSTNAME);
         String lastName = request.getParameter(RequestParameter.LASTNAME);
         String addressLine1 = request.getParameter(RequestParameter.ADDRESSLINE1);
         String addressLine2 = request.getParameter(RequestParameter.ADDRESSLINE2);
 
-        PersonDTO person = ObjectFactory.getInstance().createPersonDTO(uuid, personTypeId, firstName, lastName, addressLine1, addressLine2);
+        PersonDTO person = ObjectFactory.getInstance().createPersonDTO(uuid, firstName, lastName, addressLine1, addressLine2);
         person = personService.savePerson(person);
 
         String title = person.getFirstName() + " - " + person.getLastName();

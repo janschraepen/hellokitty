@@ -19,20 +19,6 @@
     <div class="entity__form">
         <table>
             <tr>
-                <td class="lbl"><fmt:message key="label.type" bundle="${lang}"/>:</td>
-                <td class="val">
-                    <select name="personTypeId">
-                        <option value="-1"></option>
-                        <c:forEach items="${personTypes}" var="type">
-                            <option
-                                    value="${type.id}"
-                                    <c:if test="${entity.personTypeId eq type.id}"> selected </c:if>
-                                    >${type.name} (${type.shortCode})</option>
-                        </c:forEach>
-                    </select>
-                </td>
-            </tr>
-            <tr>
                 <td class="lbl"><fmt:message key="label.firstName" bundle="${lang}"/>:</td>
                 <td class="val"><input type="text" name="firstName" value="${entity.firstName}" /></td>
             </tr>

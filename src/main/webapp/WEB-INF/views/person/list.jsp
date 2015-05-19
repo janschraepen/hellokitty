@@ -42,7 +42,6 @@
                     <table>
                         <tr>
                             <th></th>
-                            <th><fmt:message key="table.header.personType" bundle="${lang}"/></th>
                             <th><fmt:message key="table.header.firstName" bundle="${lang}"/></th>
                             <th><fmt:message key="table.header.lastName" bundle="${lang}"/></th>
                             <th><fmt:message key="table.header.addressLine1" bundle="${lang}"/></th>
@@ -51,7 +50,6 @@
                         <c:forEach var="item" items="${listItems}">
                             <tr>
                                 <td class="id"><input type="checkbox" name="uuid" value="${item.id}" /></td>
-                                <td class="s">${item.personType}</td>
                                 <td class="l">${item.firstName}</td>
                                 <td class="l">${item.lastName}</td>
                                 <td class="l">${item.addressLine1}</td>

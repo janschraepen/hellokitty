@@ -28,9 +28,6 @@ public class PersonType extends Entity {
     @Column(name = "NAME")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "type")
-    private List<Person> persons;
-
     /**
      *
      * @return the shortCode
@@ -63,28 +60,11 @@ public class PersonType extends Entity {
         this.name = name;
     }
 
-    /**
-     *
-     * @return the persons
-     */
-    public List<Person> getPersons() {
-        return persons;
-    }
-
-    /**
-     *
-     * @param persons the persons to set
-     */
-    public void setPersons(List<Person> persons) {
-        this.persons = persons;
-    }
-
     @Override
     public String toString() {
         return "PersonType{" +
                 "shortCode='" + shortCode + '\'' +
                 ", name='" + name + '\'' +
-                ", persons=" + persons +
                 '}';
     }
 

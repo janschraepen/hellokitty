@@ -1,10 +1,8 @@
 package be.janschraepen.hellokitty.services.impl;
 
 import be.janschraepen.hellokitty.domain.person.*;
-import be.janschraepen.hellokitty.domain.persontype.PersonType;
 import be.janschraepen.hellokitty.repository.PersonContactRepository;
 import be.janschraepen.hellokitty.repository.PersonRepository;
-import be.janschraepen.hellokitty.repository.PersonTypeRepository;
 import be.janschraepen.hellokitty.services.PersonService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +19,6 @@ public class PersonServiceImpl implements PersonService {
 
     @Autowired
     private PersonRepository personRepository;
-
-    @Autowired
-    private PersonTypeRepository personTypeRepository;
 
     @Autowired
     private PersonContactRepository personContactRepository;
@@ -61,9 +56,6 @@ public class PersonServiceImpl implements PersonService {
             // update an existing person
             person = personRepository.findById(dto.getId());
         }
-
-        PersonType personType = personTypeRepository.findById(dto.getPersonTypeId());
-        person.setType(personType);
         person.setFirstName(dto.getFirstName());
         person.setLastName(dto.getLastName());
         person.setAddressLine1(dto.getAddressLine1());

@@ -32,8 +32,6 @@ public final class ObjectFactory {
     public PersonDTO createPersonDTO(Person p) {
         PersonDTO dto = new PersonDTO();
         dto.setId(p.getId());
-        dto.setPersonTypeId(p.getType().getId());
-        dto.setPersonType(p.getType().getName());
         dto.setFirstName(p.getFirstName());
         dto.setLastName(p.getLastName());
         dto.setAddressLine1(p.getAddressLine1());
@@ -46,17 +44,15 @@ public final class ObjectFactory {
      * Create PersonDTO object.
      *
      * @param id           the uuid
-     * @param personTypeId the personType uuid
      * @param firstName    the firstName
      * @param lastName     the lastName
      * @param addressLine1 the addressLine1
      * @param addressLine2 the addressLine2
      * @return PersonDTO object
      */
-    public PersonDTO createPersonDTO(String id, String personTypeId, String firstName, String lastName, String addressLine1, String addressLine2) {
+    public PersonDTO createPersonDTO(String id, String firstName, String lastName, String addressLine1, String addressLine2) {
         PersonDTO dto = new PersonDTO();
         dto.setId(id);
-        dto.setPersonTypeId(personTypeId);
         dto.setFirstName(firstName);
         dto.setLastName(lastName);
         dto.setAddressLine1(addressLine1);
@@ -96,9 +92,9 @@ public final class ObjectFactory {
     /**
      * Create PersonContactDTO object.
      *
-     * @param id       the uuid
-     * @param type     the ContactType
-     * @param value    the value
+     * @param id    the uuid
+     * @param type  the ContactType
+     * @param value the value
      * @return PersonContactDTO object
      */
     public PersonContactDTO createPersonContactDTO(String id, ContactType type, String value) {
