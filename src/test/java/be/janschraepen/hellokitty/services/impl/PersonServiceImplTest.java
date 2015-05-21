@@ -76,7 +76,7 @@ public class PersonServiceImplTest {
     public void testFindPersons_noResultsReturnsEmptyList() throws Exception {
         when(personRepository.find(SEARCH_FOR)).thenReturn(Collections.emptyList());
 
-        List<PersonDTO> list = underTest.findAllPersons();
+        List<PersonDTO> list = underTest.findPersons(SEARCH_FOR);
         assertNotNull(list);
         assertEquals(0, list.size());
     }
@@ -159,6 +159,17 @@ public class PersonServiceImplTest {
     }
 
     @Test
+    public void testDeletePerson_existingInstance() throws Exception {
+        Person toDelete = createPerson(UUID, "firstName_3", "lastName_3", "addressLine1_3", "addressLine2_3");
+
+        when(personRepository.findById(UUID)).thenReturn(toDelete);
+
+        underTest.deletePerson(UUID);
+
+        verify(personRepository).delete(toDelete);
+    }
+
+    @Test
     public void testSavePersonContact_newInstance() throws Exception {
         PersonContact update = createPersonContact(UUID, ContactType.EMAIL, "value");
         PersonContactDTO _new = createPersonContactDTO("uuid", ContactType.EMAIL, "value");
@@ -176,25 +187,6 @@ public class PersonServiceImplTest {
         assertSame(person, arg.getPerson());
         assertEquals(ContactType.EMAIL, arg.getType());
         assertEquals("value", arg.getValue());
-    }
-
-    @Test
-    public void testDeletePerson_existingInstance() throws Exception {
-        Person toDelete = createPerson(UUID, "firstName_3", "lastName_3", "addressLine1_3", "addressLine2_3");
-
-        when(personRepository.findById(UUID)).thenReturn(toDelete);
-
-        underTest.deletePerson(UUID);
-
-        ArgumentCaptor<Person> p = ArgumentCaptor.forClass(Person.class);
-        verify(personRepository).delete(p.capture());
-
-        Person arg = p.getValue();
-        assertNotNull(arg);
-        assertEquals("firstName_3", arg.getFirstName());
-        assertEquals("lastName_3", arg.getLastName());
-        assertEquals("addressLine1_3", arg.getAddressLine1());
-        assertEquals("addressLine2_3", arg.getAddressLine2());
     }
 
     @Test

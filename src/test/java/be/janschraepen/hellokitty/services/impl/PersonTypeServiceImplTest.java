@@ -70,7 +70,7 @@ public class PersonTypeServiceImplTest {
     public void testFindPersonTypes_noResultsReturnsEmptyList() throws Exception {
         when(personTypeRepository.find(SEARCH_FOR)).thenReturn(Collections.emptyList());
 
-        List<PersonTypeDTO> list = underTest.findAllPersonTypes();
+        List<PersonTypeDTO> list = underTest.findPersonTypes(SEARCH_FOR);
         assertNotNull(list);
         assertEquals(0, list.size());
     }
@@ -152,13 +152,7 @@ public class PersonTypeServiceImplTest {
 
         underTest.deletePersonType(UUID);
 
-        ArgumentCaptor<PersonType> p = ArgumentCaptor.forClass(PersonType.class);
-        verify(personTypeRepository).delete(p.capture());
-
-        PersonType arg = p.getValue();
-        assertNotNull(arg);
-        assertEquals("shortCode_3", arg.getShortCode());
-        assertEquals("name_3", arg.getName());
+        verify(personTypeRepository).delete(toDelete);
     }
 
     @Test
