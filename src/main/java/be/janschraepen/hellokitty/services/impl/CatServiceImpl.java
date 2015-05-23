@@ -1,9 +1,10 @@
 package be.janschraepen.hellokitty.services.impl;
 
-import be.janschraepen.hellokitty.domain.cat.Cat;
-import be.janschraepen.hellokitty.domain.cat.CatDTO;
-import be.janschraepen.hellokitty.domain.cat.ObjectFactory;
+import be.janschraepen.hellokitty.domain.cat.*;
+import be.janschraepen.hellokitty.repository.CatPersonRepository;
 import be.janschraepen.hellokitty.repository.CatRepository;
+import be.janschraepen.hellokitty.repository.PersonRepository;
+import be.janschraepen.hellokitty.repository.PersonTypeRepository;
 import be.janschraepen.hellokitty.services.CatService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,15 @@ public class CatServiceImpl implements CatService {
 
     @Autowired
     private CatRepository catRepository;
+
+    @Autowired
+    private CatPersonRepository catPersonRepository;
+
+    @Autowired
+    private PersonTypeRepository personTypeRepository;
+
+    @Autowired
+    private PersonRepository personRepository;
 
     @Override
     public CatDTO findCat(String uuid) {
@@ -81,6 +91,17 @@ public class CatServiceImpl implements CatService {
         for (String uuid : uuids) {
             deleteCat(uuid);
         }
+    }
+
+    @Override
+    public CatPersonDTO saveCatPerson(CatPersonDTO dto) {
+        CatPerson catPerson = new CatPerson();
+        catPerson.setCat(catRepository.findById(dto.getCatId()));
+        catPerson.setType(personTypeRepository.findById(dto.getPersonTypeId()));
+        catPerson.setPerson(personRepository.findById(dto.getPersonId()));
+
+        catPerson = catPersonRepository.saveAndFlush(catPerson);
+        return ObjectFactory.getInstance().createCatPersonDTO(catPerson);
     }
 
 }

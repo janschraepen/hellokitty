@@ -1,11 +1,13 @@
 package be.janschraepen.hellokitty.web.controller;
 
 import be.janschraepen.hellokitty.domain.cat.CatDTO;
+import be.janschraepen.hellokitty.domain.cat.CatPersonDTO;
 import be.janschraepen.hellokitty.domain.cat.Gender;
 import be.janschraepen.hellokitty.domain.cat.ObjectFactory;
 import be.janschraepen.hellokitty.services.CatService;
 import be.janschraepen.hellokitty.services.PersonService;
 import be.janschraepen.hellokitty.services.PersonTypeService;
+import be.janschraepen.hellokitty.web.Event;
 import be.janschraepen.hellokitty.web.RequestParameter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +51,13 @@ public class CatController extends AbstractController<CatDTO> {
     @Override
     @RequestMapping("/cat/edit")
     public ModelAndView doEvent(@RequestParam String _event, HttpServletRequest request) {
-        return super.doEvent(_event, request);
+        ModelAndView mv = super.doEvent(_event, request);
+        switch (_event) {
+            case Event.ADD_PERSON:
+                mv = doSavePerson(request);
+                break;
+        }
+        return mv;
     }
 
     @Override
@@ -101,6 +109,25 @@ public class CatController extends AbstractController<CatDTO> {
 
         catService.deleteCats(uuids);
         return list(request, VIEW_LIST, TITLE, DESCRIPTION, catService.findAllCats());
+    }
+
+    /**
+     * save entity CatPerson
+     *
+     * @param request the servlet request
+     * @return ModelAndView model and view
+     */
+    public ModelAndView doSavePerson(HttpServletRequest request) {
+        String uuid = request.getParameter(RequestParameter.UUID);
+        String personType = request.getParameter(RequestParameter.PERSON_TYPE);
+        String person = request.getParameter(RequestParameter.PERSON);
+
+        CatPersonDTO catPerson = ObjectFactory.getInstance().createCatPersonDTO(uuid, personType, person);
+        catService.saveCatPerson(catPerson);
+
+        ModelAndView mv = doOpenEdit(request);
+        mv.getModel().put(RequestParameter.ACTIVE_TAB, 1);
+        return mv;
     }
 
     @Override

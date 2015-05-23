@@ -1,11 +1,13 @@
 package be.janschraepen.hellokitty.services.impl;
 
-import be.janschraepen.hellokitty.domain.cat.Cat;
-import be.janschraepen.hellokitty.domain.cat.CatDTO;
-import be.janschraepen.hellokitty.domain.cat.Gender;
+import be.janschraepen.hellokitty.domain.cat.*;
 import be.janschraepen.hellokitty.domain.person.Person;
 import be.janschraepen.hellokitty.domain.person.PersonDTO;
+import be.janschraepen.hellokitty.domain.persontype.PersonType;
+import be.janschraepen.hellokitty.repository.CatPersonRepository;
 import be.janschraepen.hellokitty.repository.CatRepository;
+import be.janschraepen.hellokitty.repository.PersonRepository;
+import be.janschraepen.hellokitty.repository.PersonTypeRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -30,6 +32,15 @@ public class CatServiceImplTest {
 
     @Mock
     private CatRepository catRepository;
+
+    @Mock
+    private CatPersonRepository catPersonRepository;
+
+    @Mock
+    private PersonTypeRepository personTypeRepository;
+
+    @Mock
+    private PersonRepository personRepository;
 
     @InjectMocks
     private CatServiceImpl underTest = new CatServiceImpl();
@@ -202,7 +213,52 @@ public class CatServiceImplTest {
 
     @Test
     public void testDeleteCats() throws Exception {
+        Cat toDelete = createCat(UUID, "name_3", "breed_3", "age_3", Gender.V, true, false, "attention_3", "behavioral_3", "nutrition_3");
 
+        when(catRepository.findById(UUID)).thenReturn(toDelete);
+
+        underTest.deleteCats(new String[] {UUID});
+
+        verify(catRepository).delete(toDelete);
+    }
+
+    @Test
+    public void testSaveCatPerson_newInstance() throws Exception {
+        CatPersonDTO _new = new CatPersonDTO();
+        _new.setCatId("cat-uuid");
+        _new.setPersonTypeId("personType-uuid");
+        _new.setPersonId("person-uuid");
+
+        Cat cat = new Cat();
+        PersonType personType = new PersonType();
+        personType.setId("personType-uuid");
+        personType.setName("personType");
+        Person person = new Person();
+        person.setId("person-uuid");
+        person.setFirstName("firstName");
+        person.setLastName("lastName");
+
+        CatPerson update = new CatPerson();
+        update.setId("uuid");
+        update.setCat(cat);
+        update.setType(personType);
+        update.setPerson(person);
+
+
+        when(catRepository.findById("cat-uuid")).thenReturn(cat);
+        when(personTypeRepository.findById("personType-uuid")).thenReturn(personType);
+        when(personRepository.findById("person-uuid")).thenReturn(person);
+
+        ArgumentCaptor<CatPerson> c = ArgumentCaptor.forClass(CatPerson.class);
+        when(catPersonRepository.saveAndFlush(c.capture())).thenReturn(update);
+
+        underTest.saveCatPerson(_new);
+
+        CatPerson arg = c.getValue();
+        assertNotNull(arg);
+        assertSame(cat, arg.getCat());
+        assertSame(personType, arg.getType());
+        assertSame(person, arg.getPerson());
     }
 
     private CatDTO createCatDTO(String name, String breed, String age, Gender gender, boolean neutered, boolean chipped, String attention, String behavioral, String nutrition) {

@@ -1,6 +1,7 @@
 package be.janschraepen.hellokitty.web.controller;
 
 import be.janschraepen.hellokitty.domain.cat.CatDTO;
+import be.janschraepen.hellokitty.domain.cat.CatPersonDTO;
 import be.janschraepen.hellokitty.domain.cat.Gender;
 import be.janschraepen.hellokitty.domain.person.PersonDTO;
 import be.janschraepen.hellokitty.domain.persontype.PersonType;
@@ -164,6 +165,36 @@ public class CatControllerTest {
         String[] arg = s.getValue();
         assertNotNull(arg);
         assertEquals("uuid", arg[0]);
+    }
+
+    @Test
+    public void testDoSaveContact() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addParameter(RequestParameter.UUID, "uuid");
+        request.addParameter(RequestParameter.PERSON_TYPE, "personType-uuid");
+        request.addParameter(RequestParameter.PERSON, "person-uuid");
+
+        CatDTO entity = new CatDTO();
+        entity.setId("uuid");
+        entity.setName("name");
+
+        when(catService.findCat("uuid")).thenReturn(entity);
+
+        ModelAndView mv = underTest.doSavePerson(request);
+        assertNotNull(mv);
+        assertEquals("cat/edit", mv.getViewName());
+        assertEquals("name", mv.getModel().get("title"));
+        assertNotNull(mv.getModel().get("entity"));
+        assertEquals(1, mv.getModel().get("activeTab"));
+
+        ArgumentCaptor<CatPersonDTO> c = ArgumentCaptor.forClass(CatPersonDTO.class);
+        verify(catService).saveCatPerson(c.capture());
+
+        CatPersonDTO arg = c.getValue();
+        assertNotNull(arg);
+        assertEquals("uuid", arg.getCatId());
+        assertEquals("personType-uuid", arg.getPersonTypeId());
+        assertEquals("person-uuid", arg.getPersonId());
     }
 
     @Test

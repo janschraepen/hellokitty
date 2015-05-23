@@ -23,4 +23,7 @@ public final class Event {
     public static final String DELETE_CONTACT = "delete-contact";
     public static final String ADD_CONTACT = "add-contact";
 
+    public static final String DELETE_PERSON = "delete-person";
+    public static final String ADD_PERSON = "add-person";
+
 }

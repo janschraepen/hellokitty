@@ -1,6 +1,7 @@
 package be.janschraepen.hellokitty.services;
 
 import be.janschraepen.hellokitty.domain.cat.CatDTO;
+import be.janschraepen.hellokitty.domain.cat.CatPersonDTO;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -61,5 +62,14 @@ public interface CatService {
      */
     @Transactional
     void deleteCats(String[] uuids);
+
+    /**
+     * Save/update a CatPerson.
+     *
+     * @param dto the catPerson to save/update
+     * @return CatPersonDTO the saved instance
+     */
+    @Transactional
+    CatPersonDTO saveCatPerson(CatPersonDTO dto);
 
 }

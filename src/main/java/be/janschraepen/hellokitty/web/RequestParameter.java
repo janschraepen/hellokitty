@@ -38,6 +38,10 @@ public final class RequestParameter {
     public static final String CONTACT_TYPE = "contactType";
     public static final String CONTACT_VALUE = "contactValue";
 
+    public static final String PERSON_UUID = "person-uuid";
+    public static final String PERSON_TYPE = "personType";
+    public static final String PERSON = "person";
+
     public static final String BREED = "breed";
     public static final String AGE = "age";
     public static final String GENDER = "gender";
