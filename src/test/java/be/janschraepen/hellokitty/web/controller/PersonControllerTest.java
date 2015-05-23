@@ -1,10 +1,8 @@
 package be.janschraepen.hellokitty.web.controller;
 
 import be.janschraepen.hellokitty.domain.person.ContactType;
-import be.janschraepen.hellokitty.domain.person.Person;
 import be.janschraepen.hellokitty.domain.person.PersonContactDTO;
 import be.janschraepen.hellokitty.domain.person.PersonDTO;
-import be.janschraepen.hellokitty.domain.persontype.PersonTypeDTO;
 import be.janschraepen.hellokitty.services.PersonService;
 import be.janschraepen.hellokitty.services.PersonTypeService;
 import be.janschraepen.hellokitty.web.RequestParameter;
@@ -102,7 +100,7 @@ public class PersonControllerTest {
         ModelAndView mv = underTest.doOpenEdit(request);
         assertNotNull(mv);
         assertEquals("person/edit", mv.getViewName());
-        assertEquals("firstName - lastName", mv.getModel().get("title"));
+        assertEquals("firstName lastName", mv.getModel().get("title"));
         assertNotNull(mv.getModel().get("entity"));
     }
 
@@ -129,7 +127,7 @@ public class PersonControllerTest {
         ModelAndView mv = underTest.doSave(request);
         assertNotNull(mv);
         assertEquals("person/edit", mv.getViewName());
-        assertEquals("firstName - lastName", mv.getModel().get("title"));
+        assertEquals("firstName lastName", mv.getModel().get("title"));
         assertNotNull(mv.getModel().get("entity"));
 
         PersonDTO arg = p.getValue();
@@ -181,7 +179,7 @@ public class PersonControllerTest {
         ModelAndView mv = underTest.doDeleteContact(request);
         assertNotNull(mv);
         assertEquals("person/edit", mv.getViewName());
-        assertEquals("firstName - lastName", mv.getModel().get("title"));
+        assertEquals("firstName lastName", mv.getModel().get("title"));
         assertNotNull(mv.getModel().get("entity"));
         assertEquals(1, mv.getModel().get("activeTab"));
 
@@ -212,7 +210,7 @@ public class PersonControllerTest {
         ModelAndView mv = underTest.doSaveContact(request);
         assertNotNull(mv);
         assertEquals("person/edit", mv.getViewName());
-        assertEquals("firstName - lastName", mv.getModel().get("title"));
+        assertEquals("firstName lastName", mv.getModel().get("title"));
         assertNotNull(mv.getModel().get("entity"));
         assertEquals(1, mv.getModel().get("activeTab"));
 
@@ -228,18 +226,15 @@ public class PersonControllerTest {
 
     @Test
     public void testAddDetailModelParameters() throws Exception {
-        PersonTypeDTO personType = new PersonTypeDTO("uuid", "shortCode", "name");
-        when(personTypeService.findAllPersonTypes()).thenReturn(Arrays.asList(new PersonTypeDTO[] {personType}));
-
         ModelAndView mv = new ModelAndView();
         underTest.addDetailModelParameters(mv);
 
-        List<PersonTypeDTO> personTypes = (List<PersonTypeDTO>) mv.getModel().get("personTypes");
-        assertNotNull(personTypes);
-        assertEquals(1, personTypes.size(), 0);
-        assertEquals("uuid", personTypes.get(0).getId());
-        assertEquals("shortCode", personTypes.get(0).getShortCode());
-        assertEquals("name", personTypes.get(0).getName());
+        List<ContactType> contactTypes = (List<ContactType>) mv.getModel().get("contactTypes");
+        assertNotNull(contactTypes);
+        assertEquals(3, contactTypes.size(), 0);
+        assertEquals(ContactType.TELEPHONE, contactTypes.get(0));
+        assertEquals(ContactType.CELLULAR, contactTypes.get(1));
+        assertEquals(ContactType.EMAIL, contactTypes.get(2));
     }
 
 }

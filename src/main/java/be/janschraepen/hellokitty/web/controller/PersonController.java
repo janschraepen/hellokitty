@@ -76,7 +76,7 @@ public class PersonController extends AbstractController<PersonDTO> {
             title = messageSource.getMessage(TITLE_NEW, null, nl_BE);
         } else {
             person = personService.findPerson(uuid);
-            title = person.getFirstName() + " - " + person.getLastName();
+            title = person.getFirstName() + " " + person.getLastName();
         }
 
         return detail(request, VIEW_EDIT, title, DESCRIPTION, person);
@@ -93,7 +93,7 @@ public class PersonController extends AbstractController<PersonDTO> {
         PersonDTO person = ObjectFactory.getInstance().createPersonDTO(uuid, firstName, lastName, addressLine1, addressLine2);
         person = personService.savePerson(person);
 
-        String title = person.getFirstName() + " - " + person.getLastName();
+        String title = person.getFirstName() + " " + person.getLastName();
         return detail(request, VIEW_EDIT, title, DESCRIPTION, person);
     }
 
@@ -142,7 +142,6 @@ public class PersonController extends AbstractController<PersonDTO> {
 
     @Override
     void addDetailModelParameters(ModelAndView mv) {
-        mv.getModel().put(RequestParameter.PERSONTYPES, personTypeService.findAllPersonTypes());
         mv.getModel().put(RequestParameter.CONTACTTYPES, Arrays.asList(ContactType.values()));
     }
 

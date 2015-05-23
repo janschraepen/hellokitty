@@ -25,10 +25,8 @@ public final class RequestParameter {
     public static final String SHORT_CODE = "shortCode";
     public static final String NAME = "name";
 
-    public static final String PERSONTYPES = "personTypes";
     public static final String CONTACTTYPES = "contactTypes";
 
-    public static final String PERSON_TYPE_ID = "personTypeId";
     public static final String FIRSTNAME = "firstName";
     public static final String LASTNAME = "lastName";
     public static final String ADDRESSLINE1 = "addressLine1";
@@ -37,6 +35,15 @@ public final class RequestParameter {
     public static final String CONTACT_UUID = "contact-uuid";
     public static final String CONTACT_TYPE = "contactType";
     public static final String CONTACT_VALUE = "contactValue";
+
+    public static final String BREED = "breed";
+    public static final String AGE = "age";
+    public static final String GENDER = "gender";
+    public static final String NEUTERED = "neutered";
+    public static final String CHIPPED = "chipped";
+    public static final String ATTENTION = "attention";
+    public static final String BEHAVIORAL = "behavioral";
+    public static final String NUTRITION = "nutrition";
 
     public static final String ACTIVE_TAB = "activeTab";
 

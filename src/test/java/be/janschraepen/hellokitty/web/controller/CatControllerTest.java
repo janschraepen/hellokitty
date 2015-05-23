@@ -1,7 +1,8 @@
 package be.janschraepen.hellokitty.web.controller;
 
-import be.janschraepen.hellokitty.domain.persontype.PersonTypeDTO;
-import be.janschraepen.hellokitty.services.PersonTypeService;
+import be.janschraepen.hellokitty.domain.cat.CatDTO;
+import be.janschraepen.hellokitty.domain.cat.Gender;
+import be.janschraepen.hellokitty.services.CatService;
 import be.janschraepen.hellokitty.web.RequestParameter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,33 +19,34 @@ import java.util.List;
 import java.util.Locale;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PersonTypeControllerTest {
+public class CatControllerTest {
 
     @Mock
     private MessageSource messageSource;
 
     @Mock
-    private PersonTypeService personTypeService;
+    private CatService catService;
 
     @InjectMocks
-    private PersonTypeController underTest = new PersonTypeController();
+    private CatController underTest = new CatController();
+
 
     @Test
     public void testList() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
 
-        List<PersonTypeDTO> list = Arrays.asList(new PersonTypeDTO[]{ });
+        List<CatDTO> list = Arrays.asList(new CatDTO[]{});
 
-        when(personTypeService.findAllPersonTypes()).thenReturn(list);
+        when(catService.findAllCats()).thenReturn(list);
 
         ModelAndView mv = underTest.list(request);
         assertNotNull(mv);
-        assertEquals("persontype/list", mv.getViewName());
-        assertEquals("persontype.list.title", mv.getModel().get("title"));
+        assertEquals("cat/list", mv.getViewName());
+        assertEquals("cat.list.title", mv.getModel().get("title"));
         assertSame(list, mv.getModel().get("listItems"));
     }
 
@@ -53,13 +55,13 @@ public class PersonTypeControllerTest {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addParameter(RequestParameter.SEARCH, "searchFor");
 
-        List<PersonTypeDTO> list = Arrays.asList(new PersonTypeDTO[]{ });
-        when(personTypeService.findPersonTypes("searchFor")).thenReturn(list);
+        List<CatDTO> list = Arrays.asList(new CatDTO[]{});
+        when(catService.findCats("searchFor")).thenReturn(list);
 
         ModelAndView mv = underTest.doSearch(request);
         assertNotNull(mv);
-        assertEquals("persontype/list", mv.getViewName());
-        assertEquals("persontype.list.title", mv.getModel().get("title"));
+        assertEquals("cat/list", mv.getViewName());
+        assertEquals("cat.list.title", mv.getModel().get("title"));
         assertEquals(list, mv.getModel().get("listItems"));
     }
 
@@ -68,12 +70,12 @@ public class PersonTypeControllerTest {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addParameter(RequestParameter.UUID, "");
 
-        when(messageSource.getMessage("persontype.detail.new", null, new Locale("nl", "BE"))).thenReturn("NIEUW PERSOONTYPE");
+        when(messageSource.getMessage("cat.detail.new", null, new Locale("nl", "BE"))).thenReturn("NIEUWE KAT");
 
         ModelAndView mv = underTest.doOpenEdit(request);
         assertNotNull(mv);
-        assertEquals("persontype/edit", mv.getViewName());
-        assertEquals("NIEUW PERSOONTYPE", mv.getModel().get("title"));
+        assertEquals("cat/edit", mv.getViewName());
+        assertEquals("NIEUWE KAT", mv.getModel().get("title"));
         assertNotNull(mv.getModel().get("entity"));
     }
 
@@ -82,13 +84,14 @@ public class PersonTypeControllerTest {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addParameter(RequestParameter.UUID, "uuid");
 
-        PersonTypeDTO entity = new PersonTypeDTO("uuid", "shortCode", "name");
-        when(personTypeService.findPersonType("uuid")).thenReturn(entity);
+        CatDTO entity = new CatDTO();
+        entity.setName("name");
+        when(catService.findCat("uuid")).thenReturn(entity);
 
         ModelAndView mv = underTest.doOpenEdit(request);
         assertNotNull(mv);
-        assertEquals("persontype/edit", mv.getViewName());
-        assertEquals("shortCode - name", mv.getModel().get("title"));
+        assertEquals("cat/edit", mv.getViewName());
+        assertEquals("name", mv.getModel().get("title"));
         assertNotNull(mv.getModel().get("entity"));
     }
 
@@ -96,23 +99,37 @@ public class PersonTypeControllerTest {
     public void testDoSave() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addParameter(RequestParameter.UUID, "uuid");
-        request.addParameter(RequestParameter.SHORT_CODE, "shortCode");
         request.addParameter(RequestParameter.NAME, "name");
+        request.addParameter(RequestParameter.BREED, "breed");
+        request.addParameter(RequestParameter.AGE, "age");
+        request.addParameter(RequestParameter.GENDER, "V");
+        request.addParameter(RequestParameter.NEUTERED, "TRUE");
+        request.addParameter(RequestParameter.CHIPPED, "FALSE");
+        request.addParameter(RequestParameter.ATTENTION, "attention");
+        request.addParameter(RequestParameter.BEHAVIORAL, "behavioral");
+        request.addParameter(RequestParameter.NUTRITION, "nutrition");
 
         ModelAndView mv = underTest.doSave(request);
         assertNotNull(mv);
-        assertEquals("persontype/edit", mv.getViewName());
-        assertEquals("shortCode - name", mv.getModel().get("title"));
+        assertEquals("cat/edit", mv.getViewName());
+        assertEquals("name", mv.getModel().get("title"));
         assertNotNull(mv.getModel().get("entity"));
 
-        ArgumentCaptor<PersonTypeDTO> p = ArgumentCaptor.forClass(PersonTypeDTO.class);
-        verify(personTypeService).savePersonType(p.capture());
+        ArgumentCaptor<CatDTO> c = ArgumentCaptor.forClass(CatDTO.class);
+        verify(catService).saveCat(c.capture());
 
-        PersonTypeDTO arg = p.getValue();
+        CatDTO arg = c.getValue();
         assertNotNull(arg);
         assertEquals("uuid", arg.getId());
-        assertEquals("shortCode", arg.getShortCode());
         assertEquals("name", arg.getName());
+        assertEquals("breed", arg.getBreed());
+        assertEquals("age", arg.getAge());
+        assertEquals(Gender.V, arg.getGender());
+        assertTrue(arg.isNeutered());
+        assertFalse(arg.isChipped());
+        assertEquals("attention", arg.getAttention());
+        assertEquals("behavioral", arg.getBehavioral());
+        assertEquals("nutrition", arg.getNutrition());
     }
 
     @Test
@@ -120,17 +137,17 @@ public class PersonTypeControllerTest {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addParameter(RequestParameter.UUID, "uuid");
 
-        List<PersonTypeDTO> list = Arrays.asList(new PersonTypeDTO[]{});
-        when(personTypeService.findAllPersonTypes()).thenReturn(list);
+        List<CatDTO> list = Arrays.asList(new CatDTO[]{});
+        when(catService.findAllCats()).thenReturn(list);
 
         ModelAndView mv = underTest.doDelete(request);
         assertNotNull(mv);
-        assertEquals("persontype/list", mv.getViewName());
-        assertEquals("persontype.list.title", mv.getModel().get("title"));
+        assertEquals("cat/list", mv.getViewName());
+        assertEquals("cat.list.title", mv.getModel().get("title"));
         assertEquals(list, mv.getModel().get("listItems"));
 
         ArgumentCaptor<String[]> s = ArgumentCaptor.forClass(String[].class);
-        verify(personTypeService).deletePersonTypes(s.capture());
+        verify(catService).deleteCats(s.capture());
 
         String[] arg = s.getValue();
         assertNotNull(arg);

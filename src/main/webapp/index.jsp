@@ -28,6 +28,7 @@
         <ul>
             <li><a href="${pageContext.request.contextPath}/person/type/list"><fmt:message key="navigation.persontype" bundle="${lang}"/></a></li>
             <li><a href="${pageContext.request.contextPath}/person/list"><fmt:message key="navigation.person" bundle="${lang}"/></a></li>
+            <li><a href="${pageContext.request.contextPath}/cat/list"><fmt:message key="navigation.cat" bundle="${lang}"/></a></li>
         </ul>
     </div>
 </div>
