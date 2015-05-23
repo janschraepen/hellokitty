@@ -50,6 +50,9 @@ public class Cat extends Entity {
     @Column(name = "NUTRITION")
     private String nutrition;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "cat")
+    private List<CatPerson> catPersons;
+
     /**
      *
      * @return the name
@@ -194,18 +197,35 @@ public class Cat extends Entity {
         this.nutrition = nutrition;
     }
 
+    /**
+     *
+     * @return the cat_persons
+     */
+    public List<CatPerson> getCatPersons() {
+        return catPersons;
+    }
+
+    /**
+     *
+     * @param catPersons the cat_persons to set
+     */
+    public void setCatPersons(List<CatPerson> catPersons) {
+        this.catPersons = catPersons;
+    }
+
     @Override
     public String toString() {
         return "Cat{" +
                 "name='" + name + '\'' +
                 ", breed='" + breed + '\'' +
-                ", age=" + age +
+                ", age='" + age + '\'' +
                 ", gender=" + gender +
                 ", neutered=" + neutered +
                 ", chipped=" + chipped +
                 ", attention='" + attention + '\'' +
                 ", behavioral='" + behavioral + '\'' +
                 ", nutrition='" + nutrition + '\'' +
+                ", catPersons=" + catPersons +
                 '}';
     }
 

@@ -19,7 +19,7 @@ public interface PersonContactRepository extends JpaRepository<PersonContact, St
      * Find PersonContact by its id.
      *
      * @param id the id to find
-     * @return the found Person, or null if not found
+     * @return the found PersonContact, or null if not found
      */
     PersonContact findById(String id);
 

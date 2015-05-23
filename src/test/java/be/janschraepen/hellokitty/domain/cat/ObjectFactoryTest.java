@@ -103,4 +103,86 @@ public class ObjectFactoryTest {
         assertEquals(NUTRITION, dto.getNutrition());
     }
 
+    @Test
+    public void testCreateCatPersonDTO_withEntity() throws Exception {
+        Cat cat = new Cat();
+        cat.setId("uuid");
+
+        PersonType personType = new PersonType();
+        personType.setId("personType-uuid");
+        personType.setName("personType");
+
+        Person person = new Person();
+        person.setId("person-uuid");
+        person.setFirstName("firstName");
+        person.setLastName("lastName");
+
+        CatPerson catPerson = new CatPerson();
+        catPerson.setId("catPerson-uuid");
+        catPerson.setCat(cat);
+        catPerson.setType(personType);
+        catPerson.setPerson(person);
+
+        CatPersonDTO dto = underTest.createCatPersonDTO(catPerson);
+        assertNotNull(dto);
+        assertEquals("catPerson-uuid", dto.getId());
+        assertEquals("uuid", dto.getCatId());
+        assertEquals("personType-uuid", dto.getPersonTypeId());
+        assertEquals("personType", dto.getPersonType());
+        assertEquals("person-uuid", dto.getPersonId());
+        assertEquals("firstName", dto.getPersonFirstName());
+        assertEquals("lastName", dto.getPersonLastName());
+    }
+
+    @Test
+    public void testCreateCatPersonDTO_withParams() throws Exception {
+        CatPersonDTO dto = underTest.createCatPersonDTO("uuid", "personType-uuid", "person-uuid");
+        assertNotNull(dto);
+        assertEquals("uuid", dto.getCatId());
+        assertEquals("personType-uuid", dto.getPersonTypeId());
+        assertEquals("person-uuid", dto.getPersonId());
+    }
+
+    @Test
+    public void testCreateListCatPersonDTOs() throws Exception {
+        Cat cat = new Cat();
+        cat.setId("uuid");
+
+        PersonType personType = new PersonType();
+        personType.setId("personType-uuid");
+        personType.setName("personType");
+
+        Person person = new Person();
+        person.setId("person-uuid");
+        person.setFirstName("firstName");
+        person.setLastName("lastName");
+
+        CatPerson catPerson = new CatPerson();
+        catPerson.setId("catPerson-uuid");
+        catPerson.setCat(cat);
+        catPerson.setType(personType);
+        catPerson.setPerson(person);
+
+        List<CatPersonDTO> dtos = underTest.createListCatPersonDTOs(Arrays.asList(new CatPerson[]{catPerson}));
+        assertNotNull(dtos);
+        assertEquals(1, dtos.size(), 0);
+
+        CatPersonDTO dto = dtos.get(0);
+        assertNotNull(dto);
+        assertEquals("catPerson-uuid", dto.getId());
+        assertEquals("uuid", dto.getCatId());
+        assertEquals("personType-uuid", dto.getPersonTypeId());
+        assertEquals("personType", dto.getPersonType());
+        assertEquals("person-uuid", dto.getPersonId());
+        assertEquals("firstName", dto.getPersonFirstName());
+        assertEquals("lastName", dto.getPersonLastName());
+    }
+
+    @Test
+    public void testCreateListCatPersonDTOs_nullListReturnsEmptyList() throws Exception {
+        List<CatPersonDTO> dtos = underTest.createListCatPersonDTOs(null);
+        assertNotNull(dtos);
+        assertEquals(0, dtos.size(), 0);
+    }
+
 }

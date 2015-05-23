@@ -26,6 +26,8 @@ public final class RequestParameter {
     public static final String NAME = "name";
 
     public static final String CONTACTTYPES = "contactTypes";
+    public static final String PERSONTYPES = "personTypes";
+    public static final String PERSONS = "persons";
 
     public static final String FIRSTNAME = "firstName";
     public static final String LASTNAME = "lastName";

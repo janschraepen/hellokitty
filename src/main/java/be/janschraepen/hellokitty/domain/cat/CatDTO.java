@@ -1,7 +1,5 @@
 package be.janschraepen.hellokitty.domain.cat;
 
-import be.janschraepen.hellokitty.domain.person.PersonContactDTO;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -33,6 +31,8 @@ public class CatDTO implements Serializable {
 
     private String nutrition;
 
+    private List<CatPersonDTO> persons;
+
     /**
      * Instantiates a new CatDTO.
      */
@@ -55,7 +55,6 @@ public class CatDTO implements Serializable {
     }
 
     /**
-     *
      * @return the name
      */
     public String getName() {
@@ -63,7 +62,6 @@ public class CatDTO implements Serializable {
     }
 
     /**
-     *
      * @param name the name to set
      */
     public void setName(String name) {
@@ -71,7 +69,6 @@ public class CatDTO implements Serializable {
     }
 
     /**
-     *
      * @return the breed
      */
     public String getBreed() {
@@ -79,7 +76,6 @@ public class CatDTO implements Serializable {
     }
 
     /**
-     *
      * @param breed the breed to set
      */
     public void setBreed(String breed) {
@@ -87,7 +83,6 @@ public class CatDTO implements Serializable {
     }
 
     /**
-     *
      * @return the age (in years)
      */
     public String getAge() {
@@ -95,7 +90,6 @@ public class CatDTO implements Serializable {
     }
 
     /**
-     *
      * @param age the age to set (in years)
      */
     public void setAge(String age) {
@@ -103,7 +97,6 @@ public class CatDTO implements Serializable {
     }
 
     /**
-     *
      * @return the gender
      */
     public Gender getGender() {
@@ -111,7 +104,6 @@ public class CatDTO implements Serializable {
     }
 
     /**
-     *
      * @param gender the gender to set
      */
     public void setGender(Gender gender) {
@@ -119,7 +111,6 @@ public class CatDTO implements Serializable {
     }
 
     /**
-     *
      * @return true if is neutered, false if not
      */
     public boolean isNeutered() {
@@ -127,7 +118,6 @@ public class CatDTO implements Serializable {
     }
 
     /**
-     *
      * @param neutered the neutered value to set
      */
     public void setNeutered(boolean neutered) {
@@ -135,7 +125,6 @@ public class CatDTO implements Serializable {
     }
 
     /**
-     *
      * @return true if chipped, false if not
      */
     public boolean isChipped() {
@@ -143,7 +132,6 @@ public class CatDTO implements Serializable {
     }
 
     /**
-     *
      * @param chipped the chipped value to set
      */
     public void setChipped(boolean chipped) {
@@ -151,7 +139,6 @@ public class CatDTO implements Serializable {
     }
 
     /**
-     *
      * @return the attention
      */
     public String getAttention() {
@@ -159,7 +146,6 @@ public class CatDTO implements Serializable {
     }
 
     /**
-     *
      * @param attention the attention to set
      */
     public void setAttention(String attention) {
@@ -167,7 +153,6 @@ public class CatDTO implements Serializable {
     }
 
     /**
-     *
      * @return the behavioral
      */
     public String getBehavioral() {
@@ -175,7 +160,6 @@ public class CatDTO implements Serializable {
     }
 
     /**
-     *
      * @param behavioral the behavioral to set
      */
     public void setBehavioral(String behavioral) {
@@ -183,7 +167,6 @@ public class CatDTO implements Serializable {
     }
 
     /**
-     *
      * @return the nutrition
      */
     public String getNutrition() {
@@ -191,11 +174,24 @@ public class CatDTO implements Serializable {
     }
 
     /**
-     *
      * @param nutrition the nutrition to set
      */
     public void setNutrition(String nutrition) {
         this.nutrition = nutrition;
+    }
+
+    /**
+     * @return the Persons
+     */
+    public List<CatPersonDTO> getPersons() {
+        return persons;
+    }
+
+    /**
+     * @param persons the Persons to set
+     */
+    public void setPersons(List<CatPersonDTO> persons) {
+        this.persons = persons;
     }
 
 }

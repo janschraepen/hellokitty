@@ -2,6 +2,7 @@ package be.janschraepen.hellokitty.domain.person;
 
 
 import be.janschraepen.hellokitty.domain.Entity;
+import be.janschraepen.hellokitty.domain.cat.CatPerson;
 import be.janschraepen.hellokitty.domain.persontype.PersonType;
 
 import javax.persistence.*;
@@ -36,6 +37,9 @@ public class Person extends Entity {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
     private List<PersonContact> contacts;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
+    private List<CatPerson> catPersons;
 
     /**
      * @return the firstName
@@ -105,6 +109,22 @@ public class Person extends Entity {
      */
     public void setContacts(List<PersonContact> contacts) {
         this.contacts = contacts;
+    }
+
+    /**
+     *
+     * @return the cat_persons
+     */
+    public List<CatPerson> getCatPersons() {
+        return catPersons;
+    }
+
+    /**
+     *
+     * @param catPersons the cat_persons to set
+     */
+    public void setCatPersons(List<CatPerson> catPersons) {
+        this.catPersons = catPersons;
     }
 
     @Override

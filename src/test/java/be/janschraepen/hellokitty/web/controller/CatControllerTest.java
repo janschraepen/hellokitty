@@ -2,7 +2,12 @@ package be.janschraepen.hellokitty.web.controller;
 
 import be.janschraepen.hellokitty.domain.cat.CatDTO;
 import be.janschraepen.hellokitty.domain.cat.Gender;
+import be.janschraepen.hellokitty.domain.person.PersonDTO;
+import be.janschraepen.hellokitty.domain.persontype.PersonType;
+import be.janschraepen.hellokitty.domain.persontype.PersonTypeDTO;
 import be.janschraepen.hellokitty.services.CatService;
+import be.janschraepen.hellokitty.services.PersonService;
+import be.janschraepen.hellokitty.services.PersonTypeService;
 import be.janschraepen.hellokitty.web.RequestParameter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +24,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -30,6 +36,12 @@ public class CatControllerTest {
 
     @Mock
     private CatService catService;
+
+    @Mock
+    private PersonTypeService personTypeService;
+
+    @Mock
+    private PersonService personService;
 
     @InjectMocks
     private CatController underTest = new CatController();
@@ -152,6 +164,29 @@ public class CatControllerTest {
         String[] arg = s.getValue();
         assertNotNull(arg);
         assertEquals("uuid", arg[0]);
+    }
+
+    @Test
+    public void testAddDetailModelParameters() throws Exception {
+        PersonTypeDTO personType = new PersonTypeDTO();
+        when(personTypeService.findAllPersonTypes()).thenReturn(Arrays.asList(new PersonTypeDTO[] {personType}));
+
+        PersonDTO person_1 = new PersonDTO();
+        person_1.setId("uuid-1");
+        PersonDTO person_2 = new PersonDTO();
+        person_2.setId("uuid-2");
+        when(personService.findAllPersons()).thenReturn(Arrays.asList(new PersonDTO[] {person_1, person_2}));
+
+        ModelAndView mv = new ModelAndView();
+        underTest.addDetailModelParameters(mv);
+
+        List<PersonTypeDTO> personTypes = (List<PersonTypeDTO>) mv.getModel().get("personTypes");
+        assertNotNull(personTypes);
+        assertEquals(1, personTypes.size(), 0);
+
+        List<PersonDTO> persons = (List<PersonDTO>) mv.getModel().get("persons");
+        assertNotNull(persons);
+        assertEquals(2, persons.size(), 0);
     }
 
 }

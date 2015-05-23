@@ -4,6 +4,8 @@ import be.janschraepen.hellokitty.domain.cat.CatDTO;
 import be.janschraepen.hellokitty.domain.cat.Gender;
 import be.janschraepen.hellokitty.domain.cat.ObjectFactory;
 import be.janschraepen.hellokitty.services.CatService;
+import be.janschraepen.hellokitty.services.PersonService;
+import be.janschraepen.hellokitty.services.PersonTypeService;
 import be.janschraepen.hellokitty.web.RequestParameter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 
 /**
  * CatController class. Used for mapping request
@@ -30,6 +33,12 @@ public class CatController extends AbstractController<CatDTO> {
 
     @Autowired
     private CatService catService;
+
+    @Autowired
+    private PersonTypeService personTypeService;
+
+    @Autowired
+    private PersonService personService;
 
     @Override
     @RequestMapping("/cat/list")
@@ -92,6 +101,12 @@ public class CatController extends AbstractController<CatDTO> {
 
         catService.deleteCats(uuids);
         return list(request, VIEW_LIST, TITLE, DESCRIPTION, catService.findAllCats());
+    }
+
+    @Override
+    void addDetailModelParameters(ModelAndView mv) {
+        mv.getModel().put(RequestParameter.PERSONTYPES, personTypeService.findAllPersonTypes());
+        mv.getModel().put(RequestParameter.PERSONS, personService.findAllPersons());
     }
 
 }

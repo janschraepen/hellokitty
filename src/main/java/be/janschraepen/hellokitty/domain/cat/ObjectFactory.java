@@ -41,6 +41,7 @@ public final class ObjectFactory {
         dto.setAttention(c.getAttention());
         dto.setBehavioral(c.getBehavioral());
         dto.setNutrition(c.getNutrition());
+        dto.setPersons(createListCatPersonDTOs(c.getCatPersons()));
         return dto;
     }
 
@@ -84,6 +85,56 @@ public final class ObjectFactory {
         List<CatDTO> list = new ArrayList<>();
         for (Cat c : l) {
             list.add(createCatDTO(c));
+        }
+        return list;
+    }
+
+    /**
+     * Create CatPersonDTO object.
+     *
+     * @param c the CatPerson
+     * @return CatPersonsTO object
+     */
+    public CatPersonDTO createCatPersonDTO(CatPerson c) {
+        CatPersonDTO dto = new CatPersonDTO();
+        dto.setId(c.getId());
+        dto.setCatId(c.getCat().getId());
+        dto.setPersonTypeId(c.getType().getId());
+        dto.setPersonType(c.getType().getName());
+        dto.setPersonId(c.getPerson().getId());
+        dto.setPersonFirstName(c.getPerson().getFirstName());
+        dto.setPersonLastName(c.getPerson().getLastName());
+        return dto;
+    }
+
+    /**
+     * Create CatPersonDTO object.
+     *
+     * @param catId the Cat id
+     * @param personTypeId the PersonType id
+     * @param personId the Person id
+     * @return CatPersonsTO object
+     */
+    public CatPersonDTO createCatPersonDTO(String catId, String personTypeId, String personId) {
+        CatPersonDTO dto = new CatPersonDTO();
+        dto.setCatId(catId);
+        dto.setPersonTypeId(personTypeId);
+        dto.setPersonId(personId);
+        return dto;
+    }
+
+    /**
+     * Create List of CatPersonDTO objects.
+     *
+     * @param l the list of CatPersons
+     * @return List<CatPersonDTO> a list of CatPersonDTOs
+     */
+    public List<CatPersonDTO> createListCatPersonDTOs(List<CatPerson> l) {
+        List<CatPersonDTO> list = new ArrayList<>();
+        if (l != null) {
+            for (CatPerson c : l) {
+                list.add(createCatPersonDTO(c));
+            }
         }
         return list;
     }
