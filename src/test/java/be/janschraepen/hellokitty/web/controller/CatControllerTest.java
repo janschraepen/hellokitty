@@ -168,6 +168,33 @@ public class CatControllerTest {
     }
 
     @Test
+    public void testDoDeletePerson() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addParameter(RequestParameter.UUID, "uuid");
+        request.addParameter(RequestParameter.PERSON_UUID, "uuid");
+
+        CatDTO entity = new CatDTO();
+        entity.setId("uuid");
+        entity.setName("name");
+
+        when(catService.findCat("uuid")).thenReturn(entity);
+
+        ModelAndView mv = underTest.doDeletePerson(request);
+        assertNotNull(mv);
+        assertEquals("cat/edit", mv.getViewName());
+        assertEquals("name", mv.getModel().get("title"));
+        assertNotNull(mv.getModel().get("entity"));
+        assertEquals(1, mv.getModel().get("activeTab"));
+
+        ArgumentCaptor<String[]> s = ArgumentCaptor.forClass(String[].class);
+        verify(catService).deleteCatPersons(s.capture());
+
+        String[] arg = s.getValue();
+        assertNotNull(arg);
+        assertEquals("uuid", arg[0]);
+    }
+
+    @Test
     public void testDoSaveContact() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addParameter(RequestParameter.UUID, "uuid");

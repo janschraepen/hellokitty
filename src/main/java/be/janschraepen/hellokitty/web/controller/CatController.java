@@ -56,6 +56,9 @@ public class CatController extends AbstractController<CatDTO> {
             case Event.ADD_PERSON:
                 mv = doSavePerson(request);
                 break;
+            case Event.DELETE_PERSON:
+                mv = doDeletePerson(request);
+                break;
         }
         return mv;
     }
@@ -109,6 +112,22 @@ public class CatController extends AbstractController<CatDTO> {
 
         catService.deleteCats(uuids);
         return list(request, VIEW_LIST, TITLE, DESCRIPTION, catService.findAllCats());
+    }
+
+    /**
+     * delete entity CatPerson.
+     *
+     * @param request the servlet request
+     * @return ModelAndView model and view
+     */
+    public ModelAndView doDeletePerson(HttpServletRequest request) {
+        String[] uuids = request.getParameterValues(RequestParameter.PERSON_UUID);
+
+        catService.deleteCatPersons(uuids);
+
+        ModelAndView mv = doOpenEdit(request);
+        mv.getModel().put(RequestParameter.ACTIVE_TAB, 1);
+        return mv;
     }
 
     /**

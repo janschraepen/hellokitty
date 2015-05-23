@@ -217,7 +217,7 @@ public class CatServiceImplTest {
 
         when(catRepository.findById(UUID)).thenReturn(toDelete);
 
-        underTest.deleteCats(new String[] {UUID});
+        underTest.deleteCats(new String[]{UUID});
 
         verify(catRepository).delete(toDelete);
     }
@@ -261,6 +261,49 @@ public class CatServiceImplTest {
         assertSame(person, arg.getPerson());
     }
 
+    @Test
+    public void testDeleteCatPerson_nonExistingInstance() throws Exception {
+        when(catPersonRepository.findById(UUID)).thenReturn(null);
+
+        underTest.deleteCatPerson(UUID);
+    }
+
+    @Test
+    public void testDeleteCatPerson_existingInstance() throws Exception {
+        Cat cat = createCat("cat-uuid", "name", "breed", "age", Gender.V, true, false, "attention", "behavioral", "nutrition");
+        CatPerson toDelete = createCatPersonContact(UUID, cat);
+
+        when(catPersonRepository.findById(UUID)).thenReturn(toDelete);
+
+        underTest.deleteCatPerson(UUID);
+
+        ArgumentCaptor<CatPerson> p = ArgumentCaptor.forClass(CatPerson.class);
+        verify(catPersonRepository).delete(p.capture());
+
+        CatPerson arg = p.getValue();
+        assertNotNull(arg);
+        assertEquals("uuid", arg.getId());
+        assertEquals(cat, arg.getCat());
+    }
+
+    @Test
+    public void testDeletePersonContacts_existingInstance() throws Exception {
+        Cat cat = createCat("cat-uuid", "name", "breed", "age", Gender.V, true, false, "attention", "behavioral", "nutrition");
+        CatPerson toDelete = createCatPersonContact(UUID, cat);
+
+        when(catPersonRepository.findById(UUID)).thenReturn(toDelete);
+
+        underTest.deleteCatPersons(new String[] {UUID});
+
+        ArgumentCaptor<CatPerson> p = ArgumentCaptor.forClass(CatPerson.class);
+        verify(catPersonRepository).delete(p.capture());
+
+        CatPerson arg = p.getValue();
+        assertNotNull(arg);
+        assertEquals("uuid", arg.getId());
+        assertEquals(cat, arg.getCat());
+    }
+
     private CatDTO createCatDTO(String name, String breed, String age, Gender gender, boolean neutered, boolean chipped, String attention, String behavioral, String nutrition) {
         return createCatDTO(null, name, breed, age, gender, neutered, chipped, attention, behavioral, nutrition);
     }
@@ -297,6 +340,15 @@ public class CatServiceImplTest {
         cat.setBehavioral(behavioral);
         cat.setNutrition(nutrition);
         return cat;
+    }
+
+    private CatPerson createCatPersonContact(String uuid, Cat cat) {
+        CatPerson catPerson = new CatPerson();
+        catPerson.setId(uuid);
+        catPerson.setCat(cat);
+        catPerson.setType(new PersonType());
+        catPerson.setPerson(new Person());
+        return catPerson;
     }
 
 }

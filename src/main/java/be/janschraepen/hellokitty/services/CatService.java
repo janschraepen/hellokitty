@@ -72,4 +72,20 @@ public interface CatService {
     @Transactional
     CatPersonDTO saveCatPerson(CatPersonDTO dto);
 
+    /**
+     * Delete a CatPerson.
+     *
+     * @param uuid the uuid to delete
+     */
+    @Transactional
+    void deleteCatPerson(String uuid);
+
+    /**
+     * Delete multiple CatPersons.
+     *
+     * @param uuids the uuids to delete
+     */
+    @Transactional
+    void deleteCatPersons(String[] uuids);
+
 }

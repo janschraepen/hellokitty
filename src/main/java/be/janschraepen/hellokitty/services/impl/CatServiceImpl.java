@@ -104,4 +104,19 @@ public class CatServiceImpl implements CatService {
         return ObjectFactory.getInstance().createCatPersonDTO(catPerson);
     }
 
+    @Override
+    public void deleteCatPerson(String uuid) {
+        CatPerson catPerson = catPersonRepository.findById(uuid);
+        if (catPerson != null) {
+            catPersonRepository.delete(catPerson);
+        }
+    }
+
+    @Override
+    public void deleteCatPersons(String[] uuids) {
+        for (String uuid : uuids) {
+            deleteCatPerson(uuid);
+        }
+    }
+
 }
