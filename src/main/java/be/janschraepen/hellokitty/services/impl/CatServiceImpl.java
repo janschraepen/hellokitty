@@ -1,10 +1,7 @@
 package be.janschraepen.hellokitty.services.impl;
 
 import be.janschraepen.hellokitty.domain.cat.*;
-import be.janschraepen.hellokitty.repository.CatPersonRepository;
-import be.janschraepen.hellokitty.repository.CatRepository;
-import be.janschraepen.hellokitty.repository.PersonRepository;
-import be.janschraepen.hellokitty.repository.PersonTypeRepository;
+import be.janschraepen.hellokitty.repository.*;
 import be.janschraepen.hellokitty.services.CatService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +21,9 @@ public class CatServiceImpl implements CatService {
 
     @Autowired
     private CatPersonRepository catPersonRepository;
+
+    @Autowired
+    private CatPictureRepository catPictureRepository;
 
     @Autowired
     private PersonTypeRepository personTypeRepository;
@@ -117,6 +117,16 @@ public class CatServiceImpl implements CatService {
         for (String uuid : uuids) {
             deleteCatPerson(uuid);
         }
+    }
+
+    @Override
+    public void updateCatPicture(String uuid, byte[] picture) {
+        catPictureRepository.deleteAllPicutesForCat(uuid);
+
+        CatPicture catPicture = new CatPicture();
+        catPicture.setCat(catRepository.findById(uuid));
+        catPicture.setPicture(picture);
+        catPictureRepository.saveAndFlush(catPicture);
     }
 
 }

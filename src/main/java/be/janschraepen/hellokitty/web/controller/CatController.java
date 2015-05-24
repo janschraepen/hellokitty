@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -146,6 +148,23 @@ public class CatController extends AbstractController<CatDTO> {
 
         ModelAndView mv = doOpenEdit(request);
         mv.getModel().put(RequestParameter.ACTIVE_TAB, 1);
+        return mv;
+    }
+
+    /**
+     * upload picture for entity.
+     * @param request the servlet request
+     * @param file the MultiPart file
+     * @return ModelAndView model and view
+     */
+    @RequestMapping("/cat/upload")
+    public ModelAndView doSavePicture(HttpServletRequest request, @RequestParam("picture") MultipartFile file) throws IOException {
+        String uuid = request.getParameter(RequestParameter.UUID);
+
+        catService.updateCatPicture(uuid, file.getBytes());
+
+        ModelAndView mv = doOpenEdit(request);
+        mv.getModel().put(RequestParameter.ACTIVE_TAB, 2);
         return mv;
     }
 

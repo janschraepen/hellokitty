@@ -88,4 +88,13 @@ public interface CatService {
     @Transactional
     void deleteCatPersons(String[] uuids);
 
+    /**
+     * Update CatPicture. Removes old picture first, before adding
+     * a new picture
+     * @param uuid the Cat uuid
+     * @param picture the picture
+     */
+    @Transactional
+    void updateCatPicture(String uuid, byte[] picture);
+
 }

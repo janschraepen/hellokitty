@@ -18,8 +18,12 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.MessageSource;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -225,6 +229,34 @@ public class CatControllerTest {
     }
 
     @Test
+    public void testDoSavePicture() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addParameter(RequestParameter.UUID, "uuid");
+
+        CatDTO entity = new CatDTO();
+        entity.setId("uuid");
+        entity.setName("name");
+
+        when(catService.findCat("uuid")).thenReturn(entity);
+
+        MultipartFile file = new TestMultiPartFile();
+
+        underTest.doSavePicture(request, file);
+
+        ArgumentCaptor<String> u = ArgumentCaptor.forClass(String.class);
+        ArgumentCaptor<byte[]> p = ArgumentCaptor.forClass(byte[].class);
+
+        verify(catService).updateCatPicture(u.capture(), p.capture());
+
+        String arg1 = u.getValue();
+        assertNotNull(arg1);
+        assertEquals("uuid", arg1);
+
+        byte[] arg2 = p.getValue();
+        assertNotNull(arg2);
+    }
+
+    @Test
     public void testAddDetailModelParameters() throws Exception {
         PersonTypeDTO personType = new PersonTypeDTO();
         when(personTypeService.findAllPersonTypes()).thenReturn(Arrays.asList(new PersonTypeDTO[] {personType}));
@@ -245,6 +277,50 @@ public class CatControllerTest {
         List<PersonDTO> persons = (List<PersonDTO>) mv.getModel().get("persons");
         assertNotNull(persons);
         assertEquals(2, persons.size(), 0);
+    }
+
+    private class TestMultiPartFile implements MultipartFile {
+
+        @Override
+        public String getName() {
+            return null;
+        }
+
+        @Override
+        public String getOriginalFilename() {
+            return null;
+        }
+
+        @Override
+        public String getContentType() {
+            return null;
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return false;
+        }
+
+        @Override
+        public long getSize() {
+            return 0;
+        }
+
+        @Override
+        public byte[] getBytes() throws IOException {
+            return new byte[] { };
+        }
+
+        @Override
+        public InputStream getInputStream() throws IOException {
+            return null;
+        }
+
+        @Override
+        public void transferTo(File file) throws IOException, IllegalStateException {
+
+        }
+
     }
 
 }

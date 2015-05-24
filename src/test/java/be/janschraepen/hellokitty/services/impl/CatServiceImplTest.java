@@ -4,10 +4,7 @@ import be.janschraepen.hellokitty.domain.cat.*;
 import be.janschraepen.hellokitty.domain.person.Person;
 import be.janschraepen.hellokitty.domain.person.PersonDTO;
 import be.janschraepen.hellokitty.domain.persontype.PersonType;
-import be.janschraepen.hellokitty.repository.CatPersonRepository;
-import be.janschraepen.hellokitty.repository.CatRepository;
-import be.janschraepen.hellokitty.repository.PersonRepository;
-import be.janschraepen.hellokitty.repository.PersonTypeRepository;
+import be.janschraepen.hellokitty.repository.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -35,6 +32,9 @@ public class CatServiceImplTest {
 
     @Mock
     private CatPersonRepository catPersonRepository;
+
+    @Mock
+    private CatPictureRepository catPictureRepository;
 
     @Mock
     private PersonTypeRepository personTypeRepository;
@@ -302,6 +302,26 @@ public class CatServiceImplTest {
         assertNotNull(arg);
         assertEquals("uuid", arg.getId());
         assertEquals(cat, arg.getCat());
+    }
+
+    @Test
+    public void testUpdateCatPicture() throws Exception {
+        Cat cat = createCat(UUID, "name", "breed", "age", Gender.V, true, false, "attention", "behavioral", "nutrition");
+
+        when(catRepository.findById(UUID)).thenReturn(cat);
+
+        byte[] picture = new byte[] {};
+        underTest.updateCatPicture(UUID, picture);
+
+        verify(catPictureRepository).deleteAllPicutesForCat(UUID);
+
+        ArgumentCaptor<CatPicture> p = ArgumentCaptor.forClass(CatPicture.class);
+        verify(catPictureRepository).saveAndFlush(p.capture());
+
+        CatPicture catPicture = p.getValue();
+        assertNotNull(catPicture);
+        assertEquals(cat, catPicture.getCat());
+        assertEquals(picture, catPicture.getPicture());
     }
 
     private CatDTO createCatDTO(String name, String breed, String age, Gender gender, boolean neutered, boolean chipped, String attention, String behavioral, String nutrition) {

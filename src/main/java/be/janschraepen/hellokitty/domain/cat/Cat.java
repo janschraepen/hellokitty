@@ -53,6 +53,9 @@ public class Cat extends Entity {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "cat")
     private List<CatPerson> catPersons;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cat")
+    private List<CatPicture> catPictures;
+
     /**
      *
      * @return the name
@@ -211,6 +214,22 @@ public class Cat extends Entity {
      */
     public void setCatPersons(List<CatPerson> catPersons) {
         this.catPersons = catPersons;
+    }
+
+    /**
+     *
+     * @return the cat_pictures
+     */
+    public List<CatPicture> getCatPictures() {
+        return catPictures;
+    }
+
+    /**
+     *
+     * @param catPictures the cat_pictures to set
+     */
+    public void setCatPictures(List<CatPicture> catPictures) {
+        this.catPictures = catPictures;
     }
 
     @Override
