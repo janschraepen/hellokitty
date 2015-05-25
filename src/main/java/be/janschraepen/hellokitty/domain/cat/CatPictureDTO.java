@@ -1,52 +1,44 @@
 package be.janschraepen.hellokitty.domain.cat;
 
-
-import be.janschraepen.hellokitty.domain.Entity;
-import be.janschraepen.hellokitty.domain.person.Person;
-import be.janschraepen.hellokitty.domain.persontype.PersonType;
-
-import javax.persistence.*;
+import java.io.Serializable;
 
 /**
- * CatPicture Entity class. This class represents a Picture related to a
- * Cat with attributes such as picture, etc..
+ * CatPicture Data Transfer Object. Used for transferring data
+ * throughout the layers.
  */
-@javax.persistence.Entity
-@Table(name = "CAT_PICTURE")
-public class CatPicture extends Entity {
+public class CatPictureDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "CAT_ID", nullable = false)
-    private Cat cat;
+    private String catId;
 
-    @Lob
-    @Column(name = "DATA", nullable =  false, columnDefinition = "BLOB")
     private byte[] picture;
 
-    @Column(name = "SIZE")
     private Long size;
 
-    @Column(name = "CONTENT_TYPE")
     private String contentType;
 
     /**
-     *
-     * @return the cat
+     * Instantiates a new CatPersonDTO.
      */
-    public Cat getCat() {
-        return cat;
+    public CatPictureDTO() {
+
+    }
+
+    /**
+     * @return the Cat id
+     */
+    public String getCatId() {
+        return catId;
     }
 
     /**
      *
-     * @param cat the cat to set
+     * @param catId the Cat id to set
      */
-    public void setCat(Cat cat) {
-        this.cat = cat;
+    public void setCatId(String catId) {
+        this.catId = catId;
     }
-
 
     /**
      *
@@ -90,7 +82,7 @@ public class CatPicture extends Entity {
 
     /**
      *
-     * @param contentType the contentType
+     * @param contentType the contentType to set
      */
     public void setContentType(String contentType) {
         this.contentType = contentType;

@@ -2,7 +2,6 @@ package be.janschraepen.hellokitty.services.impl;
 
 import be.janschraepen.hellokitty.domain.cat.*;
 import be.janschraepen.hellokitty.domain.person.Person;
-import be.janschraepen.hellokitty.domain.person.PersonDTO;
 import be.janschraepen.hellokitty.domain.persontype.PersonType;
 import be.janschraepen.hellokitty.repository.*;
 import org.junit.Test;
@@ -17,7 +16,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -293,7 +291,7 @@ public class CatServiceImplTest {
 
         when(catPersonRepository.findById(UUID)).thenReturn(toDelete);
 
-        underTest.deleteCatPersons(new String[] {UUID});
+        underTest.deleteCatPersons(new String[]{UUID});
 
         ArgumentCaptor<CatPerson> p = ArgumentCaptor.forClass(CatPerson.class);
         verify(catPersonRepository).delete(p.capture());
@@ -305,23 +303,59 @@ public class CatServiceImplTest {
     }
 
     @Test
+    public void testFindCatPicture_nonExistingInstance() throws Exception {
+        when(catPictureRepository.findPictureForCat(UUID)).thenReturn(null);
+
+        CatPictureDTO dto = underTest.findCatPicture(UUID);
+        assertNull(dto);
+    }
+
+    @Test
+    public void testFindCatPicture_existingInstance() throws Exception {
+        Cat cat = createCat(UUID, "name", "breed", "age", Gender.V, true, false, "attention", "behavioral", "nutrition");
+
+        CatPicture catPicture = new CatPicture();
+        catPicture.setCat(cat);
+        catPicture.setPicture(new byte[] { });
+        catPicture.setSize(20L);
+        catPicture.setContentType("image/jpeg");
+
+        when(catPictureRepository.findPictureForCat(UUID)).thenReturn(catPicture);
+
+        CatPictureDTO dto = underTest.findCatPicture(UUID);
+        assertNotNull(dto);
+        assertEquals(UUID, dto.getCatId());
+        assertEquals(catPicture.getPicture(), dto.getPicture());
+        assertEquals(catPicture.getSize(), dto.getSize(), 0);
+        assertEquals(catPicture.getContentType(), dto.getContentType());
+
+    }
+
+    @Test
     public void testUpdateCatPicture() throws Exception {
         Cat cat = createCat(UUID, "name", "breed", "age", Gender.V, true, false, "attention", "behavioral", "nutrition");
 
         when(catRepository.findById(UUID)).thenReturn(cat);
 
-        byte[] picture = new byte[] {};
-        underTest.updateCatPicture(UUID, picture);
+        CatPictureDTO catPicture = new CatPictureDTO();
+        catPicture.setCatId(UUID);
+        catPicture.setPicture(new byte[]{});
+        catPicture.setSize(20L);
+        catPicture.setContentType("image/jpeg");
+
+        underTest.updateCatPicture(catPicture);
 
         verify(catPictureRepository).deleteAllPicutesForCat(UUID);
 
         ArgumentCaptor<CatPicture> p = ArgumentCaptor.forClass(CatPicture.class);
         verify(catPictureRepository).saveAndFlush(p.capture());
 
-        CatPicture catPicture = p.getValue();
-        assertNotNull(catPicture);
-        assertEquals(cat, catPicture.getCat());
-        assertEquals(picture, catPicture.getPicture());
+        CatPicture arg = p.getValue();
+        assertNotNull(arg);
+        assertEquals(cat, arg.getCat());
+        assertEquals(catPicture.getPicture(), arg.getPicture());
+        assertEquals(catPicture.getSize(), arg.getSize());
+        assertEquals(catPicture.getContentType(), arg.getContentType());
     }
 
     private CatDTO createCatDTO(String name, String breed, String age, Gender gender, boolean neutered, boolean chipped, String attention, String behavioral, String nutrition) {

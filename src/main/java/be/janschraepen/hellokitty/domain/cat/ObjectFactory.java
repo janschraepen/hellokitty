@@ -139,4 +139,35 @@ public final class ObjectFactory {
         return list;
     }
 
+    /**
+     * Create CatPictureDTO object
+     * @param p the CatPicture
+     * @return CatPictureDTO object
+     */
+    public CatPictureDTO createCatPictureDTO(CatPicture p) {
+        CatPictureDTO dto = new CatPictureDTO();
+        dto.setCatId(p.getCat().getId());
+        dto.setPicture(p.getPicture());
+        dto.setSize(p.getSize());
+        dto.setContentType(p.getContentType());
+        return dto;
+    }
+
+    /**
+     * Create CatPictureDTO object
+     * @param catId the Cat id
+     * @param picture the picture
+     * @param size the size
+     * @param contentType the contentType
+     * @return CatPictureDTO object
+     */
+    public CatPictureDTO createCatPictureDTO(String catId, byte[] picture, Long size, String contentType) {
+        CatPictureDTO dto = new CatPictureDTO();
+        dto.setCatId(catId);
+        dto.setPicture(picture);
+        dto.setSize(size);
+        dto.setContentType(contentType);
+        return dto;
+    }
+
 }

@@ -2,6 +2,7 @@ package be.janschraepen.hellokitty.services;
 
 import be.janschraepen.hellokitty.domain.cat.CatDTO;
 import be.janschraepen.hellokitty.domain.cat.CatPersonDTO;
+import be.janschraepen.hellokitty.domain.cat.CatPictureDTO;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -89,12 +90,19 @@ public interface CatService {
     void deleteCatPersons(String[] uuids);
 
     /**
+     * Find CatPicture with given uuid.
+     * @param uuid the Cat id
+     * @return CatPictureDTO the found CatPicture or null if not found
+     */
+    @Transactional(readOnly = true)
+    CatPictureDTO findCatPicture(String uuid);
+
+    /**
      * Update CatPicture. Removes old picture first, before adding
      * a new picture
-     * @param uuid the Cat uuid
-     * @param picture the picture
+     * @param dto the catPicture to save/update
      */
     @Transactional
-    void updateCatPicture(String uuid, byte[] picture);
+    void updateCatPicture(CatPictureDTO dto);
 
 }

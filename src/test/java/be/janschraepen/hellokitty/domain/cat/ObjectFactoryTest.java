@@ -185,4 +185,38 @@ public class ObjectFactoryTest {
         assertEquals(0, dtos.size(), 0);
     }
 
+    @Test
+    public void testCreateCatPictureDTO_withEntity() throws Exception {
+        Cat cat = new Cat();
+        cat.setId("uuid");
+
+        CatPicture p = new CatPicture();
+        p.setCat(cat);
+        p.setPicture(new byte[] { });
+        p.setSize(20L);
+        p.setContentType("image/jpeg");
+
+        CatPictureDTO dto = underTest.createCatPictureDTO(p);
+        assertNotNull(dto);
+        assertEquals("uuid", dto.getCatId());
+        assertEquals(p.getPicture(), dto.getPicture());
+        assertEquals(p.getSize(), dto.getSize(), 0);
+        assertEquals(p.getContentType(), dto.getContentType());
+    }
+
+    @Test
+    public void testCreateCatPictureDTO_withParams() throws Exception {
+        String catId = "uuid";
+        byte[] picture = new byte[] { };
+        Long size = 20L;
+        String contentType = "image/jpeg";
+
+        CatPictureDTO dto = underTest.createCatPictureDTO(catId, picture, size, contentType);
+        assertNotNull(dto);
+        assertEquals(catId, dto.getCatId());
+        assertEquals(picture, dto.getPicture());
+        assertEquals(size, dto.getSize(), 0);
+        assertEquals(contentType, dto.getContentType());
+    }
+
 }

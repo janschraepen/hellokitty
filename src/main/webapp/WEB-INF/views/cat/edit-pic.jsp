@@ -21,6 +21,6 @@
 
     </div>
     <div class="entity__form">
-        <!-- show image here -->
+        <img src="${actionUrl}/picture/cat/${entity.id}" alt="${entity.name}" />
     </div>
 </form>

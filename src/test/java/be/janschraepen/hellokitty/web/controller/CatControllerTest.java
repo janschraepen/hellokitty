@@ -2,6 +2,7 @@ package be.janschraepen.hellokitty.web.controller;
 
 import be.janschraepen.hellokitty.domain.cat.CatDTO;
 import be.janschraepen.hellokitty.domain.cat.CatPersonDTO;
+import be.janschraepen.hellokitty.domain.cat.CatPictureDTO;
 import be.janschraepen.hellokitty.domain.cat.Gender;
 import be.janschraepen.hellokitty.domain.person.PersonDTO;
 import be.janschraepen.hellokitty.domain.persontype.PersonType;
@@ -243,17 +244,16 @@ public class CatControllerTest {
 
         underTest.doSavePicture(request, file);
 
-        ArgumentCaptor<String> u = ArgumentCaptor.forClass(String.class);
-        ArgumentCaptor<byte[]> p = ArgumentCaptor.forClass(byte[].class);
+        ArgumentCaptor<CatPictureDTO> p = ArgumentCaptor.forClass(CatPictureDTO.class);
 
-        verify(catService).updateCatPicture(u.capture(), p.capture());
+        verify(catService).updateCatPicture(p.capture());
 
-        String arg1 = u.getValue();
-        assertNotNull(arg1);
-        assertEquals("uuid", arg1);
-
-        byte[] arg2 = p.getValue();
-        assertNotNull(arg2);
+        CatPictureDTO arg = p.getValue();
+        assertNotNull(arg);
+        assertEquals("uuid", arg.getCatId());
+        assertEquals(file.getBytes(), arg.getPicture());
+        assertEquals(file.getSize(), arg.getSize(), 0);
+        assertEquals(file.getContentType(), arg.getContentType());
     }
 
     @Test
@@ -293,7 +293,7 @@ public class CatControllerTest {
 
         @Override
         public String getContentType() {
-            return null;
+            return "image/jpeg";
         }
 
         @Override
@@ -303,7 +303,7 @@ public class CatControllerTest {
 
         @Override
         public long getSize() {
-            return 0;
+            return 20L;
         }
 
         @Override

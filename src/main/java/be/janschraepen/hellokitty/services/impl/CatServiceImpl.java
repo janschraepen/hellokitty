@@ -120,12 +120,25 @@ public class CatServiceImpl implements CatService {
     }
 
     @Override
-    public void updateCatPicture(String uuid, byte[] picture) {
-        catPictureRepository.deleteAllPicutesForCat(uuid);
+    public CatPictureDTO findCatPicture(String uuid) {
+        CatPicture catPicture = catPictureRepository.findPictureForCat(uuid);
+
+        CatPictureDTO p = null;
+        if (catPicture != null) {
+            p = ObjectFactory.getInstance().createCatPictureDTO(catPicture);
+        }
+        return p;
+    }
+
+    @Override
+    public void updateCatPicture(CatPictureDTO dto) {
+        catPictureRepository.deleteAllPicutesForCat(dto.getCatId());
 
         CatPicture catPicture = new CatPicture();
-        catPicture.setCat(catRepository.findById(uuid));
-        catPicture.setPicture(picture);
+        catPicture.setCat(catRepository.findById(dto.getCatId()));
+        catPicture.setPicture(dto.getPicture());
+        catPicture.setSize(dto.getSize());
+        catPicture.setContentType(dto.getContentType());
         catPictureRepository.saveAndFlush(catPicture);
     }
 

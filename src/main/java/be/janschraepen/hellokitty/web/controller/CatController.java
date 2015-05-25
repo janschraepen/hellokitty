@@ -1,9 +1,6 @@
 package be.janschraepen.hellokitty.web.controller;
 
-import be.janschraepen.hellokitty.domain.cat.CatDTO;
-import be.janschraepen.hellokitty.domain.cat.CatPersonDTO;
-import be.janschraepen.hellokitty.domain.cat.Gender;
-import be.janschraepen.hellokitty.domain.cat.ObjectFactory;
+import be.janschraepen.hellokitty.domain.cat.*;
 import be.janschraepen.hellokitty.services.CatService;
 import be.janschraepen.hellokitty.services.PersonService;
 import be.janschraepen.hellokitty.services.PersonTypeService;
@@ -161,7 +158,8 @@ public class CatController extends AbstractController<CatDTO> {
     public ModelAndView doSavePicture(HttpServletRequest request, @RequestParam("picture") MultipartFile file) throws IOException {
         String uuid = request.getParameter(RequestParameter.UUID);
 
-        catService.updateCatPicture(uuid, file.getBytes());
+        CatPictureDTO dto = ObjectFactory.getInstance().createCatPictureDTO(uuid, file.getBytes(), file.getSize(), file.getContentType());
+        catService.updateCatPicture(dto);
 
         ModelAndView mv = doOpenEdit(request);
         mv.getModel().put(RequestParameter.ACTIVE_TAB, 2);
