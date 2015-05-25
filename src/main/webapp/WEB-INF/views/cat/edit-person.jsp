@@ -38,12 +38,16 @@
                 <th></th>
                 <th><fmt:message key="table.header.personType" bundle="${lang}"/></th>
                 <th><fmt:message key="table.header.person" bundle="${lang}"/></th>
+                <th><fmt:message key="table.header.address" bundle="${lang}"/></th>
+                <th><fmt:message key="table.header.contact" bundle="${lang}"/></th>
             </tr>
             <c:forEach var="person" items="${entity.persons}">
                 <tr>
                     <td class="id"><input type="checkbox" name="person-uuid" value="${person.id}" /></td>
                     <td class="s">${person.personType}</td>
                     <td class="l">${person.personFirstName} ${person.personLastName}</td>
+                    <td class="l">${person.personAddressLine1} ${person.personAddressLine2}</td>
+                    <td class="l">${person.personContacts}</td>
                 </tr>
             </c:forEach>
         </table>

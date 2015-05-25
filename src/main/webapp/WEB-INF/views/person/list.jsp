@@ -46,6 +46,7 @@
                             <th><fmt:message key="table.header.lastName" bundle="${lang}"/></th>
                             <th><fmt:message key="table.header.addressLine1" bundle="${lang}"/></th>
                             <th><fmt:message key="table.header.addressLine2" bundle="${lang}"/></th>
+                            <th><fmt:message key="table.header.contact" bundle="${lang}"/></th>
                         </tr>
                         <c:forEach var="item" items="${listItems}">
                             <tr>
@@ -54,6 +55,7 @@
                                 <td class="l">${item.lastName}</td>
                                 <td class="l">${item.addressLine1}</td>
                                 <td class="l">${item.addressLine2}</td>
+                                <td class="l">${item.contactInfo}</td>
                             </tr>
                         </c:forEach>
                     </table>

@@ -1,6 +1,9 @@
 package be.janschraepen.hellokitty.domain.person;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -112,6 +115,23 @@ public class PersonDTO implements Serializable {
      */
     public void setContacts(List<PersonContactDTO> contacts) {
         this.contacts = contacts;
+    }
+
+    /**
+     * @return a String with contact information separated by <br/> tags
+     */
+    public String getContactInfo() {
+        StringBuilder builder = new StringBuilder();
+        if (CollectionUtils.isNotEmpty(contacts)) {
+            Iterator<PersonContactDTO> contactIter = contacts.iterator();
+            while (contactIter.hasNext()) {
+                builder.append(((PersonContactDTO) contactIter.next()).getValue());
+                if (contactIter.hasNext()) {
+                    builder.append("<br/>");
+                }
+            }
+        }
+        return builder.toString();
     }
 
 }

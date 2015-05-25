@@ -1,6 +1,10 @@
 package be.janschraepen.hellokitty.domain.cat;
 
+import be.janschraepen.hellokitty.domain.person.PersonContact;
+import org.apache.commons.collections4.CollectionUtils;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -104,6 +108,21 @@ public final class ObjectFactory {
         dto.setPersonId(c.getPerson().getId());
         dto.setPersonFirstName(c.getPerson().getFirstName());
         dto.setPersonLastName(c.getPerson().getLastName());
+        dto.setPersonAddressLine1(c.getPerson().getAddressLine1());
+        dto.setPersonAddressLine2(c.getPerson().getAddressLine2());
+
+        if (CollectionUtils.isNotEmpty(c.getPerson().getContacts())) {
+            Iterator<PersonContact> contactIter = c.getPerson().getContacts().iterator();
+            StringBuilder builder = new StringBuilder();
+            while (contactIter.hasNext()) {
+                builder.append(((PersonContact) contactIter.next()).getValue());
+                if (contactIter.hasNext()) {
+                    builder.append("<br/>");
+                }
+            }
+            dto.setPersonContacts(builder.toString());
+        }
+
         return dto;
     }
 

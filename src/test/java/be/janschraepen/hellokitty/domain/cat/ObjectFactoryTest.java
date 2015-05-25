@@ -112,10 +112,16 @@ public class ObjectFactoryTest {
         personType.setId("personType-uuid");
         personType.setName("personType");
 
+        PersonContact personContact = new PersonContact();
+        personContact.setValue("+32000000000000");
+
         Person person = new Person();
         person.setId("person-uuid");
         person.setFirstName("firstName");
         person.setLastName("lastName");
+        person.setAddressLine1("addressLine1");
+        person.setAddressLine2("addressLine2");
+        person.setContacts(Arrays.asList(new PersonContact[] {personContact}));
 
         CatPerson catPerson = new CatPerson();
         catPerson.setId("catPerson-uuid");
@@ -132,6 +138,9 @@ public class ObjectFactoryTest {
         assertEquals("person-uuid", dto.getPersonId());
         assertEquals("firstName", dto.getPersonFirstName());
         assertEquals("lastName", dto.getPersonLastName());
+        assertEquals("addressLine1", dto.getPersonAddressLine1());
+        assertEquals("addressLine2", dto.getPersonAddressLine2());
+        assertEquals("+32000000000000", dto.getPersonContacts());
     }
 
     @Test
@@ -152,10 +161,20 @@ public class ObjectFactoryTest {
         personType.setId("personType-uuid");
         personType.setName("personType");
 
+        PersonContact personContact_1 = new PersonContact();
+        personContact_1.setValue("+32000000000000");
+        PersonContact personContact_2 = new PersonContact();
+        personContact_2.setValue("email@domain.be");
+
         Person person = new Person();
         person.setId("person-uuid");
         person.setFirstName("firstName");
         person.setLastName("lastName");
+        person.setLastName("lastName");
+        person.setAddressLine1("addressLine1");
+        person.setAddressLine2("addressLine2");
+        person.setContacts(Arrays.asList(new PersonContact[] {personContact_1, personContact_2}));
+
 
         CatPerson catPerson = new CatPerson();
         catPerson.setId("catPerson-uuid");
@@ -176,6 +195,9 @@ public class ObjectFactoryTest {
         assertEquals("person-uuid", dto.getPersonId());
         assertEquals("firstName", dto.getPersonFirstName());
         assertEquals("lastName", dto.getPersonLastName());
+        assertEquals("addressLine1", dto.getPersonAddressLine1());
+        assertEquals("addressLine2", dto.getPersonAddressLine2());
+        assertEquals("+32000000000000<br/>email@domain.be", dto.getPersonContacts());
     }
 
     @Test

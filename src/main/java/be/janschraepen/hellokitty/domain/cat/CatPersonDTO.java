@@ -24,6 +24,12 @@ public class CatPersonDTO implements Serializable {
 
     private String personLastName;
 
+    private String personAddressLine1;
+
+    private String personAddressLine2;
+
+    private String personContacts;
+
     /**
      * Instantiates a new CatPersonDTO.
      */
@@ -53,7 +59,6 @@ public class CatPersonDTO implements Serializable {
     }
 
     /**
-     *
      * @param catId the Cat id to set
      */
     public void setCatId(String catId) {
@@ -61,7 +66,6 @@ public class CatPersonDTO implements Serializable {
     }
 
     /**
-     *
      * @return the PersonType id
      */
     public String getPersonTypeId() {
@@ -69,7 +73,6 @@ public class CatPersonDTO implements Serializable {
     }
 
     /**
-     *
      * @param personTypeId the PersonType id to set
      */
     public void setPersonTypeId(String personTypeId) {
@@ -77,7 +80,6 @@ public class CatPersonDTO implements Serializable {
     }
 
     /**
-     *
      * @return the personType
      */
     public String getPersonType() {
@@ -85,7 +87,6 @@ public class CatPersonDTO implements Serializable {
     }
 
     /**
-     *
      * @param personType the personType to set
      */
     public void setPersonType(String personType) {
@@ -93,7 +94,6 @@ public class CatPersonDTO implements Serializable {
     }
 
     /**
-     *
      * @return the Person id
      */
     public String getPersonId() {
@@ -101,7 +101,6 @@ public class CatPersonDTO implements Serializable {
     }
 
     /**
-     *
      * @param personId the Person id to set
      */
     public void setPersonId(String personId) {
@@ -109,7 +108,6 @@ public class CatPersonDTO implements Serializable {
     }
 
     /**
-     *
      * @return the Person firstName
      */
     public String getPersonFirstName() {
@@ -117,7 +115,6 @@ public class CatPersonDTO implements Serializable {
     }
 
     /**
-     *
      * @param personFirstName the Person firstName to set
      */
     public void setPersonFirstName(String personFirstName) {
@@ -125,7 +122,6 @@ public class CatPersonDTO implements Serializable {
     }
 
     /**
-     *
      * @return the Person lastName
      */
     public String getPersonLastName() {
@@ -133,11 +129,52 @@ public class CatPersonDTO implements Serializable {
     }
 
     /**
-     *
      * @param personLastName the Person lastName to set
      */
     public void setPersonLastName(String personLastName) {
         this.personLastName = personLastName;
+    }
+
+    /**
+     * @return the Person addressLine1
+     */
+    public String getPersonAddressLine1() {
+        return personAddressLine1;
+    }
+
+    /**
+     * @param personAddressLine1 the Person addressLine1 to set
+     */
+    public void setPersonAddressLine1(String personAddressLine1) {
+        this.personAddressLine1 = personAddressLine1;
+    }
+
+    /**
+     * @return the Person addressLine2
+     */
+    public String getPersonAddressLine2() {
+        return personAddressLine2;
+    }
+
+    /**
+     * @param personAddressLine2 the Person addressLine2 to set
+     */
+    public void setPersonAddressLine2(String personAddressLine2) {
+        this.personAddressLine2 = personAddressLine2;
+    }
+
+    /**
+     * @return the Person contact details
+     */
+    public String getPersonContacts() {
+        return personContacts;
+    }
+
+    /**
+     * @param personContacts the Person contact details to set
+     */
+    public void setPersonContacts(String personContacts) {
+        this.personContacts = personContacts;
     }
 
 }
