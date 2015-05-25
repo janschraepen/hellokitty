@@ -44,7 +44,7 @@ public class CatServiceImpl implements CatService {
 
     @Override
     public List<CatDTO> findCats(String searchFor) {
-        List<Cat> cats = catRepository.find(searchFor);
+        List<Cat> cats = catRepository.find(searchFor.toLowerCase());
         return ObjectFactory.getInstance().createListCatDTOs(cats);
     }
 

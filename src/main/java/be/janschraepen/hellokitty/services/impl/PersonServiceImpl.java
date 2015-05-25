@@ -36,7 +36,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<PersonDTO> findPersons(String searchFor) {
-        List<Person> persons = personRepository.find(searchFor);
+        List<Person> persons = personRepository.find(searchFor.toLowerCase());
         return ObjectFactory.getInstance().createListPersonDTOs(persons);
     }
 

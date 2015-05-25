@@ -29,7 +29,7 @@ public interface CatRepository extends JpaRepository<Cat, String> {
      * @param searchFor the search criteria
      * @return List<Cat> list of found persons
      */
-    @Query("SELECT c FROM Cat c WHERE c.name LIKE %?1%")
+    @Query("SELECT c FROM Cat c WHERE lower(c.name) LIKE %?1%")
     List<Cat> find(String searchFor);
 
 }

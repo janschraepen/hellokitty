@@ -75,7 +75,7 @@ public class CatServiceImplTest {
         Cat cat_1 = createCat("name_1", "breed_1", "age_1", Gender.M, true, true, "attention_1", "behavioral_1", "nutrition_1");
         Cat cat_2 = createCat("name_2", "breed_2", "age_2", Gender.M, true, true, "attention_2", "behavioral_2", "nutrition_2");
 
-        when(catRepository.find(SEARCH_FOR)).thenReturn(Arrays.asList(cat_2));
+        when(catRepository.find(SEARCH_FOR.toLowerCase())).thenReturn(Arrays.asList(cat_2));
 
         List<CatDTO> list = underTest.findCats(SEARCH_FOR);
         assertNotNull(list);

@@ -26,7 +26,7 @@ public interface PersonTypeRepository extends JpaRepository<PersonType, String> 
      * @param searchFor the search criteria
      * @return List<PersonType> list of found personTypes
      */
-    @Query("SELECT p FROM PersonType p WHERE p.name LIKE %?1%")
+    @Query("SELECT p FROM PersonType p WHERE lower(p.name) LIKE %?1%")
     List<PersonType> find(String searchFor);
 
 }

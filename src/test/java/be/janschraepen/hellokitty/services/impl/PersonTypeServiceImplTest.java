@@ -56,7 +56,7 @@ public class PersonTypeServiceImplTest {
         PersonType personType_1 = createPersonType("shortCode_1", "name_1");
         PersonType personType_2 = createPersonType("shortCode_2", "name_2");
 
-        when(personTypeRepository.find(SEARCH_FOR)).thenReturn(Arrays.asList(personType_2));
+        when(personTypeRepository.find(SEARCH_FOR.toLowerCase())).thenReturn(Arrays.asList(personType_2));
 
         List<PersonTypeDTO> list = underTest.findPersonTypes(SEARCH_FOR);
         assertNotNull(list);

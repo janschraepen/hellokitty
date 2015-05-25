@@ -34,7 +34,7 @@ public class PersonTypeServiceImpl implements PersonTypeService {
 
     @Override
     public List<PersonTypeDTO> findPersonTypes(String searchFor) {
-        List<PersonType> personTypes = personTypeRepository.find(searchFor);
+        List<PersonType> personTypes = personTypeRepository.find(searchFor.toLowerCase());
         return ObjectFactory.getInstance().createListDTOs(personTypes);
     }
 

@@ -60,7 +60,7 @@ public class PersonServiceImplTest {
         Person person_1 = createPerson("firstName_1", "lastName_1", "addressLine1_1", "addressLine2_1");
         Person person_2 = createPerson("firstName_2", "lastName_2", "addressLine1_2", "addressLine2_2");
 
-        when(personRepository.find(SEARCH_FOR)).thenReturn(Arrays.asList(person_2));
+        when(personRepository.find(SEARCH_FOR.toLowerCase())).thenReturn(Arrays.asList(person_2));
 
         List<PersonDTO> list = underTest.findPersons(SEARCH_FOR);
         assertNotNull(list);
