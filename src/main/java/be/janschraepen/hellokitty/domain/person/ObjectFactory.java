@@ -1,6 +1,12 @@
 package be.janschraepen.hellokitty.domain.person;
 
+import be.janschraepen.hellokitty.domain.cat.CatDTO;
+import be.janschraepen.hellokitty.domain.cat.CatPerson;
+import be.janschraepen.hellokitty.domain.persontype.PersonType;
+import org.apache.commons.collections4.CollectionUtils;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -37,6 +43,17 @@ public final class ObjectFactory {
         dto.setAddressLine1(p.getAddressLine1());
         dto.setAddressLine2(p.getAddressLine2());
         dto.setContacts(createListPersonContactDTOs(p.getContacts()));
+
+        if (CollectionUtils.isNotEmpty(p.getCatPersons())) {
+            List<CatDTO> cats = new ArrayList<>();
+            for (CatPerson catPerson : p.getCatPersons()) {
+                if (PersonType.OWNER.equals(catPerson.getType().getShortCode())) {
+                    cats.add(be.janschraepen.hellokitty.domain.cat.ObjectFactory.getInstance().createCatDTO(catPerson.getCat()));
+                }
+            }
+            dto.setCats(cats);
+        }
+
         return dto;
     }
 

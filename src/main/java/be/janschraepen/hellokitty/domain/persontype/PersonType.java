@@ -21,6 +21,10 @@ public class PersonType extends Entity {
 
     private static final long serialVersionUID = 1L;
 
+    public static final String OWNER = "OWNER";
+    public static final String CONTACT = "CONT";
+    public static final String VET = "VET";
+
     @NotNull
     @Column(name = "SHORT_CODE")
     private String shortCode;

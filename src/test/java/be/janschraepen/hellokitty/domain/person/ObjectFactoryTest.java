@@ -1,5 +1,8 @@
 package be.janschraepen.hellokitty.domain.person;
 
+import be.janschraepen.hellokitty.domain.cat.Cat;
+import be.janschraepen.hellokitty.domain.cat.CatDTO;
+import be.janschraepen.hellokitty.domain.cat.CatPerson;
 import be.janschraepen.hellokitty.domain.persontype.PersonType;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,11 +41,28 @@ public class ObjectFactoryTest {
 
     @Test
     public void testCreatePersonDTO_withEntity() throws Exception {
+        Cat cat = new Cat();
+        cat.setName("catName");
+
+        PersonType personType_owner = new PersonType();
+        personType_owner.setShortCode(PersonType.OWNER);
+        PersonType personType_vet = new PersonType();
+        personType_vet.setShortCode(PersonType.VET);
+
+        CatPerson catPerson_owner = new CatPerson();
+        catPerson_owner.setCat(cat);
+        catPerson_owner.setType(personType_owner);
+
+        CatPerson catPerson_vet = new CatPerson();
+        catPerson_vet.setCat(cat);
+        catPerson_vet.setType(personType_vet);
+
         Person person = new Person();
         person.setFirstName(FIRST_NAME);
         person.setLastName(LAST_NAME);
         person.setAddressLine1(ADDRESS_LINE_1);
         person.setAddressLine2(ADDRESS_LINE_2);
+        person.setCatPersons(Arrays.asList(new CatPerson[] {catPerson_owner, catPerson_vet}));
 
         PersonDTO dto = underTest.createPersonDTO(person);
         assertNotNull(dto);
@@ -50,6 +70,13 @@ public class ObjectFactoryTest {
         assertEquals(LAST_NAME, dto.getLastName());
         assertEquals(ADDRESS_LINE_1, dto.getAddressLine1());
         assertEquals(ADDRESS_LINE_2, dto.getAddressLine2());
+
+        assertNotNull(dto.getCats());
+        assertEquals(1, dto.getCats().size());
+
+        CatDTO catDto = dto.getCats().get(0);
+        assertNotNull(catDto);
+        assertEquals("catName", catDto.getName());
     }
 
     @Test

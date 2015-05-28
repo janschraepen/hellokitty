@@ -30,12 +30,16 @@
                 <ul>
                     <li><a href="#tabs-common"><fmt:message key="tabs.common" bundle="${lang}"/></a></li>
                     <li><a href="#tabs-contact"><fmt:message key="tabs.contact" bundle="${lang}"/></a></li>
+                    <li><a href="#tabs-cats"><fmt:message key="tabs.cats" bundle="${lang}"/></a></li>
                 </ul>
                 <div id="tabs-common">
                     <jsp:include page="./edit-common.jsp" />
                 </div>
                 <div id="tabs-contact">
                     <jsp:include page="./edit-contact.jsp" />
+                </div>
+                <div id="tabs-cats">
+                    <jsp:include page="./edit-cats.jsp" />
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 package be.janschraepen.hellokitty.domain.person;
 
+import be.janschraepen.hellokitty.domain.cat.CatDTO;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.io.Serializable;
@@ -25,6 +26,8 @@ public class PersonDTO implements Serializable {
     private String addressLine2;
 
     private List<PersonContactDTO> contacts;
+
+    private List<CatDTO> cats;
 
     /**
      * Instantiates a new PersonDTO.
@@ -115,6 +118,20 @@ public class PersonDTO implements Serializable {
      */
     public void setContacts(List<PersonContactDTO> contacts) {
         this.contacts = contacts;
+    }
+
+    /**
+     * @return the cats
+     */
+    public List<CatDTO> getCats() {
+        return cats;
+    }
+
+    /**
+     * @param cats the cats to set
+     */
+    public void setCats(List<CatDTO> cats) {
+        this.cats = cats;
     }
 
     /**
