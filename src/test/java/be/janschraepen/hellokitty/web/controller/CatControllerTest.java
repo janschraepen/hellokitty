@@ -127,14 +127,26 @@ public class CatControllerTest {
         request.addParameter(RequestParameter.BEHAVIORAL, "behavioral");
         request.addParameter(RequestParameter.NUTRITION, "nutrition");
 
+        CatDTO cat = new CatDTO();
+        cat.setId("uuid");
+        cat.setName("name");
+        cat.setBreed("breed");
+        cat.setAge("age");
+        cat.setGender(Gender.V);
+        cat.setNeutered(true);
+        cat.setChipped(false);
+        cat.setAttention("attention");
+        cat.setBehavioral("behavioral");
+        cat.setNutrition("nutrition");
+
+        ArgumentCaptor<CatDTO> c = ArgumentCaptor.forClass(CatDTO.class);
+        when(catService.saveCat(c.capture())).thenReturn(cat);
+
         ModelAndView mv = underTest.doSave(request);
         assertNotNull(mv);
         assertEquals("cat/edit", mv.getViewName());
         assertEquals("name", mv.getModel().get("title"));
         assertNotNull(mv.getModel().get("entity"));
-
-        ArgumentCaptor<CatDTO> c = ArgumentCaptor.forClass(CatDTO.class);
-        verify(catService).saveCat(c.capture());
 
         CatDTO arg = c.getValue();
         assertNotNull(arg);

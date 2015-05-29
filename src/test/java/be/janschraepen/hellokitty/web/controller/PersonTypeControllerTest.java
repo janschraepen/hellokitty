@@ -102,14 +102,19 @@ public class PersonTypeControllerTest {
         request.addParameter(RequestParameter.SHORT_CODE, "shortCode");
         request.addParameter(RequestParameter.NAME, "name");
 
+        PersonTypeDTO personType = new PersonTypeDTO();
+        personType.setId("uuid");
+        personType.setShortCode("shortCode");
+        personType.setName("name");
+
+        ArgumentCaptor<PersonTypeDTO> p = ArgumentCaptor.forClass(PersonTypeDTO.class);
+        when(personTypeService.savePersonType(p.capture())).thenReturn(personType);
+
         ModelAndView mv = underTest.doSave(request);
         assertNotNull(mv);
         assertEquals("persontype/edit", mv.getViewName());
         assertEquals("shortCode - name", mv.getModel().get("title"));
         assertNotNull(mv.getModel().get("entity"));
-
-        ArgumentCaptor<PersonTypeDTO> p = ArgumentCaptor.forClass(PersonTypeDTO.class);
-        verify(personTypeService).savePersonType(p.capture());
 
         PersonTypeDTO arg = p.getValue();
         assertNotNull(arg);

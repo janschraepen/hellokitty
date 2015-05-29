@@ -76,7 +76,7 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
         PersonTypeDTO personType = ObjectFactory.getInstance().createDTO(uuid, shortCode, name);;
         String title;
         try {
-            personTypeService.savePersonType(personType);
+            personType = personTypeService.savePersonType(personType);
 
             title = personType.getShortCode() + " - " + personType.getName();
             return detail(request, VIEW_EDIT, title, DESCRIPTION, personType);

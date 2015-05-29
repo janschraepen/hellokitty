@@ -99,7 +99,7 @@ public class CatController extends AbstractController<CatDTO> {
         String nutrition = request.getParameter(RequestParameter.NUTRITION);
 
         CatDTO cat = ObjectFactory.getInstance().createCatDTO(uuid, name, breed, age, gender, neutered, chipped, attention, behavioral, nutrition);
-        catService.saveCat(cat);
+        cat = catService.saveCat(cat);
 
         String title = cat.getName();
         return detail(request, VIEW_EDIT, title, DESCRIPTION, cat);
