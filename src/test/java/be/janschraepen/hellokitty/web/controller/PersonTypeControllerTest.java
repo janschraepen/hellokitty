@@ -1,7 +1,10 @@
 package be.janschraepen.hellokitty.web.controller;
 
+import be.janschraepen.hellokitty.domain.person.Person;
+import be.janschraepen.hellokitty.domain.persontype.CannotModifyPersonTypeException;
 import be.janschraepen.hellokitty.domain.persontype.PersonTypeDTO;
 import be.janschraepen.hellokitty.services.PersonTypeService;
+import be.janschraepen.hellokitty.web.RequestAttribute;
 import be.janschraepen.hellokitty.web.RequestParameter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -116,6 +119,29 @@ public class PersonTypeControllerTest {
     }
 
     @Test
+    public void testDoSave_onExceptionShowsErrorMessage() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addParameter(RequestParameter.UUID, "uuid");
+        request.addParameter(RequestParameter.SHORT_CODE, "shortCode");
+        request.addParameter(RequestParameter.NAME, "name");
+
+        when(personTypeService.savePersonType(anyObject())).thenThrow(new CannotModifyPersonTypeException());
+
+        PersonTypeDTO entity = new PersonTypeDTO("uuid", "shortCode", "name");
+        when(personTypeService.findPersonType("uuid")).thenReturn(entity);
+
+        ModelAndView mv = underTest.doSave(request);
+        assertNotNull(mv);
+        assertEquals("persontype/edit", mv.getViewName());
+        assertEquals("shortCode - name", mv.getModel().get("title"));
+        assertNotNull(mv.getModel().get("entity"));
+
+        String attr = (String) request.getAttribute(RequestAttribute.ERROR_MSG);
+        assertNotNull(attr);
+        assertEquals("Kan PersoonType Eigenaar, Contactpersoon en/of Dierenarts niet wijzigen!", attr);
+    }
+
+    @Test
     public void testDoDelete() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addParameter(RequestParameter.UUID, "uuid");
@@ -135,6 +161,27 @@ public class PersonTypeControllerTest {
         String[] arg = s.getValue();
         assertNotNull(arg);
         assertEquals("uuid", arg[0]);
+    }
+
+    @Test
+    public void testDoDelete_onExceptionShowsErrorMessage() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addParameter(RequestParameter.UUID, "uuid");
+
+        doThrow(new CannotModifyPersonTypeException()).when(personTypeService).deletePersonTypes(new String[] {"uuid"});
+
+        List<PersonTypeDTO> list = Arrays.asList(new PersonTypeDTO[]{});
+        when(personTypeService.findAllPersonTypes()).thenReturn(list);
+
+        ModelAndView mv = underTest.doDelete(request);
+        assertNotNull(mv);
+        assertEquals("persontype/list", mv.getViewName());
+        assertEquals("persontype.list.title", mv.getModel().get("title"));
+        assertEquals(list, mv.getModel().get("listItems"));
+
+        String attr = (String) request.getAttribute(RequestAttribute.ERROR_MSG);
+        assertNotNull(attr);
+        assertEquals("Kan PersoonType Eigenaar, Contactpersoon en/of Dierenarts niet wijzigen!", attr);
     }
 
 }

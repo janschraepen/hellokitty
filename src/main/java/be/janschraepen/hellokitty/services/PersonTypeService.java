@@ -1,5 +1,6 @@
 package be.janschraepen.hellokitty.services;
 
+import be.janschraepen.hellokitty.domain.persontype.CannotModifyPersonTypeException;
 import be.janschraepen.hellokitty.domain.persontype.PersonTypeDTO;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,22 +39,25 @@ public interface PersonTypeService {
      * Save/update a PersonType.
      * @param dto the personType to save/update
      * @return PersonTypeDTO the saved instance
+     * @throws CannotModifyPersonTypeException if a system required PersonType is being modified
      */
     @Transactional
-    PersonTypeDTO savePersonType(PersonTypeDTO dto);
+    PersonTypeDTO savePersonType(PersonTypeDTO dto) throws CannotModifyPersonTypeException;
 
     /**
      * Delete a PersonType.
      * @param uuid the uuid to delete
+     * @throws CannotModifyPersonTypeException if a system required PersonType is being modified
      */
     @Transactional
-    void deletePersonType(String uuid);
+    void deletePersonType(String uuid) throws CannotModifyPersonTypeException;
 
     /**
      * Delete multiple PersonTypes.
      * @param uuids the uuids to delete
+     * @throws CannotModifyPersonTypeException if a system required PersonType is being modified
      */
     @Transactional
-    void deletePersonTypes(String[] uuids);
+    void deletePersonTypes(String[] uuids) throws CannotModifyPersonTypeException;
 
 }

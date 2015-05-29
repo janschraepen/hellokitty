@@ -11,7 +11,7 @@
     <input type="hidden" name="_event" value="" />
     <input type="hidden" name="uuid" value="${entity.id}" />
 
-    <div class="entity_catt">
+    <div class="entity_cat">
         <div>
 
         </div>

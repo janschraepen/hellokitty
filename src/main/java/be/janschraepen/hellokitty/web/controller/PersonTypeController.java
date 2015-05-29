@@ -1,8 +1,10 @@
 package be.janschraepen.hellokitty.web.controller;
 
+import be.janschraepen.hellokitty.domain.persontype.CannotModifyPersonTypeException;
 import be.janschraepen.hellokitty.domain.persontype.ObjectFactory;
 import be.janschraepen.hellokitty.domain.persontype.PersonTypeDTO;
 import be.janschraepen.hellokitty.services.PersonTypeService;
+import be.janschraepen.hellokitty.web.RequestAttribute;
 import be.janschraepen.hellokitty.web.RequestParameter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,18 +73,28 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
         String shortCode = request.getParameter(RequestParameter.SHORT_CODE);
         String name = request.getParameter(RequestParameter.NAME);
 
-        PersonTypeDTO personType = ObjectFactory.getInstance().createDTO(uuid, shortCode, name);
-        personTypeService.savePersonType(personType);
+        PersonTypeDTO personType = ObjectFactory.getInstance().createDTO(uuid, shortCode, name);;
+        String title;
+        try {
+            personTypeService.savePersonType(personType);
 
-        String title = personType.getShortCode() + " - " + personType.getName();
-        return detail(request, VIEW_EDIT, title, DESCRIPTION, personType);
+            title = personType.getShortCode() + " - " + personType.getName();
+            return detail(request, VIEW_EDIT, title, DESCRIPTION, personType);
+        } catch (CannotModifyPersonTypeException e) {
+            request.setAttribute(RequestAttribute.ERROR_MSG, "Kan PersoonType Eigenaar, Contactpersoon en/of Dierenarts niet wijzigen!");
+            return doOpenEdit(request);
+        }
     }
 
     @Override
     public ModelAndView doDelete(HttpServletRequest request) {
         String[] uuids = request.getParameterValues(RequestParameter.UUID);
 
-        personTypeService.deletePersonTypes(uuids);
+        try {
+            personTypeService.deletePersonTypes(uuids);
+        } catch (CannotModifyPersonTypeException e) {
+            request.setAttribute(RequestAttribute.ERROR_MSG, "Kan PersoonType Eigenaar, Contactpersoon en/of Dierenarts niet wijzigen!");
+        }
         return list(request, VIEW_LIST, TITLE, DESCRIPTION, personTypeService.findAllPersonTypes());
     }
 

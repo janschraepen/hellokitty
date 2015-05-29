@@ -1,5 +1,6 @@
 package be.janschraepen.hellokitty.services.impl;
 
+import be.janschraepen.hellokitty.domain.persontype.CannotModifyPersonTypeException;
 import be.janschraepen.hellokitty.domain.persontype.PersonType;
 import be.janschraepen.hellokitty.domain.persontype.PersonTypeDTO;
 import be.janschraepen.hellokitty.repository.PersonTypeRepository;
@@ -137,6 +138,23 @@ public class PersonTypeServiceImplTest {
         assertEquals("name_4", arg.getName());
     }
 
+    @Test(expected = CannotModifyPersonTypeException.class)
+    public void testSavePersonType_newInstanceWithSystemPersonTypeThrowsException() throws Exception {
+        PersonTypeDTO _new = createPersonTypeDTO(PersonType.OWNER, "name_3");
+
+        underTest.savePersonType(_new);
+    }
+
+    @Test(expected = CannotModifyPersonTypeException.class)
+    public void testSavePersonType_existingInstanceWithSystemPersonTypeThrowsException() throws Exception {
+        PersonType toUpdate = createPersonType(UUID, PersonType.OWNER, "name_3");
+        PersonTypeDTO updated = createPersonTypeDTO(UUID, PersonType.OWNER, "name_4");
+
+        when(personTypeRepository.findById(UUID)).thenReturn(toUpdate);
+
+        underTest.savePersonType(updated);
+    }
+
     @Test
     public void testDeletePersonType_nonExistingInstance() throws Exception {
         when(personTypeRepository.findById(UUID)).thenReturn(null);
@@ -155,6 +173,15 @@ public class PersonTypeServiceImplTest {
         verify(personTypeRepository).delete(toDelete);
     }
 
+    @Test(expected = CannotModifyPersonTypeException.class)
+    public void testDeletePersonType_existingInstanceWithSystemPersonTypeThrowsException() throws Exception {
+        PersonType toDelete = createPersonType(UUID, PersonType.OWNER, "name_3");
+
+        when(personTypeRepository.findById(UUID)).thenReturn(toDelete);
+
+        underTest.deletePersonType(UUID);
+    }
+
     @Test
     public void testDeletePersonTypes_existingInstance() throws Exception {
         PersonType toDelete = createPersonType(UUID, "shortCode_3", "name_3");
@@ -170,6 +197,14 @@ public class PersonTypeServiceImplTest {
         assertNotNull(arg);
         assertEquals("shortCode_3", arg.getShortCode());
         assertEquals("name_3", arg.getName());
+    }
+
+    @Test
+    public void testIsSystemPersonType() throws Exception {
+        assertTrue(underTest.isSystemPersonType(PersonType.OWNER));
+        assertTrue(underTest.isSystemPersonType(PersonType.CONTACT));
+        assertTrue(underTest.isSystemPersonType(PersonType.VET));
+        assertFalse(underTest.isSystemPersonType("shortCode"));
     }
 
     private PersonTypeDTO createPersonTypeDTO(String shortCode, String name) {
