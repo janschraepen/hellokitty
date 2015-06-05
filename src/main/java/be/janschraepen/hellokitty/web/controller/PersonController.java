@@ -141,9 +141,14 @@ public class PersonController extends AbstractController<PersonDTO> {
         String contactType = request.getParameter(RequestParameter.CONTACT_TYPE);
         String contactValue = request.getParameter(RequestParameter.CONTACT_VALUE);
 
-        PersonContactDTO personContact = ObjectFactory.getInstance().createPersonContactDTO(uuid, ContactType.valueOf(contactType), contactValue);
-        personService.savePersonContact(personContact);
-
+        try {
+            PersonContactDTO personContact = ObjectFactory.getInstance().createPersonContactDTO(uuid, ContactType.valueOf(contactType), contactValue);
+            personService.savePersonContact(personContact);
+        } catch (IllegalArgumentException e) {
+            request.setAttribute(RequestAttribute.ERROR_MSG, "Ongeldig ContactType geselecteerd!");
+        } catch (ConstraintViolationException e) {
+            request.setAttribute(RequestAttribute.ERROR_MSG, handleConstraintViolations(e));
+        }
         ModelAndView mv = doOpenEdit(request);
         mv.getModel().put(RequestParameter.ACTIVE_TAB, 1);
         return mv;

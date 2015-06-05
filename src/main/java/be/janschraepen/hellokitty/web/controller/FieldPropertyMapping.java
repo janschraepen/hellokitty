@@ -23,10 +23,13 @@ public final class FieldPropertyMapping {
         // personType
         fieldProperty.put("shortCode", "Code");
         fieldProperty.put("name", "Omschrijving");
+        // person
         fieldProperty.put("firstName", "Voornaam");
         fieldProperty.put("lastName", "Fam.naam");
         fieldProperty.put("addressLine1", "Straat+nr");
         fieldProperty.put("addressLine2", "Postcode+plaats");
+        // personContact
+        fieldProperty.put("value", "Waarde");
 
     }
 

@@ -82,7 +82,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public PersonContactDTO savePersonContact(PersonContactDTO dto) {
+    public PersonContactDTO savePersonContact(PersonContactDTO dto) throws ConstraintViolationException {
         PersonContact personContact = new PersonContact();
         personContact.setPerson(personRepository.findById(dto.getPersonId()));
         personContact.setType(dto.getType());

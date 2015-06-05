@@ -6,6 +6,7 @@ import be.janschraepen.hellokitty.domain.persontype.PersonType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * PersonContact Entity class. This class represents a Contacts of a Person
@@ -26,6 +27,7 @@ public class PersonContact extends Entity {
     @Column(name = "TYPE")
     private ContactType type;
 
+    @Size(min = 1, max = 100)
     @NotNull
     @Column(name = "VALUE")
     private String value;

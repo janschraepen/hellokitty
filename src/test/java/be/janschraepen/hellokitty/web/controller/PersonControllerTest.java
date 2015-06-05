@@ -268,6 +268,72 @@ public class PersonControllerTest {
     }
 
     @Test
+    public void testDoSaveContact_onIllegalArgumentExceptionShowsErrorMessage() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addParameter(RequestParameter.UUID, "uuid");
+        request.addParameter(RequestParameter.CONTACT_TYPE, "-1");
+        request.addParameter(RequestParameter.CONTACT_VALUE, "value");
+
+        PersonDTO entity = new PersonDTO();
+        entity.setId("uuid");
+        entity.setFirstName("firstName");
+        entity.setLastName("lastName");
+        entity.setAddressLine1("addressLine1");
+        entity.setAddressLine2("addressLine2");
+
+        when(personService.findPerson("uuid")).thenReturn(entity);
+
+        ModelAndView mv = underTest.doSaveContact(request);
+        assertNotNull(mv);
+        assertEquals("person/edit", mv.getViewName());
+        assertEquals("firstName lastName", mv.getModel().get("title"));
+        assertNotNull(mv.getModel().get("entity"));
+        assertEquals(1, mv.getModel().get("activeTab"));
+
+        String attr = (String) request.getAttribute(RequestAttribute.ERROR_MSG);
+        assertNotNull(attr);
+        assertEquals("Ongeldig ContactType geselecteerd!", attr);
+    }
+    @Test
+    public void testDoSaveContact_onConstraintViolationExceptionShowsErrorMessage() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addParameter(RequestParameter.UUID, "uuid");
+        request.addParameter(RequestParameter.CONTACT_TYPE, "CELLULAR");
+        request.addParameter(RequestParameter.CONTACT_VALUE, "value");
+
+        StubConstraintViolation<String> violation_1 = new StubConstraintViolation<>("{messageTemplate-1}");
+        StubConstraintViolation<String> violation_2 = new StubConstraintViolation<>("{messageTemplate-1}");
+
+        Set<ConstraintViolation<String>> violations = new HashSet<>();
+        violations.add(violation_1);
+        violations.add(violation_2);
+
+        ConstraintViolationException exception = new ConstraintViolationException(violations);
+
+        when(personService.savePersonContact(anyObject())).thenThrow(exception);
+        when(messageSource.getMessage(anyObject(), anyObject(), anyObject())).thenReturn("Violation message");
+
+        PersonDTO entity = new PersonDTO();
+        entity.setId("uuid");
+        entity.setFirstName("firstName");
+        entity.setLastName("lastName");
+        entity.setAddressLine1("addressLine1");
+        entity.setAddressLine2("addressLine2");
+        when(personService.findPerson("uuid")).thenReturn(entity);
+
+        ModelAndView mv = underTest.doSaveContact(request);
+        assertNotNull(mv);
+        assertEquals("person/edit", mv.getViewName());
+        assertEquals("firstName lastName", mv.getModel().get("title"));
+        assertNotNull(mv.getModel().get("entity"));
+        assertEquals(1, mv.getModel().get("activeTab"));
+
+        String attr = (String) request.getAttribute(RequestAttribute.ERROR_MSG);
+        assertNotNull(attr);
+        assertEquals("<ul><li>Violation message</li><li>Violation message</li></ul>", attr);
+    }
+
+    @Test
     public void testAddDetailModelParameters() throws Exception {
         ModelAndView mv = new ModelAndView();
         underTest.addDetailModelParameters(mv);

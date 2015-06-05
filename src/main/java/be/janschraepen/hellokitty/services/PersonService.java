@@ -70,9 +70,10 @@ public interface PersonService {
      *
      * @param dto the personContact to save/update
      * @return PersonContactDTO the saved instance
+     * @throws ConstraintViolationException if one occurs
      */
     @Transactional
-    PersonContactDTO savePersonContact(PersonContactDTO dto);
+    PersonContactDTO savePersonContact(PersonContactDTO dto) throws ConstraintViolationException;
 
     /**
      * Delete a PersonContact.
