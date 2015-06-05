@@ -10,7 +10,9 @@ import be.janschraepen.hellokitty.domain.persontype.PersonTypeDTO;
 import be.janschraepen.hellokitty.services.CatService;
 import be.janschraepen.hellokitty.services.PersonService;
 import be.janschraepen.hellokitty.services.PersonTypeService;
+import be.janschraepen.hellokitty.web.RequestAttribute;
 import be.janschraepen.hellokitty.web.RequestParameter;
+import be.janschraepen.hellokitty.web.controller.stub.StubConstraintViolation;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -22,15 +24,16 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -160,6 +163,95 @@ public class CatControllerTest {
         assertEquals("attention", arg.getAttention());
         assertEquals("behavioral", arg.getBehavioral());
         assertEquals("nutrition", arg.getNutrition());
+    }
+
+    @Test
+    public void testDoSave_onNullPointerExceptionShowsErrorMessage() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addParameter(RequestParameter.UUID, "uuid");
+        request.addParameter(RequestParameter.NAME, "name");
+        request.addParameter(RequestParameter.BREED, "breed");
+        request.addParameter(RequestParameter.AGE, "age");
+        request.addParameter(RequestParameter.NEUTERED, "TRUE");
+        request.addParameter(RequestParameter.CHIPPED, "FALSE");
+        request.addParameter(RequestParameter.ATTENTION, "attention");
+        request.addParameter(RequestParameter.BEHAVIORAL, "behavioral");
+        request.addParameter(RequestParameter.NUTRITION, "nutrition");
+
+        CatDTO cat = new CatDTO();
+        cat.setId("uuid");
+        cat.setName("name");
+        cat.setBreed("breed");
+        cat.setAge("age");
+        cat.setGender(Gender.V);
+        cat.setNeutered(true);
+        cat.setChipped(false);
+        cat.setAttention("attention");
+        cat.setBehavioral("behavioral");
+        cat.setNutrition("nutrition");
+
+        when(catService.findCat("uuid")).thenReturn(cat);
+
+        ModelAndView mv = underTest.doSave(request);
+        assertNotNull(mv);
+        assertEquals("cat/edit", mv.getViewName());
+        assertEquals("name", mv.getModel().get("title"));
+        assertNotNull(mv.getModel().get("entity"));
+
+        String attr = (String) request.getAttribute(RequestAttribute.ERROR_MSG);
+        assertNotNull(attr);
+        assertEquals("Ongeldig Geslacht geselecteerd!", attr);
+    }
+
+    @Test
+    public void testDoSave_onConstraintViolationExceptionShowsErrorMessage() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addParameter(RequestParameter.UUID, "uuid");
+        request.addParameter(RequestParameter.NAME, "name");
+        request.addParameter(RequestParameter.BREED, "breed");
+        request.addParameter(RequestParameter.AGE, "age");
+        request.addParameter(RequestParameter.GENDER, "V");
+        request.addParameter(RequestParameter.NEUTERED, "TRUE");
+        request.addParameter(RequestParameter.CHIPPED, "FALSE");
+        request.addParameter(RequestParameter.ATTENTION, "attention");
+        request.addParameter(RequestParameter.BEHAVIORAL, "behavioral");
+        request.addParameter(RequestParameter.NUTRITION, "nutrition");
+
+        StubConstraintViolation<String> violation_1 = new StubConstraintViolation<>("{messageTemplate-1}");
+        StubConstraintViolation<String> violation_2 = new StubConstraintViolation<>("{messageTemplate-1}");
+
+        Set<ConstraintViolation<String>> violations = new HashSet<>();
+        violations.add(violation_1);
+        violations.add(violation_2);
+
+        ConstraintViolationException exception = new ConstraintViolationException(violations);
+
+        when(catService.saveCat(anyObject())).thenThrow(exception);
+        when(messageSource.getMessage(anyObject(), anyObject(), anyObject())).thenReturn("Violation message");
+
+        CatDTO cat = new CatDTO();
+        cat.setId("uuid");
+        cat.setName("name");
+        cat.setBreed("breed");
+        cat.setAge("age");
+        cat.setGender(Gender.V);
+        cat.setNeutered(true);
+        cat.setChipped(false);
+        cat.setAttention("attention");
+        cat.setBehavioral("behavioral");
+        cat.setNutrition("nutrition");
+
+        when(catService.findCat("uuid")).thenReturn(cat);
+
+        ModelAndView mv = underTest.doSave(request);
+        assertNotNull(mv);
+        assertEquals("cat/edit", mv.getViewName());
+        assertEquals("name", mv.getModel().get("title"));
+        assertNotNull(mv.getModel().get("entity"));
+
+        String attr = (String) request.getAttribute(RequestAttribute.ERROR_MSG);
+        assertNotNull(attr);
+        assertEquals("<ul><li>Violation message</li><li>Violation message</li></ul>", attr);
     }
 
     @Test

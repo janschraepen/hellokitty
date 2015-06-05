@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 /**
@@ -55,7 +56,7 @@ public class CatServiceImpl implements CatService {
     }
 
     @Override
-    public CatDTO saveCat(CatDTO dto) {
+    public CatDTO saveCat(CatDTO dto) throws ConstraintViolationException {
         Cat cat;
         if (StringUtils.isBlank(dto.getId())) {
             // save a new cat

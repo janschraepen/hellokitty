@@ -30,6 +30,13 @@ public final class FieldPropertyMapping {
         fieldProperty.put("addressLine2", "Postcode+plaats");
         // personContact
         fieldProperty.put("value", "Waarde");
+        // cat
+        fieldProperty.put("name", "Naam");
+        fieldProperty.put("breed", "Ras");
+        fieldProperty.put("age", "Leeftijd");
+        fieldProperty.put("attention", "Aandachtspunten");
+        fieldProperty.put("behavioral", "Gedragseigenschappen");
+        fieldProperty.put("nutrition", "Voeding");
 
     }
 

@@ -2,10 +2,10 @@ package be.janschraepen.hellokitty.domain.cat;
 
 
 import be.janschraepen.hellokitty.domain.Entity;
-import be.janschraepen.hellokitty.domain.person.PersonContact;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -18,13 +18,16 @@ public class Cat extends Entity {
 
     private static final long serialVersionUID = 1L;
 
+    @Size(min = 1, max = 100)
     @NotNull
     @Column(name = "NAME")
     private String name;
 
+    @Size(max = 40)
     @Column(name = "BREED")
     private String breed;
 
+    @Size(max = 4)
     @Column(name = "YEAR_OF_BIRTH")
     private String age;
 
@@ -41,12 +44,15 @@ public class Cat extends Entity {
     @Column(name = "CHIPPED")
     private boolean chipped;
 
+    @Size(max = 512)
     @Column(name = "ATTENTION")
     private String attention;
 
+    @Size(max = 512)
     @Column(name = "BEHAVIORAL")
     private String behavioral;
 
+    @Size(max = 512)
     @Column(name = "NUTRITION")
     private String nutrition;
 
@@ -57,7 +63,6 @@ public class Cat extends Entity {
     private List<CatPicture> catPictures;
 
     /**
-     *
      * @return the name
      */
     public String getName() {
@@ -65,7 +70,6 @@ public class Cat extends Entity {
     }
 
     /**
-     *
      * @param name the name to set
      */
     public void setName(String name) {
@@ -73,7 +77,6 @@ public class Cat extends Entity {
     }
 
     /**
-     *
      * @return the breed
      */
     public String getBreed() {
@@ -81,7 +84,6 @@ public class Cat extends Entity {
     }
 
     /**
-     *
      * @param breed the breed to set
      */
     public void setBreed(String breed) {
@@ -89,7 +91,6 @@ public class Cat extends Entity {
     }
 
     /**
-     *
      * @return the age (in years)
      */
     public String getAge() {
@@ -97,7 +98,6 @@ public class Cat extends Entity {
     }
 
     /**
-     *
      * @param age the age to set (in years)
      */
     public void setAge(String age) {
@@ -105,7 +105,6 @@ public class Cat extends Entity {
     }
 
     /**
-     *
      * @return the gender
      */
     public Gender getGender() {
@@ -113,7 +112,6 @@ public class Cat extends Entity {
     }
 
     /**
-     *
      * @param gender the gender to set
      */
     public void setGender(Gender gender) {
@@ -121,7 +119,6 @@ public class Cat extends Entity {
     }
 
     /**
-     *
      * @return true if is neutered, false if not
      */
     public boolean isNeutered() {
@@ -129,7 +126,6 @@ public class Cat extends Entity {
     }
 
     /**
-     *
      * @param neutered the neutered value to set
      */
     public void setNeutered(boolean neutered) {
@@ -137,7 +133,6 @@ public class Cat extends Entity {
     }
 
     /**
-     *
      * @return true if chipped, false if not
      */
     public boolean isChipped() {
@@ -145,7 +140,6 @@ public class Cat extends Entity {
     }
 
     /**
-     *
      * @param chipped the chipped value to set
      */
     public void setChipped(boolean chipped) {
@@ -153,7 +147,6 @@ public class Cat extends Entity {
     }
 
     /**
-     *
      * @return the attention
      */
     public String getAttention() {
@@ -161,7 +154,6 @@ public class Cat extends Entity {
     }
 
     /**
-     *
      * @param attention the attention to set
      */
     public void setAttention(String attention) {
@@ -169,7 +161,6 @@ public class Cat extends Entity {
     }
 
     /**
-     *
      * @return the behavioral
      */
     public String getBehavioral() {
@@ -177,7 +168,6 @@ public class Cat extends Entity {
     }
 
     /**
-     *
      * @param behavioral the behavioral to set
      */
     public void setBehavioral(String behavioral) {
@@ -185,7 +175,6 @@ public class Cat extends Entity {
     }
 
     /**
-     *
      * @return the nutrition
      */
     public String getNutrition() {
@@ -193,7 +182,6 @@ public class Cat extends Entity {
     }
 
     /**
-     *
      * @param nutrition the nutrition
      */
     public void setNutrition(String nutrition) {
@@ -201,7 +189,6 @@ public class Cat extends Entity {
     }
 
     /**
-     *
      * @return the cat_persons
      */
     public List<CatPerson> getCatPersons() {
@@ -209,7 +196,6 @@ public class Cat extends Entity {
     }
 
     /**
-     *
      * @param catPersons the cat_persons to set
      */
     public void setCatPersons(List<CatPerson> catPersons) {
@@ -217,7 +203,6 @@ public class Cat extends Entity {
     }
 
     /**
-     *
      * @return the cat_pictures
      */
     public List<CatPicture> getCatPictures() {
@@ -225,7 +210,6 @@ public class Cat extends Entity {
     }
 
     /**
-     *
      * @param catPictures the cat_pictures to set
      */
     public void setCatPictures(List<CatPicture> catPictures) {

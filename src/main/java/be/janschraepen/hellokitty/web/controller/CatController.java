@@ -5,6 +5,7 @@ import be.janschraepen.hellokitty.services.CatService;
 import be.janschraepen.hellokitty.services.PersonService;
 import be.janschraepen.hellokitty.services.PersonTypeService;
 import be.janschraepen.hellokitty.web.Event;
+import be.janschraepen.hellokitty.web.RequestAttribute;
 import be.janschraepen.hellokitty.web.RequestParameter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -91,18 +93,26 @@ public class CatController extends AbstractController<CatDTO> {
         String name = request.getParameter(RequestParameter.NAME);
         String breed = request.getParameter(RequestParameter.BREED);
         String age = request.getParameter(RequestParameter.AGE);
-        Gender gender = Gender.valueOf(request.getParameter(RequestParameter.GENDER));
+        String gender = request.getParameter(RequestParameter.GENDER);
         boolean neutered = Boolean.valueOf(request.getParameter(RequestParameter.NEUTERED));
         boolean chipped = Boolean.valueOf(request.getParameter(RequestParameter.CHIPPED));
         String attention = request.getParameter(RequestParameter.ATTENTION);
         String behavioral = request.getParameter(RequestParameter.BEHAVIORAL);
         String nutrition = request.getParameter(RequestParameter.NUTRITION);
 
-        CatDTO cat = ObjectFactory.getInstance().createCatDTO(uuid, name, breed, age, gender, neutered, chipped, attention, behavioral, nutrition);
-        cat = catService.saveCat(cat);
+        try {
+            CatDTO cat = ObjectFactory.getInstance().createCatDTO(uuid, name, breed, age, Gender.valueOf(gender), neutered, chipped, attention, behavioral, nutrition);
+            cat = catService.saveCat(cat);
 
-        String title = cat.getName();
-        return detail(request, VIEW_EDIT, title, DESCRIPTION, cat);
+            String title = cat.getName();
+            return detail(request, VIEW_EDIT, title, DESCRIPTION, cat);
+        } catch (NullPointerException e) {
+            request.setAttribute(RequestAttribute.ERROR_MSG, "Ongeldig Geslacht geselecteerd!");
+            return doOpenEdit(request);
+        } catch (ConstraintViolationException e) {
+            request.setAttribute(RequestAttribute.ERROR_MSG, handleConstraintViolations(e));
+            return doOpenEdit(request);
+        }
     }
 
     @Override

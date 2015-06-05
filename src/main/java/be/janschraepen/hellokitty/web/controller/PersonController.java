@@ -92,12 +92,11 @@ public class PersonController extends AbstractController<PersonDTO> {
         String addressLine1 = request.getParameter(RequestParameter.ADDRESSLINE1);
         String addressLine2 = request.getParameter(RequestParameter.ADDRESSLINE2);
 
-        PersonDTO person = ObjectFactory.getInstance().createPersonDTO(uuid, firstName, lastName, addressLine1, addressLine2);
-        String title;
         try {
+            PersonDTO person = ObjectFactory.getInstance().createPersonDTO(uuid, firstName, lastName, addressLine1, addressLine2);
             person = personService.savePerson(person);
 
-            title = person.getFirstName() + " " + person.getLastName();
+            String title = person.getFirstName() + " " + person.getLastName();
             return detail(request, VIEW_EDIT, title, DESCRIPTION, person);
         } catch (ConstraintViolationException e) {
             request.setAttribute(RequestAttribute.ERROR_MSG, handleConstraintViolations(e));

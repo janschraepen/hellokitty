@@ -5,6 +5,7 @@ import be.janschraepen.hellokitty.domain.cat.CatPersonDTO;
 import be.janschraepen.hellokitty.domain.cat.CatPictureDTO;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 /**
@@ -44,9 +45,10 @@ public interface CatService {
      *
      * @param dto the cat to save/update
      * @return CatDTO the saved instance
+     * @throws ConstraintViolationException if one occurs
      */
     @Transactional
-    CatDTO saveCat(CatDTO dto);
+    CatDTO saveCat(CatDTO dto) throws ConstraintViolationException;
 
     /**
      * Delete a Cat.
