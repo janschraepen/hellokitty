@@ -7,6 +7,7 @@ import be.janschraepen.hellokitty.domain.person.PersonDTO;
 import be.janschraepen.hellokitty.services.PersonService;
 import be.janschraepen.hellokitty.services.PersonTypeService;
 import be.janschraepen.hellokitty.web.Event;
+import be.janschraepen.hellokitty.web.RequestAttribute;
 import be.janschraepen.hellokitty.web.RequestParameter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
 
 /**
@@ -91,10 +93,17 @@ public class PersonController extends AbstractController<PersonDTO> {
         String addressLine2 = request.getParameter(RequestParameter.ADDRESSLINE2);
 
         PersonDTO person = ObjectFactory.getInstance().createPersonDTO(uuid, firstName, lastName, addressLine1, addressLine2);
-        person = personService.savePerson(person);
+        String title;
+        try {
+            person = personService.savePerson(person);
 
-        String title = person.getFirstName() + " " + person.getLastName();
-        return detail(request, VIEW_EDIT, title, DESCRIPTION, person);
+            title = person.getFirstName() + " " + person.getLastName();
+            return detail(request, VIEW_EDIT, title, DESCRIPTION, person);
+        } catch (ConstraintViolationException e) {
+            request.setAttribute(RequestAttribute.ERROR_MSG, handleConstraintViolations(e));
+            return doOpenEdit(request);
+        }
+
     }
 
     @Override

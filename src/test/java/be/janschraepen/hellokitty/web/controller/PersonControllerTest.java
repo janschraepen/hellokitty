@@ -5,7 +5,9 @@ import be.janschraepen.hellokitty.domain.person.PersonContactDTO;
 import be.janschraepen.hellokitty.domain.person.PersonDTO;
 import be.janschraepen.hellokitty.services.PersonService;
 import be.janschraepen.hellokitty.services.PersonTypeService;
+import be.janschraepen.hellokitty.web.RequestAttribute;
 import be.janschraepen.hellokitty.web.RequestParameter;
+import be.janschraepen.hellokitty.web.controller.stub.StubConstraintViolation;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -16,11 +18,12 @@ import org.springframework.context.MessageSource;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.*;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -137,6 +140,46 @@ public class PersonControllerTest {
         assertEquals("lastName", arg.getLastName());
         assertEquals("addressLine1", arg.getAddressLine1());
         assertEquals("addressLine2", arg.getAddressLine2());
+    }
+
+    @Test
+    public void testDoSave_onConstraintViolationExceptionShowsErrorMessage() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addParameter(RequestParameter.UUID, "uuid");
+        request.addParameter(RequestParameter.FIRSTNAME, "firstName");
+        request.addParameter(RequestParameter.LASTNAME, "lastName");
+        request.addParameter(RequestParameter.ADDRESSLINE1, "addressLine1");
+        request.addParameter(RequestParameter.ADDRESSLINE2, "addressLine2");
+
+        StubConstraintViolation<String> violation_1 = new StubConstraintViolation<>("{messageTemplate-1}");
+        StubConstraintViolation<String> violation_2 = new StubConstraintViolation<>("{messageTemplate-1}");
+
+        Set<ConstraintViolation<String>> violations = new HashSet<>();
+        violations.add(violation_1);
+        violations.add(violation_2);
+
+        ConstraintViolationException exception = new ConstraintViolationException(violations);
+
+        when(personService.savePerson(anyObject())).thenThrow(exception);
+        when(messageSource.getMessage(anyObject(), anyObject(), anyObject())).thenReturn("Violation message");
+
+        PersonDTO person = new PersonDTO();
+        person.setId("uuid");
+        person.setFirstName("firstName");
+        person.setLastName("lastName");
+        person.setAddressLine1("addressLine1");
+        person.setAddressLine2("addressLine2");
+        when(personService.findPerson("uuid")).thenReturn(person);
+
+        ModelAndView mv = underTest.doSave(request);
+        assertNotNull(mv);
+        assertEquals("person/edit", mv.getViewName());
+        assertEquals("firstName lastName", mv.getModel().get("title"));
+        assertNotNull(mv.getModel().get("entity"));
+
+        String attr = (String) request.getAttribute(RequestAttribute.ERROR_MSG);
+        assertNotNull(attr);
+        assertEquals("<ul><li>Violation message</li><li>Violation message</li></ul>", attr);
     }
 
     @Test

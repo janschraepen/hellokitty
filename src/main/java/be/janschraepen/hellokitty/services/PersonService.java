@@ -4,6 +4,7 @@ import be.janschraepen.hellokitty.domain.person.PersonContactDTO;
 import be.janschraepen.hellokitty.domain.person.PersonDTO;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 /**
@@ -43,9 +44,10 @@ public interface PersonService {
      *
      * @param dto the person to save/update
      * @return PersonDTO the saved instance
+     * @throws ConstraintViolationException if one occurs
      */
     @Transactional
-    PersonDTO savePerson(PersonDTO dto);
+    PersonDTO savePerson(PersonDTO dto) throws ConstraintViolationException;
 
     /**
      * Delete a Person.

@@ -7,6 +7,7 @@ import be.janschraepen.hellokitty.domain.persontype.PersonType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -19,18 +20,22 @@ public class Person extends Entity {
 
     private static final long serialVersionUID = 1L;
 
+    @Size(min = 1, max = 100)
     @NotNull
     @Column(name = "FIRST_NAME")
     private String firstName;
 
+    @Size(min = 1, max = 100)
     @NotNull
     @Column(name = "LAST_NAME")
     private String lastName;
 
+    @Size(min = 1, max = 100)
     @NotNull
     @Column(name = "ADDRESS_LINE_1")
     private String addressLine1;
 
+    @Size(min = 1, max = 100)
     @NotNull
     @Column(name = "ADDRESS_LINE_2")
     private String addressLine2;

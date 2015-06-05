@@ -45,6 +45,7 @@ public interface PersonTypeService {
      * @param dto the personType to save/update
      * @return PersonTypeDTO the saved instance
      * @throws CannotModifyPersonTypeException if a system required PersonType is being modified
+     * @throws javax.validation.ConstraintViolationException if one occurs
      */
     @Transactional
     PersonTypeDTO savePersonType(PersonTypeDTO dto) throws CannotModifyPersonTypeException, ConstraintViolationException;
