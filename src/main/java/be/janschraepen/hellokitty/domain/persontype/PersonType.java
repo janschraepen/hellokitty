@@ -9,7 +9,10 @@ import be.janschraepen.hellokitty.domain.person.PersonContact;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * PersonType Entity class. This class represents a PersonType with
@@ -25,10 +28,12 @@ public class PersonType extends Entity {
     public static final String CONTACT = "CONT";
     public static final String VET = "VET";
 
+    @Size(min = 1, max = 40)
     @NotNull
     @Column(name = "SHORT_CODE")
     private String shortCode;
 
+    @Size(min = 1, max = 256)
     @NotNull
     @Column(name = "NAME")
     private String name;

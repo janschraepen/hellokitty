@@ -1,67 +1,80 @@
 package be.janschraepen.hellokitty.web.controller;
 
 import be.janschraepen.hellokitty.web.Event;
+import be.janschraepen.hellokitty.web.controller.stub.StubConstraintViolation;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.context.MessageSource;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class AbstractControllerTest {
 
-    private AbstractController<String> underTest;
+    @Mock
+    private MessageSource messageSource;
 
-    @Before
-    public void setUp() throws Exception {
-        underTest = new AbstractController<String>() {
+    @InjectMocks
+    private AbstractController<String> underTest = new AbstractController<String>() {
 
-            @Override
-            public ModelAndView list(HttpServletRequest request) {
-                ModelAndView mv = new ModelAndView();
-                mv.setViewName("list");
-                return mv;
-            }
+        @Override
+        public ModelAndView list(HttpServletRequest request) {
+            ModelAndView mv = new ModelAndView();
+            mv.setViewName("list");
+            return mv;
+        }
 
-            @Override
-            public ModelAndView doOpenEdit(HttpServletRequest request) {
-                ModelAndView mv = new ModelAndView();
-                mv.setViewName("open_edit");
-                return mv;
-            }
+        @Override
+        public ModelAndView doOpenEdit(HttpServletRequest request) {
+            ModelAndView mv = new ModelAndView();
+            mv.setViewName("open_edit");
+            return mv;
+        }
 
-            @Override
-            public ModelAndView doSave(HttpServletRequest request) {
-                ModelAndView mv = new ModelAndView();
-                mv.setViewName("save");
-                return mv;
-            }
+        @Override
+        public ModelAndView doSave(HttpServletRequest request) {
+            ModelAndView mv = new ModelAndView();
+            mv.setViewName("save");
+            return mv;
+        }
 
-            @Override
-            public ModelAndView doDelete(HttpServletRequest request) {
-                ModelAndView mv = new ModelAndView();
-                mv.setViewName("delete");
-                return mv;
-            }
+        @Override
+        public ModelAndView doDelete(HttpServletRequest request) {
+            ModelAndView mv = new ModelAndView();
+            mv.setViewName("delete");
+            return mv;
+        }
 
-            @Override
-            public ModelAndView doSearch(HttpServletRequest request) {
-                ModelAndView mv = new ModelAndView();
-                mv.setViewName("search");
-                return mv;
-            }
+        @Override
+        public ModelAndView doSearch(HttpServletRequest request) {
+            ModelAndView mv = new ModelAndView();
+            mv.setViewName("search");
+            return mv;
+        }
 
-            @Override
-            void addDetailModelParameters(ModelAndView mv) {
-                mv.getModel().put("test", "test");
-            }
-        };
-    }
+        @Override
+        void addDetailModelParameters(ModelAndView mv) {
+            mv.getModel().put("test", "test");
+        }
+
+    };
 
     @Test
     public void testDoEvent_new() throws Exception {
@@ -159,6 +172,24 @@ public class AbstractControllerTest {
         assertEquals("description", mv.getModel().get("description"));
         assertEquals("arg", mv.getModel().get("entity"));
         assertEquals("test", mv.getModel().get("test"));
+    }
+
+    @Test
+    public void testHandleConstraintViolation() throws Exception {
+        when(messageSource.getMessage(anyObject(), anyObject(), anyObject())).thenReturn("Violation message");
+
+        StubConstraintViolation<String> violation_1 = new StubConstraintViolation<>("{messageTemplate-1}");
+        StubConstraintViolation<String> violation_2 = new StubConstraintViolation<>("{messageTemplate-1}");
+
+        Set<ConstraintViolation<String>> violations = new HashSet<>();
+        violations.add(violation_1);
+        violations.add(violation_2);
+
+        ConstraintViolationException exception = new ConstraintViolationException(violations);
+
+        String message = underTest.handleConstraintViolations(exception);
+        assertNotNull(message);
+        assertEquals("<ul><li>Violation message</li><li>Violation message</li></ul>", message);
     }
 
 }

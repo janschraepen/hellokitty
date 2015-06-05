@@ -12,6 +12,7 @@
         <javax.persistence.version>1.0.2</javax.persistence.version>
         <javax.validation.version>1.1.0.Final</javax.validation.version>
         <org.hibernate.version>4.3.7.Final</org.hibernate.version>
+        <org.hibernate.hibernate-validator.version>5.1.0.Final</org.hibernate.hibernate-validator.version>
         <org.springframework.version>4.1.6.RELEASE</org.springframework.version>
         <org.springframework.data.version>1.7.1.RELEASE</org.springframework.data.version>
         <jstl.version>1.2</jstl.version>
@@ -92,6 +93,12 @@
             <artifactId>hibernate-entitymanager</artifactId>
             <version>${org.hibernate.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${org.hibernate.hibernate-validator.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>

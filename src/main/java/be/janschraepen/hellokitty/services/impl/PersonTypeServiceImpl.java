@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 /**
@@ -46,7 +47,7 @@ public class PersonTypeServiceImpl implements PersonTypeService {
     }
 
     @Override
-    public PersonTypeDTO savePersonType(PersonTypeDTO dto) throws CannotModifyPersonTypeException {
+    public PersonTypeDTO savePersonType(PersonTypeDTO dto) throws CannotModifyPersonTypeException, ConstraintViolationException {
         PersonType personType;
         if (StringUtils.isBlank(dto.getId())) {
             // save a new personType

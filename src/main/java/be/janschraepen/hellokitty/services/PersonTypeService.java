@@ -4,16 +4,18 @@ import be.janschraepen.hellokitty.domain.persontype.CannotModifyPersonTypeExcept
 import be.janschraepen.hellokitty.domain.persontype.PersonTypeDTO;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 /**
  * PersonTypeService interface. This class defines all possibles actions
- *  regarding the PersonTypes.
+ * regarding the PersonTypes.
  */
 public interface PersonTypeService {
 
     /**
      * Find a PersonType with given uuid.
+     *
      * @param uuid the uuid to find
      * @return PersonTypeDTO the found PersonType, or null if not found
      */
@@ -22,6 +24,7 @@ public interface PersonTypeService {
 
     /**
      * Find PersonTypes by given search criteria.
+     *
      * @param searchFor the search criteria
      * @return List<PersonTypeDTO> list of found personTypes
      */
@@ -30,6 +33,7 @@ public interface PersonTypeService {
 
     /**
      * Find all PersonTypes.
+     *
      * @return a List of all PersonTypes
      */
     @Transactional(readOnly = true)
@@ -37,15 +41,17 @@ public interface PersonTypeService {
 
     /**
      * Save/update a PersonType.
+     *
      * @param dto the personType to save/update
      * @return PersonTypeDTO the saved instance
      * @throws CannotModifyPersonTypeException if a system required PersonType is being modified
      */
     @Transactional
-    PersonTypeDTO savePersonType(PersonTypeDTO dto) throws CannotModifyPersonTypeException;
+    PersonTypeDTO savePersonType(PersonTypeDTO dto) throws CannotModifyPersonTypeException, ConstraintViolationException;
 
     /**
      * Delete a PersonType.
+     *
      * @param uuid the uuid to delete
      * @throws CannotModifyPersonTypeException if a system required PersonType is being modified
      */
@@ -54,6 +60,7 @@ public interface PersonTypeService {
 
     /**
      * Delete multiple PersonTypes.
+     *
      * @param uuids the uuids to delete
      * @throws CannotModifyPersonTypeException if a system required PersonType is being modified
      */

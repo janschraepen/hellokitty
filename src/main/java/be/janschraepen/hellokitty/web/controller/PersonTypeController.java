@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
 
 /**
  * PersonTypeController class. Used for mapping request
@@ -82,6 +83,9 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
             return detail(request, VIEW_EDIT, title, DESCRIPTION, personType);
         } catch (CannotModifyPersonTypeException e) {
             request.setAttribute(RequestAttribute.ERROR_MSG, "Kan PersoonType Eigenaar, Contactpersoon en/of Dierenarts niet wijzigen!");
+            return doOpenEdit(request);
+        } catch (ConstraintViolationException e) {
+            request.setAttribute(RequestAttribute.ERROR_MSG, handleConstraintViolations(e));
             return doOpenEdit(request);
         }
     }

@@ -2,10 +2,12 @@ package be.janschraepen.hellokitty.web.controller;
 
 import be.janschraepen.hellokitty.domain.person.Person;
 import be.janschraepen.hellokitty.domain.persontype.CannotModifyPersonTypeException;
+import be.janschraepen.hellokitty.domain.persontype.PersonType;
 import be.janschraepen.hellokitty.domain.persontype.PersonTypeDTO;
 import be.janschraepen.hellokitty.services.PersonTypeService;
 import be.janschraepen.hellokitty.web.RequestAttribute;
 import be.janschraepen.hellokitty.web.RequestParameter;
+import be.janschraepen.hellokitty.web.controller.stub.StubConstraintViolation;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -16,9 +18,11 @@ import org.springframework.context.MessageSource;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Path;
+import javax.validation.metadata.ConstraintDescriptor;
+import java.util.*;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
@@ -124,7 +128,7 @@ public class PersonTypeControllerTest {
     }
 
     @Test
-    public void testDoSave_onExceptionShowsErrorMessage() throws Exception {
+    public void testDoSave_onCannotModifyPersonTypeExceptionShowsErrorMessage() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addParameter(RequestParameter.UUID, "uuid");
         request.addParameter(RequestParameter.SHORT_CODE, "shortCode");
@@ -144,6 +148,39 @@ public class PersonTypeControllerTest {
         String attr = (String) request.getAttribute(RequestAttribute.ERROR_MSG);
         assertNotNull(attr);
         assertEquals("Kan PersoonType Eigenaar, Contactpersoon en/of Dierenarts niet wijzigen!", attr);
+    }
+
+    @Test
+    public void testDoSave_onConstraintViolationExceptionShowsErrorMessage() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addParameter(RequestParameter.UUID, "uuid");
+        request.addParameter(RequestParameter.SHORT_CODE, "shortCode");
+        request.addParameter(RequestParameter.NAME, "name");
+
+        StubConstraintViolation<String> violation_1 = new StubConstraintViolation<>("{messageTemplate-1}");
+        StubConstraintViolation<String> violation_2 = new StubConstraintViolation<>("{messageTemplate-1}");
+
+        Set<ConstraintViolation<String>> violations = new HashSet<>();
+        violations.add(violation_1);
+        violations.add(violation_2);
+
+        ConstraintViolationException exception = new ConstraintViolationException(violations);
+
+        when(personTypeService.savePersonType(anyObject())).thenThrow(exception);
+        when(messageSource.getMessage(anyObject(), anyObject(), anyObject())).thenReturn("Violation message");
+
+        PersonTypeDTO entity = new PersonTypeDTO("uuid", "shortCode", "name");
+        when(personTypeService.findPersonType("uuid")).thenReturn(entity);
+
+        ModelAndView mv = underTest.doSave(request);
+        assertNotNull(mv);
+        assertEquals("persontype/edit", mv.getViewName());
+        assertEquals("shortCode - name", mv.getModel().get("title"));
+        assertNotNull(mv.getModel().get("entity"));
+
+        String attr = (String) request.getAttribute(RequestAttribute.ERROR_MSG);
+        assertNotNull(attr);
+        assertEquals("<ul><li>Violation message</li><li>Violation message</li></ul>", attr);
     }
 
     @Test

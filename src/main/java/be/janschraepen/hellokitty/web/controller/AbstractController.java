@@ -8,8 +8,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * AbstractController class. Used as base class for all existing
@@ -155,6 +159,28 @@ public abstract class AbstractController<T> implements MessageSourceAware {
      */
     void addDetailModelParameters(ModelAndView mv) {
         // override when needed to pass along additional model paramters
+    }
+
+    /**
+     * Handle ConstraintViolationExceptions by building a list of violations
+     * @param e the ConstraintViolationException
+     * @return String a html formatted list of violations
+     */
+    String handleConstraintViolations(ConstraintViolationException e) {
+        ConstraintViolationException exception = (ConstraintViolationException) e;
+
+        StringBuilder builder = new StringBuilder("<ul>");
+        Set<ConstraintViolation<?>> violations = exception.getConstraintViolations();
+        for (ConstraintViolation violation : violations) {
+            builder.append("<li>")
+                    .append(messageSource.getMessage(
+                            violation.getMessageTemplate(),
+                            new String[] {FieldPropertyMapping.fieldProperty.get(violation.getPropertyPath().toString())},
+                            nl_BE))
+                    .append("</li>");
+        }
+        builder.append("</ul>");
+        return builder.toString();
     }
 
     @Override
