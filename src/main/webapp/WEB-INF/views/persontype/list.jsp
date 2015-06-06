@@ -27,7 +27,7 @@
             </div>
             <jsp:include page="./../error.jsp" />
             <form action="${actionUrl}/person/type/edit" method="POST">
-                <input type="hidden" name="_event" value="" />
+                <input type="hidden" name="_event" value="new" />
                 <div class="entity_search">
                     <input type="text" name="search"/>
                     <input type="button" value="Zoeken" action="search" />

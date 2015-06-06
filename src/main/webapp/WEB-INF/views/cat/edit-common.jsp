@@ -8,7 +8,7 @@
 <fmt:setBundle basename="be.janschraepen.hellokitty.i18n.Label" var="lang"/>
 
 <form action="${actionUrl}/cat/edit" method="POST">
-    <input type="hidden" name="_event" value="" />
+    <input type="hidden" name="_event" value="save" />
     <input type="hidden" name="uuid" value="${entity.id}" />
 
     <div class="entity_actions">
