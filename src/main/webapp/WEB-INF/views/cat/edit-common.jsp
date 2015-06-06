@@ -19,7 +19,7 @@
     <div class="entity__form">
         <table>
             <tr>
-                <td class="lbl"><fmt:message key="label.name" bundle="${lang}"/>:</td>
+                <td class="lbl"><fmt:message key="label.name" bundle="${lang}"/>*:</td>
                 <td class="val"><input type="text" name="name" value="${entity.name}" /></td>
             </tr>
             <tr>
@@ -36,18 +36,18 @@
                 </td>
             </tr>
             <tr>
-                <td class="lbl"><fmt:message key="label.gender" bundle="${lang}"/>:</td>
+                <td class="lbl"><fmt:message key="label.gender" bundle="${lang}"/>*:</td>
                 <td class="val">
                     <input type="radio" name="gender" value="M" <c:if test="${entity.gender.name() == 'M'}">checked</c:if> /><fmt:message key="label.gender.m" bundle="${lang}"/>
                     <input type="radio" name="gender" value="V" <c:if test="${entity.gender.name() == 'V'}">checked</c:if> /><fmt:message key="label.gender.v" bundle="${lang}"/>
                 </td>
             </tr>
             <tr>
-                <td class="lbl"><fmt:message key="label.neutered" bundle="${lang}"/>:</td>
+                <td class="lbl"><fmt:message key="label.neutered" bundle="${lang}"/>*:</td>
                 <td class="val"><input type="checkbox" name="neutered" value="true" <c:if test="${entity.neutered}">checked</c:if> /></td>
             </tr>
             <tr>
-                <td class="lbl"><fmt:message key="label.chipped" bundle="${lang}"/>:</td>
+                <td class="lbl"><fmt:message key="label.chipped" bundle="${lang}"/>*:</td>
                 <td class="val"><input type="checkbox" name="chipped" value="true" <c:if test="${entity.chipped}">checked</c:if> /></td>
             </tr>
             <tr>

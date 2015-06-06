@@ -43,11 +43,11 @@
                         <div class="entity__form">
                             <table>
                                 <tr>
-                                    <td class="lbl"><fmt:message key="label.code" bundle="${lang}"/>:</td>
+                                    <td class="lbl"><fmt:message key="label.code" bundle="${lang}"/>*:</td>
                                     <td class="val"><input type="text" name="shortCode" value="${entity.shortCode}" /></td>
                                 </tr>
                                 <tr>
-                                    <td class="lbl"><fmt:message key="label.description" bundle="${lang}"/>:</td>
+                                    <td class="lbl"><fmt:message key="label.description" bundle="${lang}"/>*:</td>
                                     <td class="val"><input type="text" name="name" value="${entity.name}" /></td>
                                 </tr>
                             </table>
