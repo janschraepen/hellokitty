@@ -135,6 +135,7 @@ public class PersonTypeControllerTest {
         request.addParameter(RequestParameter.NAME, "name");
 
         when(personTypeService.savePersonType(anyObject())).thenThrow(new CannotModifyPersonTypeException());
+        when(messageSource.getMessage("error.personType.systemValues.save", null, new Locale("nl", "BE"))).thenReturn("message");
 
         PersonTypeDTO entity = new PersonTypeDTO("uuid", "shortCode", "name");
         when(personTypeService.findPersonType("uuid")).thenReturn(entity);
@@ -147,7 +148,7 @@ public class PersonTypeControllerTest {
 
         String attr = (String) request.getAttribute(RequestAttribute.ERROR_MSG);
         assertNotNull(attr);
-        assertEquals("Kan PersoonType Eigenaar, Contactpersoon en/of Dierenarts niet wijzigen!", attr);
+        assertEquals("message", attr);
     }
 
     @Test
@@ -211,6 +212,7 @@ public class PersonTypeControllerTest {
         request.addParameter(RequestParameter.UUID, "uuid");
 
         doThrow(new CannotModifyPersonTypeException()).when(personTypeService).deletePersonTypes(new String[] {"uuid"});
+        when(messageSource.getMessage("error.personType.systemValues.delete", null, new Locale("nl", "BE"))).thenReturn("message");
 
         List<PersonTypeDTO> list = Arrays.asList(new PersonTypeDTO[]{});
         when(personTypeService.findAllPersonTypes()).thenReturn(list);
@@ -223,7 +225,7 @@ public class PersonTypeControllerTest {
 
         String attr = (String) request.getAttribute(RequestAttribute.ERROR_MSG);
         assertNotNull(attr);
-        assertEquals("Kan PersoonType Eigenaar, Contactpersoon en/of Dierenarts niet wijzigen!", attr);
+        assertEquals("message", attr);
     }
 
 }

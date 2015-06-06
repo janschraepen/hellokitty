@@ -108,7 +108,7 @@ public class CatController extends AbstractController<CatDTO> {
             String title = cat.getName();
             return detail(request, VIEW_EDIT, title, DESCRIPTION, cat);
         } catch (NullPointerException e) {
-            request.setAttribute(RequestAttribute.ERROR_MSG, "Ongeldig Geslacht geselecteerd!");
+            request.setAttribute(RequestAttribute.ERROR_MSG, messageSource.getMessage("error.cat.invalid.gender", null, nl_BE));
             return doOpenEdit(request);
         } catch (ConstraintViolationException e) {
             request.setAttribute(RequestAttribute.ERROR_MSG, handleConstraintViolations(e));
@@ -155,7 +155,7 @@ public class CatController extends AbstractController<CatDTO> {
             CatPersonDTO catPerson = ObjectFactory.getInstance().createCatPersonDTO(uuid, personType, person);
             catService.saveCatPerson(catPerson);
         } catch (DataIntegrityViolationException e) {
-            request.setAttribute(RequestAttribute.ERROR_MSG, "Ongeldig PersoonType en/of Persoon geselecteerd!");
+            request.setAttribute(RequestAttribute.ERROR_MSG, messageSource.getMessage("error.catPerson.invalid.personTypeOrPerson", null, nl_BE));
         }
 
         ModelAndView mv = doOpenEdit(request);

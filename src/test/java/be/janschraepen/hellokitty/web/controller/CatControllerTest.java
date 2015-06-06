@@ -191,6 +191,7 @@ public class CatControllerTest {
         cat.setBehavioral("behavioral");
         cat.setNutrition("nutrition");
 
+        when(messageSource.getMessage("error.cat.invalid.gender", null, new Locale("nl", "BE"))).thenReturn("message");
         when(catService.findCat("uuid")).thenReturn(cat);
 
         ModelAndView mv = underTest.doSave(request);
@@ -201,7 +202,7 @@ public class CatControllerTest {
 
         String attr = (String) request.getAttribute(RequestAttribute.ERROR_MSG);
         assertNotNull(attr);
-        assertEquals("Ongeldig Geslacht geselecteerd!", attr);
+        assertEquals("message", attr);
     }
 
     @Test
@@ -342,6 +343,7 @@ public class CatControllerTest {
         request.addParameter(RequestParameter.PERSON, "person-uuid");
 
         when(catService.saveCatPerson(anyObject())).thenThrow(new DataIntegrityViolationException("data integrity violation"));
+        when(messageSource.getMessage("error.catPerson.invalid.personTypeOrPerson", null, new Locale("nl", "BE"))).thenReturn("message");
 
         CatDTO entity = new CatDTO();
         entity.setId("uuid");
@@ -358,7 +360,7 @@ public class CatControllerTest {
 
         String attr = (String) request.getAttribute(RequestAttribute.ERROR_MSG);
         assertNotNull(attr);
-        assertEquals("Ongeldig PersoonType en/of Persoon geselecteerd!", attr);
+        assertEquals("message", attr);
     }
 
     @Test

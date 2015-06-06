@@ -281,6 +281,7 @@ public class PersonControllerTest {
         entity.setAddressLine1("addressLine1");
         entity.setAddressLine2("addressLine2");
 
+        when(messageSource.getMessage("error.personContact.invalid.contactType", null, new Locale("nl", "BE"))).thenReturn("message");
         when(personService.findPerson("uuid")).thenReturn(entity);
 
         ModelAndView mv = underTest.doSaveContact(request);
@@ -292,8 +293,9 @@ public class PersonControllerTest {
 
         String attr = (String) request.getAttribute(RequestAttribute.ERROR_MSG);
         assertNotNull(attr);
-        assertEquals("Ongeldig ContactType geselecteerd!", attr);
+        assertEquals("message", attr);
     }
+
     @Test
     public void testDoSaveContact_onConstraintViolationExceptionShowsErrorMessage() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();

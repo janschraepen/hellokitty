@@ -82,7 +82,7 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
             title = personType.getShortCode() + " - " + personType.getName();
             return detail(request, VIEW_EDIT, title, DESCRIPTION, personType);
         } catch (CannotModifyPersonTypeException e) {
-            request.setAttribute(RequestAttribute.ERROR_MSG, "Kan PersoonType Eigenaar, Contactpersoon en/of Dierenarts niet wijzigen!");
+            request.setAttribute(RequestAttribute.ERROR_MSG, messageSource.getMessage("error.personType.systemValues.save", null, nl_BE));
             return doOpenEdit(request);
         } catch (ConstraintViolationException e) {
             request.setAttribute(RequestAttribute.ERROR_MSG, handleConstraintViolations(e));
@@ -97,7 +97,7 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
         try {
             personTypeService.deletePersonTypes(uuids);
         } catch (CannotModifyPersonTypeException e) {
-            request.setAttribute(RequestAttribute.ERROR_MSG, "Kan PersoonType Eigenaar, Contactpersoon en/of Dierenarts niet wijzigen!");
+            request.setAttribute(RequestAttribute.ERROR_MSG, messageSource.getMessage("error.personType.systemValues.delete", null, nl_BE));
         }
         return list(request, VIEW_LIST, TITLE, DESCRIPTION, personTypeService.findAllPersonTypes());
     }
