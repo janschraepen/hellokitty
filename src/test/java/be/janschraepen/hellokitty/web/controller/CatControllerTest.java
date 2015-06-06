@@ -20,6 +20,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.MessageSource;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -331,6 +332,33 @@ public class CatControllerTest {
         assertEquals("uuid", arg.getCatId());
         assertEquals("personType-uuid", arg.getPersonTypeId());
         assertEquals("person-uuid", arg.getPersonId());
+    }
+
+    @Test
+    public void testDoSaveContact_onDataIntegrityViolationExceptionShowsErrorMessage() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addParameter(RequestParameter.UUID, "uuid");
+        request.addParameter(RequestParameter.PERSON_TYPE, "personType-uuid");
+        request.addParameter(RequestParameter.PERSON, "person-uuid");
+
+        when(catService.saveCatPerson(anyObject())).thenThrow(new DataIntegrityViolationException("data integrity violation"));
+
+        CatDTO entity = new CatDTO();
+        entity.setId("uuid");
+        entity.setName("name");
+
+        when(catService.findCat("uuid")).thenReturn(entity);
+
+        ModelAndView mv = underTest.doSavePerson(request);
+        assertNotNull(mv);
+        assertEquals("cat/edit", mv.getViewName());
+        assertEquals("name", mv.getModel().get("title"));
+        assertNotNull(mv.getModel().get("entity"));
+        assertEquals(1, mv.getModel().get("activeTab"));
+
+        String attr = (String) request.getAttribute(RequestAttribute.ERROR_MSG);
+        assertNotNull(attr);
+        assertEquals("Ongeldig PersoonType en/of Persoon geselecteerd!", attr);
     }
 
     @Test

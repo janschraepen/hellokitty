@@ -9,6 +9,7 @@ import be.janschraepen.hellokitty.web.RequestAttribute;
 import be.janschraepen.hellokitty.web.RequestParameter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -150,8 +151,12 @@ public class CatController extends AbstractController<CatDTO> {
         String personType = request.getParameter(RequestParameter.PERSON_TYPE);
         String person = request.getParameter(RequestParameter.PERSON);
 
-        CatPersonDTO catPerson = ObjectFactory.getInstance().createCatPersonDTO(uuid, personType, person);
-        catService.saveCatPerson(catPerson);
+        try {
+            CatPersonDTO catPerson = ObjectFactory.getInstance().createCatPersonDTO(uuid, personType, person);
+            catService.saveCatPerson(catPerson);
+        } catch (DataIntegrityViolationException e) {
+            request.setAttribute(RequestAttribute.ERROR_MSG, "Ongeldig PersoonType en/of Persoon geselecteerd!");
+        }
 
         ModelAndView mv = doOpenEdit(request);
         mv.getModel().put(RequestParameter.ACTIVE_TAB, 1);
