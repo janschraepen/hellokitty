@@ -18,43 +18,52 @@
 
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <link href="<c:url value="/resources/css/general.css" />" rel="stylesheet" type="text/css" />
+        <link href="<c:url value="/resources/css/leftnav-menu.css" />" rel="stylesheet" type="text/css" />
     </head>
     <body>
-        <div class="entity">
-            <div class="entity__title">
-                <h1><fmt:message key="${title}" bundle="${lang}"/></h1>
-                <h4><fmt:message key="${description}" bundle="${lang}"/></h4>
+
+        <div class="application">
+            <div class="application__navigation">
+                <jsp:include page="../leftnav.jsp" />
             </div>
-            <jsp:include page="./../error.jsp" />
-            <form action="${actionUrl}/person/type/edit" method="POST">
-                <input type="hidden" name="_event" value="new" />
-                <div class="entity_search">
-                    <input type="text" name="search"/>
-                    <input type="button" value="Zoeken" action="search" />
+            <div class="application__content">
+                <div class="entity">
+                    <div class="entity__title">
+                        <h1><fmt:message key="${title}" bundle="${lang}"/></h1>
+                        <h4><fmt:message key="${description}" bundle="${lang}"/></h4>
+                    </div>
+                    <jsp:include page="./../error.jsp" />
+                    <form action="${actionUrl}/person/type/edit" method="POST">
+                        <input type="hidden" name="_event" value="new" />
+                        <div class="entity_search">
+                            <input type="text" name="search"/>
+                            <input type="button" value="Zoeken" action="search" />
+                        </div>
+                        <div class="entity_actions">
+                            <input type="button" value="Toevoegen" action="new" />
+                            <input type="button" value="Wijzigen" action="edit" />
+                            <input type="button" value="Verwijderen" action="delete" />
+                        </div>
+                        <div class="entity__list">
+                            <table>
+                                <tr>
+                                    <th></th>
+                                    <th><fmt:message key="table.header.code" bundle="${lang}"/></th>
+                                    <th><fmt:message key="table.header.description" bundle="${lang}"/></th>
+                                </tr>
+                                <c:forEach var="item" items="${listItems}">
+                                    <tr>
+                                        <td class="id"><input type="checkbox" name="uuid" value="${item.id}" /></td>
+                                        <td class="s">${item.shortCode}</td>
+                                        <td class="l">${item.name}</td>
+                                    </tr>
+                                </c:forEach>
+                            </table>
+                        </div>
+                    </form>
                 </div>
-                <div class="entity_actions">
-                    <a href="/hellokitty" target="_self"><fmt:message key="label.close" bundle="${lang}"/></a> |
-                    <input type="button" value="Toevoegen" action="new" />
-                    <input type="button" value="Wijzigen" action="edit" />
-                    <input type="button" value="Verwijderen" action="delete" />
-                </div>
-                <div class="entity__list">
-                    <table>
-                        <tr>
-                            <th></th>
-                            <th><fmt:message key="table.header.code" bundle="${lang}"/></th>
-                            <th><fmt:message key="table.header.description" bundle="${lang}"/></th>
-                        </tr>
-                        <c:forEach var="item" items="${listItems}">
-                            <tr>
-                                <td class="id"><input type="checkbox" name="uuid" value="${item.id}" /></td>
-                                <td class="s">${item.shortCode}</td>
-                                <td class="l">${item.name}</td>
-                            </tr>
-                        </c:forEach>
-                    </table>
-                </div>
-            </form>
+            </div>
         </div>
+
     </body>
 </html>

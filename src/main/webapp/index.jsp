@@ -18,19 +18,18 @@
 
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
     <link href="<c:url value="/resources/css/general.css" />" rel="stylesheet" type="text/css" />
+    <link href="<c:url value="/resources/css/leftnav-menu.css" />" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<div class="index">
-    <div class="index__title">
-        <h1>PAGINA'S</h1>
+
+    <div class="application">
+        <div class="application__navigation">
+            <jsp:include page="WEB-INF/views/leftnav.jsp" />
+        </div>
+        <div class="application__content">
+            &nbsp;
+        </div>
     </div>
-    <div class="index__list">
-        <ul>
-            <li><a href="${pageContext.request.contextPath}/person/type/list"><fmt:message key="navigation.persontype" bundle="${lang}"/></a></li>
-            <li><a href="${pageContext.request.contextPath}/person/list"><fmt:message key="navigation.person" bundle="${lang}"/></a></li>
-            <li><a href="${pageContext.request.contextPath}/cat/list"><fmt:message key="navigation.cat" bundle="${lang}"/></a></li>
-        </ul>
-    </div>
-</div>
+
 </body>
 </html>

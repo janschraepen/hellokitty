@@ -18,30 +18,40 @@
 
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <link href="<c:url value="/resources/css/general.css" />" rel="stylesheet" type="text/css" />
+        <link href="<c:url value="/resources/css/leftnav-menu.css" />" rel="stylesheet" type="text/css" />
     </head>
     <body>
-        <div class="entity">
-            <div class="entity__title">
-                <h1>${title}</h1>
-                <h4><fmt:message key="${description}" bundle="${lang}"/></h4>
+
+        <div class="application">
+            <div class="application__navigation">
+                <jsp:include page="../leftnav.jsp" />
             </div>
-            <jsp:include page="./../error.jsp" />
-            <div id="tabs" active-tab="<c:choose><c:when test="${activeTab != 0}">${activeTab}</c:when><c:otherwise>0</c:otherwise></c:choose>">
-                <ul>
-                    <li><a href="#tabs-common"><fmt:message key="tabs.common" bundle="${lang}"/></a></li>
-                    <li><a href="#tabs-person"><fmt:message key="tabs.person" bundle="${lang}"/></a></li>
-                    <li><a href="#tabs-pic"><fmt:message key="tabs.pic" bundle="${lang}"/></a></li>
-                </ul>
-                <div id="tabs-common">
-                    <jsp:include page="edit-common.jsp"/>
-                </div>
-                <div id="tabs-person">
-                    <jsp:include page="edit-person.jsp"/>
-                </div>
-                <div id="tabs-pic">
-                    <jsp:include page="edit-pic.jsp"/>
+            <div class="application__content">
+                <div class="entity">
+                    <div class="entity__title">
+                        <h1>${title}</h1>
+                        <h4><fmt:message key="${description}" bundle="${lang}"/></h4>
+                    </div>
+                    <jsp:include page="./../error.jsp" />
+                    <div id="tabs" active-tab="<c:choose><c:when test="${activeTab != 0}">${activeTab}</c:when><c:otherwise>0</c:otherwise></c:choose>">
+                        <ul>
+                            <li><a href="#tabs-common"><fmt:message key="tabs.common" bundle="${lang}"/></a></li>
+                            <li><a href="#tabs-person"><fmt:message key="tabs.person" bundle="${lang}"/></a></li>
+                            <li><a href="#tabs-pic"><fmt:message key="tabs.pic" bundle="${lang}"/></a></li>
+                        </ul>
+                        <div id="tabs-common">
+                            <jsp:include page="edit-common.jsp"/>
+                        </div>
+                        <div id="tabs-person">
+                            <jsp:include page="edit-person.jsp"/>
+                        </div>
+                        <div id="tabs-pic">
+                            <jsp:include page="edit-pic.jsp"/>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
     </body>
 </html>
