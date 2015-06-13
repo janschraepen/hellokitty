@@ -17,18 +17,20 @@
         </div>
     </div>
     <div class="entity_actions">
-        <input type="button" value="Terug" action="back" />
+
     </div>
     <div class="entity__form">
-        <table>
-            <tr>
-                <th><fmt:message key="table.header.name" bundle="${lang}"/></th>
-            </tr>
-            <c:forEach var="cat" items="${entity.cats}">
+        <div class="entity__form--1col">
+            <table>
                 <tr>
-                    <td>${cat.name}</td>
+                    <th><fmt:message key="table.header.name" bundle="${lang}"/></th>
                 </tr>
-            </c:forEach>
-        </table>
+                <c:forEach var="cat" items="${entity.cats}">
+                    <tr>
+                        <td>${cat.name}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
     </div>
 </form>

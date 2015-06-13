@@ -50,7 +50,7 @@
                                     <th class="id"></th>
                                     <th class="w15pct"><fmt:message key="table.header.firstName" bundle="${lang}"/></th>
                                     <th class="w20pct"><fmt:message key="table.header.lastName" bundle="${lang}"/></th>
-                                    <th><fmt:message key="table.header.address" bundle="${lang}"/></th>
+                                    <th class="w25pct"><fmt:message key="table.header.address" bundle="${lang}"/></th>
                                     <th><fmt:message key="table.header.contact" bundle="${lang}"/></th>
                                 </tr>
                             </table>
@@ -61,7 +61,7 @@
                                         <td class="id"><input type="checkbox" name="uuid" value="${item.id}" /></td>
                                         <td class="w15pct">${item.firstName}</td>
                                         <td class="w20pct">${item.lastName}</td>
-                                        <td>${item.addressLine1}<br/>${item.addressLine2}</td>
+                                        <td class="w25pct">${item.addressLine1}<br/>${item.addressLine2}</td>
                                         <td>${item.contactInfo}</td>
                                     </tr>
                                 </c:forEach>

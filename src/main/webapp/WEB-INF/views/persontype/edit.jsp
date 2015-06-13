@@ -48,16 +48,21 @@
                                     <input type="button" value="Verwijderen" action="delete" />
                                 </div>
                                 <div class="entity__form">
-                                    <table>
-                                        <tr>
-                                            <td class="lbl"><fmt:message key="label.code" bundle="${lang}"/>*:</td>
-                                            <td class="val"><input type="text" name="shortCode" value="${entity.shortCode}" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="lbl"><fmt:message key="label.description" bundle="${lang}"/>*:</td>
-                                            <td class="val"><input type="text" name="name" value="${entity.name}" /></td>
-                                        </tr>
-                                    </table>
+                                    <div class="entity__form--left">
+                                        <table>
+                                            <tr>
+                                                <td class="lbl"><fmt:message key="label.code" bundle="${lang}"/>*:</td>
+                                                <td class="val"><input type="text" name="shortCode" value="${entity.shortCode}" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="lbl"><fmt:message key="label.description" bundle="${lang}"/>*:</td>
+                                                <td class="val"><input type="text" name="name" value="${entity.name}" /></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="entity__form--right">
+                                        &nbsp;
+                                    </div>
                                 </div>
                             </form>
                         </div>

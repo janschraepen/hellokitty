@@ -20,7 +20,9 @@
     <div class="entity_actions">
 
     </div>
-    <div class="entity__form">
-        <img src="${actionUrl}/picture/cat/${entity.id}" alt="${entity.name}" />
+    <div class="entity__form pic">
+        <div class="entity__form--1col">
+            <img src="${actionUrl}/picture/cat/${entity.id}" alt="${entity.name}" />
+        </div>
     </div>
 </form>

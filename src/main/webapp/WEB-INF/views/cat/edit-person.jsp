@@ -29,27 +29,28 @@
         </div>
     </div>
     <div class="entity_actions">
-        <input type="button" value="Terug" action="back" />
         <input type="button" value="Verwijderen" action="delete-person" />
     </div>
     <div class="entity__form">
-        <table>
-            <tr>
-                <th></th>
-                <th><fmt:message key="table.header.personType" bundle="${lang}"/></th>
-                <th><fmt:message key="table.header.person" bundle="${lang}"/></th>
-                <th><fmt:message key="table.header.address" bundle="${lang}"/></th>
-                <th><fmt:message key="table.header.contact" bundle="${lang}"/></th>
-            </tr>
-            <c:forEach var="person" items="${entity.persons}">
+        <div class="entity__form--1col">
+            <table>
                 <tr>
-                    <td class="id"><input type="checkbox" name="person-uuid" value="${person.id}" /></td>
-                    <td>${person.personType}</td>
-                    <td>${person.personFirstName} ${person.personLastName}</td>
-                    <td>${person.personAddressLine1} ${person.personAddressLine2}</td>
-                    <td>${person.personContacts}</td>
+                    <th></th>
+                    <th><fmt:message key="table.header.personType" bundle="${lang}"/></th>
+                    <th><fmt:message key="table.header.person" bundle="${lang}"/></th>
+                    <th><fmt:message key="table.header.address" bundle="${lang}"/></th>
+                    <th><fmt:message key="table.header.contact" bundle="${lang}"/></th>
                 </tr>
-            </c:forEach>
-        </table>
+                <c:forEach var="person" items="${entity.persons}">
+                    <tr>
+                        <td class="id"><input type="checkbox" name="person-uuid" value="${person.id}" /></td>
+                        <td>${person.personType}</td>
+                        <td>${person.personFirstName} ${person.personLastName}</td>
+                        <td>${person.personAddressLine1} ${person.personAddressLine2}</td>
+                        <td>${person.personContacts}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
     </div>
 </form>

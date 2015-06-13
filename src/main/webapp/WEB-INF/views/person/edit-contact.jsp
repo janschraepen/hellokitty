@@ -24,23 +24,24 @@
         </div>
     </div>
     <div class="entity_actions">
-        <input type="button" value="Terug" action="back" />
         <input type="button" value="Verwijderen" action="delete-contact" />
     </div>
     <div class="entity__form">
-        <table>
-            <tr>
-                <th></th>
-                <th><fmt:message key="table.header.contactType" bundle="${lang}"/></th>
-                <th><fmt:message key="table.header.value" bundle="${lang}"/></th>
-            </tr>
-            <c:forEach var="contact" items="${entity.contacts}">
+        <div class="entity__form--1col">
+            <table>
                 <tr>
-                    <td class="id"><input type="checkbox" name="contact-uuid" value="${contact.id}" /></td>
-                    <td><fmt:message key="${contact.type.labelKey}" bundle="${lang}"/></td>
-                    <td>${contact.value}</td>
+                    <th></th>
+                    <th class="w15pct"><fmt:message key="table.header.contactType" bundle="${lang}"/></th>
+                    <th><fmt:message key="table.header.value" bundle="${lang}"/></th>
                 </tr>
-            </c:forEach>
-        </table>
+                <c:forEach var="contact" items="${entity.contacts}">
+                    <tr>
+                        <td class="id"><input type="checkbox" name="contact-uuid" value="${contact.id}" /></td>
+                        <td class="w15pct"><fmt:message key="${contact.type.labelKey}" bundle="${lang}"/></td>
+                        <td>${contact.value}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
     </div>
 </form>

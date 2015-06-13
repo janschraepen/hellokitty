@@ -1,7 +1,9 @@
 html, body {
+    font-family: Helvetica, Arial, Verdana, sans-serif;
+    font-size: 15px;
+    height: 100%;
     margin: 0px;
     padding: 0px;
-    height: 100%;
     width: 100%;
 }
 
@@ -67,6 +69,38 @@ html, body {
     overflow: scroll;
 }
 
+.application .application__content .entity .entity__form {
+    background: #f0f0f0;
+    display: inline-block;
+    width: 100%;
+}
+
+.application .application__content .entity .entity__form .lbl {
+    vertical-align: top;
+    width: 30%;
+}
+
+.application .application__content .entity .entity__form .val input[type="text"] {
+    width: 400px;
+}
+
+.application .application__content .entity .entity__form.pic {
+    background: #fff;
+    display: inline-block;
+    width: 100%;
+}
+
+.application .application__content .entity .entity__form .entity__form--left,
+.application .application__content .entity .entity__form .entity__form--right {
+    float: left;
+    width: 50%;
+}
+
+.application .application__content .entity .entity__form .entity__form--1col {
+    float: left;
+    width: 100%;
+}
+
 input[type="button"] {
     color: #ffffff;
     font-size: 14px;
@@ -90,6 +124,11 @@ table input[type="checkbox"] {
     height: 22px;
 }
 
+table input[type="radio"] {
+    width: 22px;
+    height: 22px;
+}
+
 table tr {
     background: #f0f0f0;
     height: 25px;
@@ -105,6 +144,7 @@ table th {
 
 table td {
     padding: 10px 0 10px 10px;
+    line-height: 14pt;
 }
 
 table td.id,
@@ -152,4 +192,45 @@ table th.w40pct {
 table td.w50pct,
 table th.w50pct {
     width: 50%;
+}
+
+/* tab styling by http://keith-wood.name/uitabs.html */
+#tabs {
+    background: transparent;
+    border: none;
+}
+
+#tabs .ui-widget-header {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #c0c0c0;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+
+#tabs .ui-tabs-nav .ui-state-default {
+    background: transparent;
+    border: none;
+}
+
+#tabs .ui-tabs-nav .ui-state-active {
+    background: transparent url(../images/uiTabsArrow.png) no-repeat bottom center;
+    border: none;
+}
+
+#tabs .ui-tabs-nav .ui-state-default a {
+    color: #c0c0c0;
+}
+
+#tabs .ui-tabs-nav .ui-state-active a {
+    color: #3cb0fd;
+}
+
+/* custom tab styling */
+.ui-tabs .ui-tabs-panel {
+    display: block;
+    border-width: 0;
+    padding: 25px 0 0 0;
+    background: none;
 }

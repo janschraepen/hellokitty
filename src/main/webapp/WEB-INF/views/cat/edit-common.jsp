@@ -17,51 +17,58 @@
         <input type="button" value="Verwijderen" action="delete" />
     </div>
     <div class="entity__form">
-        <table>
-            <tr>
-                <td class="lbl"><fmt:message key="label.name" bundle="${lang}"/>*:</td>
-                <td class="val"><input type="text" name="name" value="${entity.name}" /></td>
-            </tr>
-            <tr>
-                <td class="lbl"><fmt:message key="label.breed" bundle="${lang}"/>:</td>
-                <td class="val"><input type="text" name="breed" value="${entity.breed}" /></td>
-            </tr>
-            <tr>
-                <td class="lbl"><fmt:message key="label.age" bundle="${lang}"/>:</td>
-                <td class="val">
-                    <input type="text" name="age" value="${entity.age}" />
-                    <jsp:useBean id="now" class="java.util.Date" />
-                    <fmt:formatDate var="year" value="${now}" pattern="yyyy" />
-                    <div class="currentAge">${year - entity.age}</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="lbl"><fmt:message key="label.gender" bundle="${lang}"/>*:</td>
-                <td class="val">
-                    <input type="radio" name="gender" value="M" <c:if test="${entity.gender.name() == 'M'}">checked</c:if> /><fmt:message key="label.gender.m" bundle="${lang}"/>
-                    <input type="radio" name="gender" value="V" <c:if test="${entity.gender.name() == 'V'}">checked</c:if> /><fmt:message key="label.gender.v" bundle="${lang}"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="lbl"><fmt:message key="label.neutered" bundle="${lang}"/>*:</td>
-                <td class="val"><input type="checkbox" name="neutered" value="true" <c:if test="${entity.neutered}">checked</c:if> /></td>
-            </tr>
-            <tr>
-                <td class="lbl"><fmt:message key="label.chipped" bundle="${lang}"/>*:</td>
-                <td class="val"><input type="checkbox" name="chipped" value="true" <c:if test="${entity.chipped}">checked</c:if> /></td>
-            </tr>
-            <tr>
-                <td class="lbl"><fmt:message key="label.attention" bundle="${lang}"/>:</td>
-                <td class="val"><input type="text" name="attention" value="${entity.attention}" /></td>
-            </tr>
-            <tr>
-                <td class="lbl"><fmt:message key="label.behavioral" bundle="${lang}"/>:</td>
-                <td class="val"><input type="text" name="behavioral" value="${entity.behavioral}" /></td>
-            </tr>
-            <tr>
-                <td class="lbl"><fmt:message key="label.nutrition" bundle="${lang}"/>:</td>
-                <td class="val"><input type="text" name="nutrition" value="${entity.nutrition}" /></td>
-            </tr>
-        </table>
+        <div class="entity__form--left">
+            <table>
+                <tr>
+                    <td class="lbl"><fmt:message key="label.name" bundle="${lang}"/>*:</td>
+                    <td class="val"><input type="text" name="name" value="${entity.name}" /></td>
+                </tr>
+                <tr>
+                    <td class="lbl"><fmt:message key="label.breed" bundle="${lang}"/>:</td>
+                    <td class="val"><input type="text" name="breed" value="${entity.breed}" /></td>
+                </tr>
+                <tr>
+                    <td class="lbl"><fmt:message key="label.age" bundle="${lang}"/>:</td>
+                    <td class="val">
+                        <input type="text" name="age" value="${entity.age}" />
+                        <jsp:useBean id="now" class="java.util.Date" />
+                        <fmt:formatDate var="year" value="${now}" pattern="yyyy" />
+                        <div class="currentAge">${year - entity.age}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="lbl"><fmt:message key="label.gender" bundle="${lang}"/>*:</td>
+                    <td class="val">
+                        <input type="radio" name="gender" value="M" <c:if test="${entity.gender.name() == 'M'}">checked</c:if> /><fmt:message key="label.gender.m" bundle="${lang}"/>
+                        <input type="radio" name="gender" value="V" <c:if test="${entity.gender.name() == 'V'}">checked</c:if> /><fmt:message key="label.gender.v" bundle="${lang}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="lbl"><fmt:message key="label.neutered" bundle="${lang}"/>*:</td>
+                    <td class="val"><input type="checkbox" name="neutered" value="true" <c:if test="${entity.neutered}">checked</c:if> /></td>
+                </tr>
+                <tr>
+                    <td class="lbl"><fmt:message key="label.chipped" bundle="${lang}"/>*:</td>
+                    <td class="val"><input type="checkbox" name="chipped" value="true" <c:if test="${entity.chipped}">checked</c:if> /></td>
+                </tr>
+            </table>
+        </div>
+        <div class="entity__form--right">
+            <table>
+                <tr>
+                    <td class="lbl"><fmt:message key="label.attention" bundle="${lang}"/>:</td>
+                    <td class="val"><textarea rows="5" cols="40" name="attention">${entity.attention}</textarea></td>
+                </tr>
+                <tr>
+                    <td class="lbl"><fmt:message key="label.behavioral" bundle="${lang}"/>:</td>
+                    <td class="val"><textarea rows="5" cols="40" name="behavioral">${entity.behavioral}</textarea></td>
+                </tr>
+                <tr>
+                    <td class="lbl"><fmt:message key="label.nutrition" bundle="${lang}"/>:</td>
+                    <td class="val"><textarea rows="5" cols="40" name="nutrition">${entity.nutrition}</textarea></td>
+                </tr>
+            </table>
+        </div>
+
     </div>
 </form>
