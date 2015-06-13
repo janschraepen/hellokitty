@@ -47,6 +47,11 @@ html, body {
     padding: 20px 10px 20px 10px;
 }
 
+
+.application .application__content .entity .entity_actions {
+    margin: 0 0 15px 0;
+}
+
 .application .application__content .entity .entity_search {
     float: right;
 }
@@ -54,7 +59,12 @@ html, body {
 .application .application__content .entity .entity_search input[type="text"] {
     font-size: 12pt;
     height: 28px;
-    width: 300px;
+    width: 400px;
+}
+
+.application .application__content .entity .entity__list .entity__list--scrollable {
+    height: 655px;
+    overflow: scroll;
 }
 
 input[type="button"] {
@@ -72,27 +82,74 @@ input[type="button"]:hover {
 
 table {
     border: 0px;
+    width: 100%;
 }
 
-table th {
-    background: #3e4344 ;
-    color: #fff;
-    height: 30px;
+table input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
 }
 
 table tr {
-    background: #cecece;
+    background: #f0f0f0;
     height: 25px;
 }
 
-table td.id {
-    width: 25px;
+table th {
+    background: #0fa1e0 ;
+    color: #fff;
+    height: 40px;
+    padding: 0 0 0 10px;
+    text-align: left;
 }
 
-table td.s {
-    width: 125px;
+table td {
+    padding: 10px 0 10px 10px;
 }
 
-table td.l {
-    width: 250px;
+table td.id,
+table th.id {
+    padding: 0;
+    text-align: center;
+    width: 30px;
+}
+
+table td.w10pct,
+table th.w10pct {
+    width: 10%;
+}
+
+table td.w15pct,
+table th.w15pct {
+    width: 15%;
+}
+
+table td.w20pct,
+table th.w20pct {
+    width: 20%;
+}
+
+table td.w25pct,
+table th.w25pct {
+    width: 25%;
+}
+
+table td.w30pct,
+table th.w30pct {
+    width: 30%;
+}
+
+table td.w35pct,
+table th.w35pct {
+    width: 35%;
+}
+
+table td.w40pct,
+table th.w40pct {
+    width: 40%;
+}
+
+table td.w50pct,
+table th.w50pct {
+    width: 50%;
 }

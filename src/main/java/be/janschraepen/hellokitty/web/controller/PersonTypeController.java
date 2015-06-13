@@ -62,7 +62,7 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
             title = messageSource.getMessage(TITLE_NEW, null, nl_BE);
         } else {
             personType = personTypeService.findPersonType(uuid);
-            title = personType.getShortCode() + " - " + personType.getName();
+            title = personType.getName();
         }
 
         return detail(request, VIEW_EDIT, title, DESCRIPTION, personType);
@@ -79,7 +79,7 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
         try {
             personType = personTypeService.savePersonType(personType);
 
-            title = personType.getShortCode() + " - " + personType.getName();
+            title = personType.getName();
             return detail(request, VIEW_EDIT, title, DESCRIPTION, personType);
         } catch (CannotModifyPersonTypeException e) {
             request.setAttribute(RequestAttribute.ERROR_MSG, messageSource.getMessage("error.personType.systemValues.save", null, nl_BE));

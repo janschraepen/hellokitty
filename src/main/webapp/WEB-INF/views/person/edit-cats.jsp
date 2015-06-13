@@ -26,7 +26,7 @@
             </tr>
             <c:forEach var="cat" items="${entity.cats}">
                 <tr>
-                    <td class="l">${cat.name}</td>
+                    <td>${cat.name}</td>
                 </tr>
             </c:forEach>
         </table>

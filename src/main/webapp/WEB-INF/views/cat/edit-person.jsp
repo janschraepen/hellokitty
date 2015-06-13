@@ -44,10 +44,10 @@
             <c:forEach var="person" items="${entity.persons}">
                 <tr>
                     <td class="id"><input type="checkbox" name="person-uuid" value="${person.id}" /></td>
-                    <td class="s">${person.personType}</td>
-                    <td class="l">${person.personFirstName} ${person.personLastName}</td>
-                    <td class="l">${person.personAddressLine1} ${person.personAddressLine2}</td>
-                    <td class="l">${person.personContacts}</td>
+                    <td>${person.personType}</td>
+                    <td>${person.personFirstName} ${person.personLastName}</td>
+                    <td>${person.personAddressLine1} ${person.personAddressLine2}</td>
+                    <td>${person.personContacts}</td>
                 </tr>
             </c:forEach>
         </table>

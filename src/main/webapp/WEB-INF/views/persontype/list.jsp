@@ -47,15 +47,18 @@
                         <div class="entity__list">
                             <table>
                                 <tr>
-                                    <th></th>
-                                    <th><fmt:message key="table.header.code" bundle="${lang}"/></th>
+                                    <th class="id"></th>
+                                    <th class="w15pct"><fmt:message key="table.header.code" bundle="${lang}"/></th>
                                     <th><fmt:message key="table.header.description" bundle="${lang}"/></th>
                                 </tr>
+                            </table>
+                            <div class="entity__list--scrollable">
+                                <table>
                                 <c:forEach var="item" items="${listItems}">
                                     <tr>
                                         <td class="id"><input type="checkbox" name="uuid" value="${item.id}" /></td>
-                                        <td class="s">${item.shortCode}</td>
-                                        <td class="l">${item.name}</td>
+                                        <td class="w15pct">${item.shortCode}</td>
+                                        <td>${item.name}</td>
                                     </tr>
                                 </c:forEach>
                             </table>

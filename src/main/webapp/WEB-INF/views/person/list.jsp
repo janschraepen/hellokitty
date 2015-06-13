@@ -47,21 +47,22 @@
                         <div class="entity__list">
                             <table>
                                 <tr>
-                                    <th></th>
-                                    <th><fmt:message key="table.header.firstName" bundle="${lang}"/></th>
-                                    <th><fmt:message key="table.header.lastName" bundle="${lang}"/></th>
-                                    <th><fmt:message key="table.header.addressLine1" bundle="${lang}"/></th>
-                                    <th><fmt:message key="table.header.addressLine2" bundle="${lang}"/></th>
+                                    <th class="id"></th>
+                                    <th class="w15pct"><fmt:message key="table.header.firstName" bundle="${lang}"/></th>
+                                    <th class="w20pct"><fmt:message key="table.header.lastName" bundle="${lang}"/></th>
+                                    <th><fmt:message key="table.header.address" bundle="${lang}"/></th>
                                     <th><fmt:message key="table.header.contact" bundle="${lang}"/></th>
                                 </tr>
+                            </table>
+                            <div class="entity__list--scrollable">
+                                <table>
                                 <c:forEach var="item" items="${listItems}">
                                     <tr>
                                         <td class="id"><input type="checkbox" name="uuid" value="${item.id}" /></td>
-                                        <td class="l">${item.firstName}</td>
-                                        <td class="l">${item.lastName}</td>
-                                        <td class="l">${item.addressLine1}</td>
-                                        <td class="l">${item.addressLine2}</td>
-                                        <td class="l">${item.contactInfo}</td>
+                                        <td class="w15pct">${item.firstName}</td>
+                                        <td class="w20pct">${item.lastName}</td>
+                                        <td>${item.addressLine1}<br/>${item.addressLine2}</td>
+                                        <td>${item.contactInfo}</td>
                                     </tr>
                                 </c:forEach>
                             </table>

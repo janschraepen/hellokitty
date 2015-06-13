@@ -47,35 +47,36 @@
                         <div class="entity__list">
                             <table>
                                 <tr>
-                                    <th></th>
+                                    <th class="id"></th>
                                     <th><fmt:message key="table.header.name" bundle="${lang}"/></th>
-                                    <th><fmt:message key="table.header.breed" bundle="${lang}"/></th>
-                                    <th><fmt:message key="table.header.gender" bundle="${lang}"/></th>
-                                    <th><fmt:message key="table.header.age" bundle="${lang}"/></th>
-                                    <th><fmt:message key="table.header.neutered" bundle="${lang}"/></th>
-                                    <th><fmt:message key="table.header.chipped" bundle="${lang}"/></th>
+                                    <th class="w15pct"><fmt:message key="table.header.breed" bundle="${lang}"/></th>
+                                    <th class="w10pct"><fmt:message key="table.header.gender" bundle="${lang}"/></th>
+                                    <th class="w10pct"><fmt:message key="table.header.age" bundle="${lang}"/></th>
+                                    <th class="w15pct"><fmt:message key="table.header.neutered" bundle="${lang}"/></th>
+                                    <th class="w15pct"><fmt:message key="table.header.chipped" bundle="${lang}"/></th>
                                 </tr>
-                                <jsp:useBean id="now" class="java.util.Date" />
-                                <fmt:formatDate var="year" value="${now}" pattern="yyyy" />
-                                <c:forEach var="item" items="${listItems}">
-                                    <tr>
-                                        <td class="id"><input type="checkbox" name="uuid" value="${item.id}" /></td>
-                                        <td class="l">${item.name}</td>
-                                        <td class="l">${item.breed}</td>
-                                        <td class="s">${item.gender}</td>
-                                        <td class="s">
-                                                ${item.age}
-                                            (${year - item.age})
-                                        </td>
-                                        <td class="s">
-                                            <input type="checkbox" <c:if test="${item.neutered}">checked="checked"</c:if> readonly />
-                                        </td>
-                                        <td class="s">
-                                            <input type="checkbox" <c:if test="${item.chipped}">checked="checked"</c:if> readonly />
-                                        </td>
-                                    </tr>
-                                </c:forEach>
                             </table>
+                            <div class="entity__list--scrollable">
+                                <table>
+                                    <jsp:useBean id="now" class="java.util.Date" />
+                                    <fmt:formatDate var="year" value="${now}" pattern="yyyy" />
+                                    <c:forEach var="item" items="${listItems}">
+                                        <tr>
+                                            <td class="id"><input type="checkbox" name="uuid" value="${item.id}" /></td>
+                                            <td>${item.name}</td>
+                                            <td class="w15pct">${item.breed}</td>
+                                            <td class="w10pct">${item.gender}</td>
+                                            <td class="w10pct">${item.age} (${year - item.age})</td>
+                                            <td class="w15pct">
+                                                <input type="checkbox" <c:if test="${item.neutered}">checked="checked"</c:if> disabled="disabled" />
+                                            </td>
+                                            <td class="w15pct">
+                                                <input type="checkbox" <c:if test="${item.chipped}">checked="checked"</c:if> disabled="disabled" />
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </table>
+                            </div>
                         </div>
                     </form>
                 </div>

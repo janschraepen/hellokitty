@@ -37,8 +37,8 @@
             <c:forEach var="contact" items="${entity.contacts}">
                 <tr>
                     <td class="id"><input type="checkbox" name="contact-uuid" value="${contact.id}" /></td>
-                    <td class="s"><fmt:message key="${contact.type.labelKey}" bundle="${lang}"/></td>
-                    <td class="l">${contact.value}</td>
+                    <td><fmt:message key="${contact.type.labelKey}" bundle="${lang}"/></td>
+                    <td>${contact.value}</td>
                 </tr>
             </c:forEach>
         </table>

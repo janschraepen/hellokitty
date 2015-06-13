@@ -95,7 +95,7 @@ public class PersonTypeControllerTest {
         ModelAndView mv = underTest.doOpenEdit(request);
         assertNotNull(mv);
         assertEquals("persontype/edit", mv.getViewName());
-        assertEquals("shortCode - name", mv.getModel().get("title"));
+        assertEquals("name", mv.getModel().get("title"));
         assertNotNull(mv.getModel().get("entity"));
     }
 
@@ -117,7 +117,7 @@ public class PersonTypeControllerTest {
         ModelAndView mv = underTest.doSave(request);
         assertNotNull(mv);
         assertEquals("persontype/edit", mv.getViewName());
-        assertEquals("shortCode - name", mv.getModel().get("title"));
+        assertEquals("name", mv.getModel().get("title"));
         assertNotNull(mv.getModel().get("entity"));
 
         PersonTypeDTO arg = p.getValue();
@@ -143,7 +143,7 @@ public class PersonTypeControllerTest {
         ModelAndView mv = underTest.doSave(request);
         assertNotNull(mv);
         assertEquals("persontype/edit", mv.getViewName());
-        assertEquals("shortCode - name", mv.getModel().get("title"));
+        assertEquals("name", mv.getModel().get("title"));
         assertNotNull(mv.getModel().get("entity"));
 
         String attr = (String) request.getAttribute(RequestAttribute.ERROR_MSG);
@@ -176,7 +176,7 @@ public class PersonTypeControllerTest {
         ModelAndView mv = underTest.doSave(request);
         assertNotNull(mv);
         assertEquals("persontype/edit", mv.getViewName());
-        assertEquals("shortCode - name", mv.getModel().get("title"));
+        assertEquals("name", mv.getModel().get("title"));
         assertNotNull(mv.getModel().get("entity"));
 
         String attr = (String) request.getAttribute(RequestAttribute.ERROR_MSG);
