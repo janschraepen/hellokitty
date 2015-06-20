@@ -4,10 +4,11 @@ $(function() {
     $('#tabs').tabs({active: activeTab});
 });
 
-// _event button
+
 $(document).ready(function() {
 
-    $('input[type="button"]').click(function (e) {
+    // _event button
+    $('input[type="button"]').click(function(e) {
         e.preventDefault();
 
         var action = $(this).attr('action');
@@ -15,15 +16,30 @@ $(document).ready(function() {
         $(this).closest('form').submit();
     });
 
-});
+    // open contactCard
+    $('.open').click(function(e) {
+        $(this).nextAll('.contactCard').show();
+        $(this).nextAll('.close').show();
+        $(this).hide();
+    });
 
-// age culculation
-$(document).ready(function() {
+    // close contactCard
+    $('.close').click(function(e) {
+        $(this).nextAll('.contactCard').hide();
+        $(this).prevAll('.open').show();
+        $(this).hide();
+    });
 
+    // age culculation
     $('form input[name="age"]').focusout(function(e) {
         var birthYear = parseInt($(this).val());
         var currentYear = new Date().getFullYear();
-        $('div.currentAge').html(currentYear - birthYear);
+        var currentAge = currentYear - birthYear;
+        if (currentAge >= 0) {
+            $('div.currentAge').html(currentAge);
+        } else {
+            $('div.currentAge').html('N/A');
+        }
     });
 
 });

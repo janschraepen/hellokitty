@@ -61,8 +61,12 @@
                                         <td class="id"><input type="checkbox" name="uuid" value="${item.id}" /></td>
                                         <td class="w15pct">${item.firstName}</td>
                                         <td class="w20pct">${item.lastName}</td>
-                                        <td class="w25pct">${item.addressLine1}<br/>${item.addressLine2}</td>
-                                        <td>${item.contactInfo}</td>
+                                        <td class="w25pct">${item.addressLine1}, ${item.addressLine2}</td>
+                                        <td>
+                                            <div class="open">+</div>
+                                            <div class="close" style="display: none;">-</div>
+                                            <div class="contactCard" style="display: none;">${item.contactInfo}</div>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                             </table>

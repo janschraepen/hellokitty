@@ -81,7 +81,19 @@ html, body {
 }
 
 .application .application__content .entity .entity__form .val input[type="text"] {
+    float: left;
     width: 400px;
+}
+
+.application .application__content .entity .entity__form .val .currentAge {
+    border-radius: 25px;
+    background: #0fa1e0;
+    color: #fff;
+    float: left;
+    margin: 0 0 0 15px;
+    padding: 2px 12px 4px 12px;
+    text-align: center;
+    width: 42px;
 }
 
 .application .application__content .entity .entity__form.pic {
@@ -135,7 +147,7 @@ table tr {
 }
 
 table th {
-    background: #0fa1e0 ;
+    background: #0fa1e0;
     color: #fff;
     height: 40px;
     padding: 0 0 0 10px;
@@ -145,6 +157,22 @@ table th {
 table td {
     padding: 10px 0 10px 10px;
     line-height: 14pt;
+}
+
+table td .open,
+table td .close {
+    background: #0fa1e0;
+    color: #fff;
+    float: left;
+    height: 20px;
+    text-align: center;
+    width: 22px;
+    padding-top: 3px;
+}
+
+table td .contactCard {
+    float: left;
+    margin: 0 0 0 20px;
 }
 
 table td.id,
