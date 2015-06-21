@@ -63,9 +63,11 @@
                                         <td class="w20pct">${item.lastName}</td>
                                         <td class="w25pct">${item.addressLine1}, ${item.addressLine2}</td>
                                         <td>
-                                            <div class="open">+</div>
-                                            <div class="close" style="display: none;">-</div>
-                                            <div class="contactCard" style="display: none;">${item.contactInfo}</div>
+                                            <c:if test="${not empty item.contactInfo}">
+                                                <div class="open">+</div>
+                                                <div class="close" style="display: none;">-</div>
+                                                <div class="contactCard" style="display: none;">${item.contactInfo}</div>
+                                            </c:if>
                                         </td>
                                     </tr>
                                 </c:forEach>

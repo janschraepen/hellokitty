@@ -172,6 +172,7 @@ table td .close {
 
 table td .contactCard {
     float: left;
+    line-height: 22px;
     margin: 0 0 0 20px;
 }
 

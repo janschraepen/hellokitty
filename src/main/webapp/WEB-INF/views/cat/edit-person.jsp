@@ -48,10 +48,11 @@
                         <td class="w20pct">${person.personFirstName} ${person.personLastName}</td>
                         <td class="w30pct">${person.personAddressLine1}, ${person.personAddressLine2}</td>
                         <td>
-                            <div class="open">+</div>
-                            <div class="close" style="display: none;">-</div>
-                            <div class="contactCard" style="display: none;">${person.personContacts}</div>
-
+                            <c:if test="${not empty person.personContacts}">
+                                <div class="open">+</div>
+                                <div class="close" style="display: none;">-</div>
+                                <div class="contactCard" style="display: none;">${person.personContacts}</div>
+                            </c:if>
                         </td>
                     </tr>
                 </c:forEach>
