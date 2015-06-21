@@ -95,7 +95,9 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
         String[] uuids = request.getParameterValues(RequestParameter.UUID);
 
         try {
-            personTypeService.deletePersonTypes(uuids);
+            if (uuids != null) {
+                personTypeService.deletePersonTypes(uuids);
+            }
         } catch (CannotModifyPersonTypeException e) {
             request.setAttribute(RequestAttribute.ERROR_MSG, messageSource.getMessage("error.personType.systemValues.delete", null, nl_BE));
         }

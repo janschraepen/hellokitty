@@ -257,6 +257,20 @@ public class CatControllerTest {
     }
 
     @Test
+    public void testDoDelete_noSelection() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+
+        List<CatDTO> list = Arrays.asList(new CatDTO[]{});
+        when(catService.findAllCats()).thenReturn(list);
+
+        ModelAndView mv = underTest.doDelete(request);
+        assertNotNull(mv);
+        assertEquals("cat/list", mv.getViewName());
+        assertEquals("cat.list.title", mv.getModel().get("title"));
+        assertEquals(list, mv.getModel().get("listItems"));
+    }
+
+    @Test
     public void testDoDelete() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addParameter(RequestParameter.UUID, "uuid");
@@ -276,6 +290,25 @@ public class CatControllerTest {
         String[] arg = s.getValue();
         assertNotNull(arg);
         assertEquals("uuid", arg[0]);
+    }
+
+    @Test
+    public void testDoDeletePerson_noSelection() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addParameter(RequestParameter.UUID, "uuid");
+
+        CatDTO entity = new CatDTO();
+        entity.setId("uuid");
+        entity.setName("name");
+
+        when(catService.findCat("uuid")).thenReturn(entity);
+
+        ModelAndView mv = underTest.doDeletePerson(request);
+        assertNotNull(mv);
+        assertEquals("cat/edit", mv.getViewName());
+        assertEquals("name", mv.getModel().get("title"));
+        assertNotNull(mv.getModel().get("entity"));
+        assertEquals(1, mv.getModel().get("activeTab"));
     }
 
     @Test

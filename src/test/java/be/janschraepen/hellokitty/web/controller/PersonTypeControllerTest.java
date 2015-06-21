@@ -185,6 +185,20 @@ public class PersonTypeControllerTest {
     }
 
     @Test
+    public void testDoDelete_noSelection() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+
+        List<PersonTypeDTO> list = Arrays.asList(new PersonTypeDTO[]{});
+        when(personTypeService.findAllPersonTypes()).thenReturn(list);
+
+        ModelAndView mv = underTest.doDelete(request);
+        assertNotNull(mv);
+        assertEquals("persontype/list", mv.getViewName());
+        assertEquals("persontype.list.title", mv.getModel().get("title"));
+        assertEquals(list, mv.getModel().get("listItems"));
+    }
+
+    @Test
     public void testDoDelete() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addParameter(RequestParameter.UUID, "uuid");

@@ -183,6 +183,20 @@ public class PersonControllerTest {
     }
 
     @Test
+    public void testDoDelete_noSelection() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+
+        List<PersonDTO> list = Arrays.asList(new PersonDTO[]{ });
+        when(personService.findAllPersons()).thenReturn(list);
+
+        ModelAndView mv = underTest.doDelete(request);
+        assertNotNull(mv);
+        assertEquals("person/list", mv.getViewName());
+        assertEquals("person.list.title", mv.getModel().get("title"));
+        assertEquals(list, mv.getModel().get("listItems"));
+    }
+
+    @Test
     public void testDoDelete() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addParameter(RequestParameter.UUID, "uuid");
@@ -202,6 +216,28 @@ public class PersonControllerTest {
         String[] arg = s.getValue();
         assertNotNull(arg);
         assertEquals("uuid", arg[0]);
+    }
+
+    @Test
+    public void testDoDeleteContact_noSelection() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addParameter(RequestParameter.UUID, "uuid");
+
+        PersonDTO entity = new PersonDTO();
+        entity.setId("uuid");
+        entity.setFirstName("firstName");
+        entity.setLastName("lastName");
+        entity.setAddressLine1("addressLine1");
+        entity.setAddressLine2("addressLine2");
+
+        when(personService.findPerson("uuid")).thenReturn(entity);
+
+        ModelAndView mv = underTest.doDeleteContact(request);
+        assertNotNull(mv);
+        assertEquals("person/edit", mv.getViewName());
+        assertEquals("firstName lastName", mv.getModel().get("title"));
+        assertNotNull(mv.getModel().get("entity"));
+        assertEquals(1, mv.getModel().get("activeTab"));
     }
 
     @Test

@@ -120,7 +120,10 @@ public class CatController extends AbstractController<CatDTO> {
     public ModelAndView doDelete(HttpServletRequest request) {
         String[] uuids = request.getParameterValues(RequestParameter.UUID);
 
-        catService.deleteCats(uuids);
+        if (uuids != null) {
+            catService.deleteCats(uuids);
+        }
+
         return list(request, VIEW_LIST, TITLE, DESCRIPTION, catService.findAllCats());
     }
 
@@ -133,7 +136,9 @@ public class CatController extends AbstractController<CatDTO> {
     public ModelAndView doDeletePerson(HttpServletRequest request) {
         String[] uuids = request.getParameterValues(RequestParameter.PERSON_UUID);
 
-        catService.deleteCatPersons(uuids);
+        if (uuids != null) {
+            catService.deleteCatPersons(uuids);
+        }
 
         ModelAndView mv = doOpenEdit(request);
         mv.getModel().put(RequestParameter.ACTIVE_TAB, 1);
