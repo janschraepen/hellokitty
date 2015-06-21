@@ -9,4 +9,8 @@
         <property name="maxUploadSize" value="2000000" />
     </bean>
 
+    <bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:be/janschraepen/hellokitty/datasource/mysql.properties"/>
+    </bean>
+
 </beans>
