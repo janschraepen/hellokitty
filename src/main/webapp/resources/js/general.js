@@ -7,6 +7,14 @@ $(function() {
 
 $(document).ready(function() {
 
+    // prevent form submission on ENTER/RETURN
+    $('input').keydown(function(event){
+        if(event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+        }
+    });
+
     // _event button
     $('input[type="button"]').click(function(e) {
         e.preventDefault();
