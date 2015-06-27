@@ -49,6 +49,14 @@ html, body {
     padding: 20px 10px 20px 10px;
 }
 
+.application .application__content .entity .entity__error {
+    background-color: #ffdada;
+    border-radius: 10px;
+    font-size: 11pt;
+    line-height: 24px;
+    margin: 5px 0 15px 0;
+    padding: 20px 10px 20px 10px;
+}
 
 .application .application__content .entity .entity_actions {
     margin: 0 0 15px 0;
