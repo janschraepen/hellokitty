@@ -55,8 +55,16 @@
                                     <c:forEach var="item" items="${listItems}">
                                         <tr>
                                             <td class="id"><input type="checkbox" name="uuid" value="${item.id}" /></td>
-                                            <td class="w50pct">${item.personLastName} ${item.personFirstName}</td>
-                                            <td>${item.catName}</td>
+                                            <td class="w50pct">
+                                                <a href="${actionUrl}/person/edit?_event=edit&uuid=${item.personId}" target="_self">
+                                                    ${item.personLastName} ${item.personFirstName}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="${actionUrl}/cat/edit?_event=edit&uuid=${item.catId}" target="_self">
+                                                    ${item.catName}
+                                                </a>
+                                            </td>
                                         </tr>
                                     </c:forEach>
                                 </table>
