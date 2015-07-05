@@ -20,7 +20,16 @@ html, body {
     border-right: 4px solid #0fa1e0;
     display: table-cell;
     height: 100%;
+    position: relative;
     width: 200px;
+}
+
+.application .application__navigation .version {
+    bottom: 0px;
+    color: #fff;
+    font-size: 10pt;
+    margin: 36px 36px;
+    position: absolute;
 }
 
 /* application__content */

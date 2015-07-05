@@ -28,3 +28,7 @@
         </li>
     </ul>
 </div>
+<div class="version">
+    Versie:<br/>
+    ${appVersion}
+</div>

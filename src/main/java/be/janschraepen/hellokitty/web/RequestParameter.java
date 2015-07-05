@@ -13,6 +13,8 @@ public final class RequestParameter {
 
     }
 
+    public static final String APP_VERSION = "appVersion";
+
     public static final String ACTION_URL = "actionUrl";
     public static final String TITLE = "title";
     public static final String DESCRIPTION = "description";

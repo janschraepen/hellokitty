@@ -2,6 +2,7 @@ package be.janschraepen.hellokitty.web.controller;
 
 import be.janschraepen.hellokitty.web.Event;
 import be.janschraepen.hellokitty.web.RequestParameter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,9 @@ import java.util.Set;
 public abstract class AbstractController<T> implements MessageSourceAware {
 
     static final Locale nl_BE = new Locale("nl", "BE");
+
+    @Value("#{version.number}")
+    private String appVersion;
 
     protected MessageSource messageSource;
 
@@ -124,6 +128,7 @@ public abstract class AbstractController<T> implements MessageSourceAware {
     ModelAndView list(HttpServletRequest request, String viewName, String title, String description, List<T> entities) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName(viewName);
+        mv.getModel().put(RequestParameter.APP_VERSION, appVersion);
         mv.getModel().put(RequestParameter.ACTION_URL, getActionUrl(request));
         mv.getModel().put(RequestParameter.TITLE, title);
         mv.getModel().put(RequestParameter.DESCRIPTION, description);
@@ -144,6 +149,7 @@ public abstract class AbstractController<T> implements MessageSourceAware {
     ModelAndView detail(HttpServletRequest request, String viewName, String title, String description, T entity) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName(viewName);
+        mv.getModel().put(RequestParameter.APP_VERSION, appVersion);
         mv.getModel().put(RequestParameter.ACTION_URL, getActionUrl(request));
         mv.getModel().put(RequestParameter.TITLE, title);
         mv.getModel().put(RequestParameter.DESCRIPTION, description);
