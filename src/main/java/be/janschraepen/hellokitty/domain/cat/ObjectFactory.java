@@ -103,6 +103,7 @@ public final class ObjectFactory {
         CatPersonDTO dto = new CatPersonDTO();
         dto.setId(c.getId());
         dto.setCatId(c.getCat().getId());
+        dto.setCatName(c.getCat().getName());
         dto.setPersonTypeId(c.getType().getId());
         dto.setPersonType(c.getType().getName());
         dto.setPersonId(c.getPerson().getId());

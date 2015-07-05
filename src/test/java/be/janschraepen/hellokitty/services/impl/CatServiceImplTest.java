@@ -221,6 +221,29 @@ public class CatServiceImplTest {
     }
 
     @Test
+    public void testFindCatPersons() throws Exception {
+        Cat cat = createCat("cat-uuid", "name", "breed", "age", Gender.V, true, false, "attention", "behavioral", "nutrition");
+        CatPerson catPerson = createCatPerson("person-uuid", cat);
+
+        when(catPersonRepository.find(SEARCH_FOR.toLowerCase())).thenReturn(Arrays.asList(catPerson));
+
+        List<CatPersonDTO> list = underTest.findCatPersons(SEARCH_FOR);
+        assertNotNull(list);
+        assertEquals(1, list.size());
+        assertEquals("cat-uuid", list.get(0).getCatId());
+        assertEquals("name", list.get(0).getCatName());
+    }
+
+    @Test
+    public void testFindCatPersons_noResultsReturnsEmptyList() throws Exception {
+        when(catPersonRepository.find(SEARCH_FOR)).thenReturn(Collections.emptyList());
+
+        List<CatPersonDTO> list = underTest.findCatPersons(SEARCH_FOR);
+        assertNotNull(list);
+        assertEquals(0, list.size());
+    }
+
+    @Test
     public void testSaveCatPerson_newInstance() throws Exception {
         CatPersonDTO _new = new CatPersonDTO();
         _new.setCatId("cat-uuid");
@@ -269,7 +292,7 @@ public class CatServiceImplTest {
     @Test
     public void testDeleteCatPerson_existingInstance() throws Exception {
         Cat cat = createCat("cat-uuid", "name", "breed", "age", Gender.V, true, false, "attention", "behavioral", "nutrition");
-        CatPerson toDelete = createCatPersonContact(UUID, cat);
+        CatPerson toDelete = createCatPerson(UUID, cat);
 
         when(catPersonRepository.findById(UUID)).thenReturn(toDelete);
 
@@ -287,7 +310,7 @@ public class CatServiceImplTest {
     @Test
     public void testDeletePersonContacts_existingInstance() throws Exception {
         Cat cat = createCat("cat-uuid", "name", "breed", "age", Gender.V, true, false, "attention", "behavioral", "nutrition");
-        CatPerson toDelete = createCatPersonContact(UUID, cat);
+        CatPerson toDelete = createCatPerson(UUID, cat);
 
         when(catPersonRepository.findById(UUID)).thenReturn(toDelete);
 
@@ -396,7 +419,7 @@ public class CatServiceImplTest {
         return cat;
     }
 
-    private CatPerson createCatPersonContact(String uuid, Cat cat) {
+    private CatPerson createCatPerson(String uuid, Cat cat) {
         CatPerson catPerson = new CatPerson();
         catPerson.setId(uuid);
         catPerson.setCat(cat);

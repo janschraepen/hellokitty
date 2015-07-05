@@ -107,6 +107,7 @@ public class ObjectFactoryTest {
     public void testCreateCatPersonDTO_withEntity() throws Exception {
         Cat cat = new Cat();
         cat.setId("uuid");
+        cat.setName("name");
 
         PersonType personType = new PersonType();
         personType.setId("personType-uuid");
@@ -133,6 +134,7 @@ public class ObjectFactoryTest {
         assertNotNull(dto);
         assertEquals("catPerson-uuid", dto.getId());
         assertEquals("uuid", dto.getCatId());
+        assertEquals("name", dto.getCatName());
         assertEquals("personType-uuid", dto.getPersonTypeId());
         assertEquals("personType", dto.getPersonType());
         assertEquals("person-uuid", dto.getPersonId());
@@ -156,6 +158,7 @@ public class ObjectFactoryTest {
     public void testCreateListCatPersonDTOs() throws Exception {
         Cat cat = new Cat();
         cat.setId("uuid");
+        cat.setName("name");
 
         PersonType personType = new PersonType();
         personType.setId("personType-uuid");
@@ -190,6 +193,7 @@ public class ObjectFactoryTest {
         assertNotNull(dto);
         assertEquals("catPerson-uuid", dto.getId());
         assertEquals("uuid", dto.getCatId());
+        assertEquals("name", dto.getCatName());
         assertEquals("personType-uuid", dto.getPersonTypeId());
         assertEquals("personType", dto.getPersonType());
         assertEquals("person-uuid", dto.getPersonId());

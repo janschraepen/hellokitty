@@ -60,6 +60,7 @@ html, body {
 
 .application .application__content .entity .entity_actions {
     margin: 0 0 15px 0;
+    min-height: 34px;
 }
 
 .application .application__content .entity .entity_search {

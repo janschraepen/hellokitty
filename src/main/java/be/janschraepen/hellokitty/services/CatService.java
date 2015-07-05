@@ -67,6 +67,15 @@ public interface CatService {
     void deleteCats(String[] uuids);
 
     /**
+     * Find CatPersons by given search criteria.
+     *
+     * @param searchFor the search criteria
+     * @return List<CatPersonDTO> list of found catPersons
+     */
+    @Transactional(readOnly = true)
+    List<CatPersonDTO> findCatPersons(String searchFor);
+
+    /**
      * Save/update a CatPerson.
      *
      * @param dto the catPerson to save/update

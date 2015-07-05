@@ -14,6 +14,8 @@ public class CatPersonDTO implements Serializable {
 
     private String catId;
 
+    private String catName;
+
     private String personTypeId;
 
     private String personType;
@@ -63,6 +65,20 @@ public class CatPersonDTO implements Serializable {
      */
     public void setCatId(String catId) {
         this.catId = catId;
+    }
+
+    /**
+     * @return the Cat name
+     */
+    public String getCatName() {
+        return catName;
+    }
+
+    /**
+     * @param catName the Cat name to set
+     */
+    public void setCatName(String catName) {
+        this.catName = catName;
     }
 
     /**

@@ -18,9 +18,13 @@
             <a href='${pageContext.request.contextPath}/person/list'>
                 <span><fmt:message key="navigation.person" bundle="${lang}"/></span></a>
         </li>
-        <li class='last'>
+        <li>
             <a href='${pageContext.request.contextPath}/cat/list'>
                 <span><fmt:message key="navigation.cat" bundle="${lang}"/></span></a>
+        </li>
+        <li class='last'>
+            <a href='${pageContext.request.contextPath}/search/list'>
+                <span><fmt:message key="navigation.search" bundle="${lang}"/></span></a>
         </li>
     </ul>
 </div>
