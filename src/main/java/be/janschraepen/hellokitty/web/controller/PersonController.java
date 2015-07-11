@@ -5,7 +5,6 @@ import be.janschraepen.hellokitty.domain.person.ObjectFactory;
 import be.janschraepen.hellokitty.domain.person.PersonContactDTO;
 import be.janschraepen.hellokitty.domain.person.PersonDTO;
 import be.janschraepen.hellokitty.services.PersonService;
-import be.janschraepen.hellokitty.services.PersonTypeService;
 import be.janschraepen.hellokitty.web.Event;
 import be.janschraepen.hellokitty.web.RequestAttribute;
 import be.janschraepen.hellokitty.web.RequestParameter;
@@ -36,9 +35,6 @@ public class PersonController extends AbstractController<PersonDTO> {
 
     @Autowired
     private PersonService personService;
-
-    @Autowired
-    private PersonTypeService personTypeService;
 
     @Override
     @RequestMapping("/person/list")
@@ -91,9 +87,10 @@ public class PersonController extends AbstractController<PersonDTO> {
         String lastName = request.getParameter(RequestParameter.LASTNAME);
         String addressLine1 = request.getParameter(RequestParameter.ADDRESSLINE1);
         String addressLine2 = request.getParameter(RequestParameter.ADDRESSLINE2);
+        String extraInfo = request.getParameter(RequestParameter.EXTRA_INFO);
 
         try {
-            PersonDTO person = ObjectFactory.getInstance().createPersonDTO(uuid, firstName, lastName, addressLine1, addressLine2);
+            PersonDTO person = ObjectFactory.getInstance().createPersonDTO(uuid, firstName, lastName, addressLine1, addressLine2, extraInfo);
             person = personService.savePerson(person);
 
             String title = person.getFirstName() + " " + person.getLastName();

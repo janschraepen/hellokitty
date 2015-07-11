@@ -61,6 +61,7 @@ public class PersonServiceImpl implements PersonService {
         person.setLastName(dto.getLastName());
         person.setAddressLine1(dto.getAddressLine1());
         person.setAddressLine2(dto.getAddressLine2());
+        person.setExtraInfo(dto.getExtraInfo());
 
         person = personRepository.saveAndFlush(person);
         return ObjectFactory.getInstance().createPersonDTO(person);

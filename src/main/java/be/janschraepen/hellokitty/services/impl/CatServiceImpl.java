@@ -74,6 +74,7 @@ public class CatServiceImpl implements CatService {
         cat.setAttention(dto.getAttention());
         cat.setBehavioral(dto.getBehavioral());
         cat.setNutrition(dto.getNutrition());
+        cat.setExtraInfo(dto.getExtraInfo());
 
         cat = catRepository.saveAndFlush(cat);
         return ObjectFactory.getInstance().createCatDTO(cat);

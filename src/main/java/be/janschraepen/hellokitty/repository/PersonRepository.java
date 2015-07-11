@@ -28,7 +28,7 @@ public interface PersonRepository extends JpaRepository<Person, String> {
      * @param searchFor the search criteria
      * @return List<Person> list of found persons
      */
-    @Query("SELECT distinct p FROM Person p INNER JOIN p.contacts c WHERE lower(p.firstName) LIKE %?1% OR lower(p.lastName) LIKE %?1% OR lower(c.value) LIKE %?1%")
+    @Query("SELECT distinct p FROM Person p LEFT OUTER JOIN p.contacts c WHERE lower(p.firstName) LIKE %?1% OR lower(p.lastName) LIKE %?1% OR lower(c.value) LIKE %?1%")
     List<Person> find(String searchFor);
 
 }

@@ -42,6 +42,7 @@ public final class ObjectFactory {
         dto.setLastName(p.getLastName());
         dto.setAddressLine1(p.getAddressLine1());
         dto.setAddressLine2(p.getAddressLine2());
+        dto.setExtraInfo(p.getExtraInfo());
         dto.setContacts(createListPersonContactDTOs(p.getContacts()));
 
         if (CollectionUtils.isNotEmpty(p.getCatPersons())) {
@@ -65,15 +66,17 @@ public final class ObjectFactory {
      * @param lastName     the lastName
      * @param addressLine1 the addressLine1
      * @param addressLine2 the addressLine2
+     * @param extraInfo    the extraInfo
      * @return PersonDTO object
      */
-    public PersonDTO createPersonDTO(String id, String firstName, String lastName, String addressLine1, String addressLine2) {
+    public PersonDTO createPersonDTO(String id, String firstName, String lastName, String addressLine1, String addressLine2, String extraInfo) {
         PersonDTO dto = new PersonDTO();
         dto.setId(id);
         dto.setFirstName(firstName);
         dto.setLastName(lastName);
         dto.setAddressLine1(addressLine1);
         dto.setAddressLine2(addressLine2);
+        dto.setExtraInfo(extraInfo);
         return dto;
     }
 

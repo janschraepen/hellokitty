@@ -38,7 +38,12 @@
             </table>
         </div>
         <div class="entity__form--right">
-            &nbsp;
+            <table>
+                <tr>
+                    <td class="lbl"><fmt:message key="label.extrainfo" bundle="${lang}"/>:</td>
+                    <td class="val"><textarea rows="5" cols="40" name="extraInfo">${entity.extraInfo}</textarea></td>
+                </tr>
+            </table>
         </div>
     </div>
 </form>

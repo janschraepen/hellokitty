@@ -19,6 +19,8 @@ public class ObjectFactoryTest {
     public static final String ATTENTION = "attention";
     public static final String BEHAVIORAL = "behavioral";
     public static final String NUTRITION = "nutrition";
+    public static final String EXTRA_INFO = "extraInfo";
+
     private ObjectFactory underTest;
 
     @Before
@@ -44,6 +46,7 @@ public class ObjectFactoryTest {
         cat.setAttention(ATTENTION);
         cat.setBehavioral(BEHAVIORAL);
         cat.setNutrition(NUTRITION);
+        cat.setExtraInfo(EXTRA_INFO);
 
         CatDTO dto = underTest.createCatDTO(cat);
         assertNotNull(dto);
@@ -56,11 +59,12 @@ public class ObjectFactoryTest {
         assertEquals(ATTENTION, dto.getAttention());
         assertEquals(BEHAVIORAL, dto.getBehavioral());
         assertEquals(NUTRITION, dto.getNutrition());
+        assertEquals(EXTRA_INFO, dto.getExtraInfo());
     }
 
     @Test
     public void testCreateCatDTO_withParams() throws Exception {
-        CatDTO dto = underTest.createCatDTO("uuid", NAME, BREED, AGE, Gender.M, true, true, ATTENTION, BEHAVIORAL, NUTRITION);
+        CatDTO dto = underTest.createCatDTO("uuid", NAME, BREED, AGE, Gender.M, true, true, ATTENTION, BEHAVIORAL, NUTRITION, EXTRA_INFO);
         assertNotNull(dto);
         assertEquals(NAME, dto.getName());
         assertEquals(BREED, dto.getBreed());
@@ -71,6 +75,7 @@ public class ObjectFactoryTest {
         assertEquals(ATTENTION, dto.getAttention());
         assertEquals(BEHAVIORAL, dto.getBehavioral());
         assertEquals(NUTRITION, dto.getNutrition());
+        assertEquals(EXTRA_INFO, dto.getExtraInfo());
     }
 
     @Test

@@ -31,6 +31,8 @@ public class CatDTO implements Serializable {
 
     private String nutrition;
 
+    private String extraInfo;
+
     private List<CatPersonDTO> persons;
 
     /**
@@ -178,6 +180,20 @@ public class CatDTO implements Serializable {
      */
     public void setNutrition(String nutrition) {
         this.nutrition = nutrition;
+    }
+
+    /**
+     * @return the extra info
+     */
+    public String getExtraInfo() {
+        return extraInfo;
+    }
+
+    /**
+     * @param extraInfo the extra info to set
+     */
+    public void setExtraInfo(String extraInfo) {
+        this.extraInfo = extraInfo;
     }
 
     /**

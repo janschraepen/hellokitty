@@ -56,6 +56,10 @@ public class Cat extends Entity {
     @Column(name = "NUTRITION")
     private String nutrition;
 
+    @Size(max = 512)
+    @Column(name = "EXTRA_INFO")
+    private String extraInfo;
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "cat")
     private List<CatPerson> catPersons;
 
@@ -189,6 +193,20 @@ public class Cat extends Entity {
     }
 
     /**
+     * @return the extra info
+     */
+    public String getExtraInfo() {
+        return extraInfo;
+    }
+
+    /**
+     * @param extraInfo the extra info to set
+     */
+    public void setExtraInfo(String extraInfo) {
+        this.extraInfo = extraInfo;
+    }
+
+    /**
      * @return the cat_persons
      */
     public List<CatPerson> getCatPersons() {
@@ -228,8 +246,7 @@ public class Cat extends Entity {
                 ", attention='" + attention + '\'' +
                 ", behavioral='" + behavioral + '\'' +
                 ", nutrition='" + nutrition + '\'' +
-                ", catPersons=" + catPersons +
+                ", extraInfo='" + extraInfo + '\'' +
                 '}';
     }
-
 }

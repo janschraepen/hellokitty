@@ -45,6 +45,7 @@ public final class ObjectFactory {
         dto.setAttention(c.getAttention());
         dto.setBehavioral(c.getBehavioral());
         dto.setNutrition(c.getNutrition());
+        dto.setExtraInfo(c.getExtraInfo());
         dto.setPersons(createListCatPersonDTOs(c.getCatPersons()));
         return dto;
     }
@@ -62,9 +63,10 @@ public final class ObjectFactory {
      * @param attention  the attention
      * @param behavioral the behavioral
      * @param nutrition  the nutrition
+     * @param extraInfo  the extraInfo
      * @return CatDTO object
      */
-    public CatDTO createCatDTO(String id, String name, String breed, String age, Gender gender, boolean neutered, boolean chipped, String attention, String behavioral, String nutrition) {
+    public CatDTO createCatDTO(String id, String name, String breed, String age, Gender gender, boolean neutered, boolean chipped, String attention, String behavioral, String nutrition, String extraInfo) {
         CatDTO dto = new CatDTO();
         dto.setId(id);
         dto.setName(name);
@@ -76,6 +78,7 @@ public final class ObjectFactory {
         dto.setAttention(attention);
         dto.setBehavioral(behavioral);
         dto.setNutrition(nutrition);
+        dto.setExtraInfo(extraInfo);
         return dto;
     }
 

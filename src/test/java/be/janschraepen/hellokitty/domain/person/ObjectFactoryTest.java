@@ -14,10 +14,6 @@ import static org.junit.Assert.*;
 
 public class ObjectFactoryTest {
 
-    public static final String PERSONTYPE_ID = "personType-uuid";
-    public static final String PERSONTYPE_SHORT_CODE = "shortCode";
-    public static final String PERSONTYPE_NAME = "name";
-
     public static final String PERSONCONTACT_ID = "personContact-uuid";
     public static final String PERSONCONTACT_VALUE = "value";
 
@@ -25,6 +21,7 @@ public class ObjectFactoryTest {
     public static final String LAST_NAME = "lastName";
     public static final String ADDRESS_LINE_1 = "addressLine1";
     public static final String ADDRESS_LINE_2 = "addressLine2";
+    public static final String EXTRA_INFO = "extraInfo";
 
     private ObjectFactory underTest;
 
@@ -81,12 +78,13 @@ public class ObjectFactoryTest {
 
     @Test
     public void testCreatePersonDTO_withParams() throws Exception {
-        PersonDTO dto = underTest.createPersonDTO("uuid", FIRST_NAME, LAST_NAME, ADDRESS_LINE_1, ADDRESS_LINE_2);
+        PersonDTO dto = underTest.createPersonDTO("uuid", FIRST_NAME, LAST_NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, EXTRA_INFO);
         assertNotNull(dto);
         assertEquals(FIRST_NAME, dto.getFirstName());
         assertEquals(LAST_NAME, dto.getLastName());
         assertEquals(ADDRESS_LINE_1, dto.getAddressLine1());
         assertEquals(ADDRESS_LINE_2, dto.getAddressLine2());
+        assertEquals(EXTRA_INFO, dto.getExtraInfo());
     }
 
     @Test
@@ -96,6 +94,7 @@ public class ObjectFactoryTest {
         person.setLastName(LAST_NAME);
         person.setAddressLine1(ADDRESS_LINE_1);
         person.setAddressLine2(ADDRESS_LINE_2);
+        person.setExtraInfo(EXTRA_INFO);
 
         List<PersonDTO> dtos = underTest.createListPersonDTOs(Arrays.asList(new Person[]{person}));
         assertNotNull(dtos);
@@ -107,6 +106,7 @@ public class ObjectFactoryTest {
         assertEquals(LAST_NAME, dto.getLastName());
         assertEquals(ADDRESS_LINE_1, dto.getAddressLine1());
         assertEquals(ADDRESS_LINE_2, dto.getAddressLine2());
+        assertEquals(EXTRA_INFO, dto.getExtraInfo());
     }
 
     @Test

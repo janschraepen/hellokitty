@@ -25,6 +25,8 @@ public class PersonDTO implements Serializable {
 
     private String addressLine2;
 
+    private String extraInfo;
+
     private List<PersonContactDTO> contacts;
 
     private List<CatDTO> cats;
@@ -104,6 +106,20 @@ public class PersonDTO implements Serializable {
      */
     public void setAddressLine2(String addressLine2) {
         this.addressLine2 = addressLine2;
+    }
+
+    /**
+     * @return the extra info
+     */
+    public String getExtraInfo() {
+        return extraInfo;
+    }
+
+    /**
+     * @param extraInfo the extra info to set
+     */
+    public void setExtraInfo(String extraInfo) {
+        this.extraInfo = extraInfo;
     }
 
     /**

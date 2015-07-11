@@ -24,6 +24,8 @@ public final class RequestParameter {
     public static final String SEARCH = "search";
     public static final String UUID = "uuid";
 
+    public static final String EXTRA_INFO = "extraInfo";
+
     public static final String SHORT_CODE = "shortCode";
     public static final String NAME = "name";
 

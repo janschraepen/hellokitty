@@ -100,9 +100,10 @@ public class CatController extends AbstractController<CatDTO> {
         String attention = request.getParameter(RequestParameter.ATTENTION);
         String behavioral = request.getParameter(RequestParameter.BEHAVIORAL);
         String nutrition = request.getParameter(RequestParameter.NUTRITION);
+        String extraInfo = request.getParameter(RequestParameter.EXTRA_INFO);
 
         try {
-            CatDTO cat = ObjectFactory.getInstance().createCatDTO(uuid, name, breed, age, Gender.valueOf(gender), neutered, chipped, attention, behavioral, nutrition);
+            CatDTO cat = ObjectFactory.getInstance().createCatDTO(uuid, name, breed, age, Gender.valueOf(gender), neutered, chipped, attention, behavioral, nutrition, extraInfo);
             cat = catService.saveCat(cat);
 
             String title = cat.getName();

@@ -67,6 +67,10 @@
                     <td class="lbl"><fmt:message key="label.nutrition" bundle="${lang}"/>:</td>
                     <td class="val"><textarea rows="5" cols="40" name="nutrition">${entity.nutrition}</textarea></td>
                 </tr>
+                <tr>
+                    <td class="lbl"><fmt:message key="label.extrainfo" bundle="${lang}"/>:</td>
+                    <td class="val"><textarea rows="5" cols="40" name="extraInfo">${entity.extraInfo}</textarea></td>
+                </tr>
             </table>
         </div>
 

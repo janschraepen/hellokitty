@@ -40,6 +40,10 @@ public class Person extends Entity {
     @Column(name = "ADDRESS_LINE_2")
     private String addressLine2;
 
+    @Size(max = 512)
+    @Column(name = "EXTRA_INFO")
+    private String extraInfo;
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
     private List<PersonContact> contacts;
 
@@ -103,6 +107,20 @@ public class Person extends Entity {
     }
 
     /**
+     * @return the extra info
+     */
+    public String getExtraInfo() {
+        return extraInfo;
+    }
+
+    /**
+     * @param extraInfo the extra info to set
+     */
+    public void setExtraInfo(String extraInfo) {
+        this.extraInfo = extraInfo;
+    }
+
+    /**
      * @return the contacts
      */
     public List<PersonContact> getContacts() {
@@ -139,8 +157,7 @@ public class Person extends Entity {
                 ", lastName='" + lastName + '\'' +
                 ", addressLine1='" + addressLine1 + '\'' +
                 ", addressLine2='" + addressLine2 + '\'' +
-                ", contacts=" + contacts +
+                ", extraInfo='" + extraInfo + '\'' +
                 '}';
     }
-
 }
