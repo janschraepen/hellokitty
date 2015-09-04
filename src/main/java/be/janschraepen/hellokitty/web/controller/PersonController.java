@@ -53,6 +53,9 @@ public class PersonController extends AbstractController<PersonDTO> {
             case Event.ADD_CONTACT:
                 mv = doSaveContact(request);
                 break;
+            case Event.EXPORT:
+                mv = doExport(request);
+                break;
         }
         return mv;
     }
@@ -152,6 +155,22 @@ public class PersonController extends AbstractController<PersonDTO> {
         }
         ModelAndView mv = doOpenEdit(request);
         mv.getModel().put(RequestParameter.ACTIVE_TAB, 1);
+        return mv;
+    }
+
+    /**
+     * export email contacts.
+     *
+     * @param request the servlet request
+     * @return ModelAndView model and view
+     */
+    public ModelAndView doExport(HttpServletRequest request) {
+        String export = personService.findAllEmailContacts();
+
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("person/export");
+        mv.getModel().put(RequestParameter.APP_VERSION, appVersion);
+        mv.getModel().put(RequestParameter.EXPORT, export);
         return mv;
     }
 

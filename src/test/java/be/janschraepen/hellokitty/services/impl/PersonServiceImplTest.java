@@ -249,6 +249,18 @@ public class PersonServiceImplTest {
         assertEquals("email", arg.getValue());
     }
 
+    @Test
+    public void testFindAllEmailContacts() throws Exception {
+        PersonContact emailContact_1 = createPersonContact(UUID, ContactType.EMAIL, "email_1");
+        PersonContact emailContact_2 = createPersonContact(UUID, ContactType.EMAIL, "email_2");
+
+        when(personContactRepository.findEmailContacts()).thenReturn(Arrays.asList(emailContact_1, emailContact_2));
+
+        String emailContacts = underTest.findAllEmailContacts();
+        assertNotNull(emailContacts);
+        assertEquals("email_1,\nemail_2,\n", emailContacts);
+    }
+
     private PersonDTO createPersonDTO(String firstName, String lastName, String addressLine1, String addressLine2) {
         return createPersonDTO(null, firstName, lastName, addressLine1, addressLine2);
     }

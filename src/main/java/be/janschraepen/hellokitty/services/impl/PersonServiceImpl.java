@@ -4,6 +4,7 @@ import be.janschraepen.hellokitty.domain.person.*;
 import be.janschraepen.hellokitty.repository.PersonContactRepository;
 import be.janschraepen.hellokitty.repository.PersonRepository;
 import be.janschraepen.hellokitty.services.PersonService;
+import be.janschraepen.hellokitty.util.EmailExporter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -106,6 +107,12 @@ public class PersonServiceImpl implements PersonService {
         for (String uuid : uuids) {
             deletePersonContact(uuid);
         }
+    }
+
+    @Override
+    public String findAllEmailContacts() {
+        List<PersonContact> emailContacts = personContactRepository.findEmailContacts();
+        return EmailExporter.generateCSV(emailContacts);
     }
 
 }

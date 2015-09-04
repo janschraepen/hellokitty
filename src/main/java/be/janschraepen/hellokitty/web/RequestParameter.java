@@ -21,6 +21,8 @@ public final class RequestParameter {
     public static final String LIST_ITEMS = "listItems";
     public static final String ENTITY = "entity";
 
+    public static final String EXPORT = "export";
+
     public static final String SEARCH = "search";
     public static final String UUID = "uuid";
 

@@ -26,4 +26,6 @@ public final class Event {
     public static final String DELETE_PERSON = "delete-person";
     public static final String ADD_PERSON = "add-person";
 
+    public static final String EXPORT = "export";
+
 }

@@ -91,4 +91,12 @@ public interface PersonService {
     @Transactional
     void deletePersonContacts(String[] uuids);
 
+    /**
+     * Find all email contacts.
+     *
+     * @return String a CSV list of email contacts
+     */
+    @Transactional(readOnly = true)
+    String findAllEmailContacts();
+
 }

@@ -23,4 +23,12 @@ public interface PersonContactRepository extends JpaRepository<PersonContact, St
      */
     PersonContact findById(String id);
 
+    /**
+     * Find all Email contacts
+     *
+     * @return List<PersonContact> list of found persons
+     */
+    @Query("SELECT distinct pc FROM PersonContact pc WHERE pc.type = 'EMAIL'")
+    List<PersonContact> findEmailContacts();
+
 }

@@ -43,6 +43,7 @@
                             <input type="button" value="Toevoegen" action="new" />
                             <input type="button" value="Wijzigen" action="edit" />
                             <input type="button" value="Verwijderen" action="delete" />
+                            <input type="button" value="Export" action="export" />
                         </div>
                         <div class="entity__list">
                             <table>

@@ -25,7 +25,7 @@ public abstract class AbstractController<T> implements MessageSourceAware {
     static final Locale nl_BE = new Locale("nl", "BE");
 
     @Value("#{version.number}")
-    private String appVersion;
+    protected String appVersion;
 
     protected MessageSource messageSource;
 

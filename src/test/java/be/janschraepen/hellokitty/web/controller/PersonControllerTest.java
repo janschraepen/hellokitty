@@ -372,6 +372,18 @@ public class PersonControllerTest {
     }
 
     @Test
+    public void testDoExport() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+
+        when(personService.findAllEmailContacts()).thenReturn("email_1,\nemail_2,\n");
+
+        ModelAndView mv = underTest.doExport(request);
+        assertNotNull(mv);
+        assertEquals("person/export", mv.getViewName());
+        assertEquals("email_1,\nemail_2,\n", mv.getModel().get("export"));
+    }
+
+    @Test
     public void testAddDetailModelParameters() throws Exception {
         ModelAndView mv = new ModelAndView();
         underTest.addDetailModelParameters(mv);
