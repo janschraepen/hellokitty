@@ -45,7 +45,14 @@
                     <tr>
                         <td class="id"><input type="checkbox" name="person-uuid" value="${person.id}" /></td>
                         <td class="w20pct">${person.personType}</td>
-                        <td class="w20pct">${person.personFirstName} ${person.personLastName}</td>
+                        <td class="w20pct">
+                            <c:url value="${actionUrl}/person/edit" var="personDetailUrl">
+                                <c:param name="_event" value="edit" />
+                                <c:param name="_referer" value="${referer}" />
+                                <c:param name="uuid" value="${person.personId}" />
+                            </c:url>
+                            <a href="${personDetailUrl}" target="_self">${person.personLastName} ${person.personFirstName}</a>
+                        </td>
                         <td class="w30pct">${person.personAddressLine1}, ${person.personAddressLine2}</td>
                         <td>
                             <c:if test="${not empty person.personContacts}">
