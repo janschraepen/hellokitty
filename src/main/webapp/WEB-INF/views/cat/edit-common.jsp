@@ -31,7 +31,7 @@
                 <tr>
                     <td class="lbl"><fmt:message key="label.age" bundle="${lang}"/>:</td>
                     <td class="val">
-                        <input type="text" name="age" value="${entity.age}" />
+                        <input type="text" name="age" value="${entity.age}" onkeypress="return isNumber(event)" />
                         <jsp:useBean id="now" class="java.util.Date" />
                         <fmt:formatDate var="year" value="${now}" pattern="yyyy" />
                         <div class="currentAge">${year - entity.age}</div>
@@ -77,3 +77,7 @@
 
     </div>
 </form>
+
+<script type="application/javascript">
+    isAge($('form input[name="age"]'));
+</script>

@@ -40,15 +40,29 @@ $(document).ready(function() {
 
     // age culculation
     $('form input[name="age"]').focusout(function(e) {
-        var birthYear = parseInt($(this).val());
-        var currentYear = new Date().getFullYear();
-        var currentAge = currentYear - birthYear;
-        if (currentAge >= 0) {
-            $('div.currentAge').html(currentAge);
-        } else {
-            $('div.currentAge').html('N/A');
-        }
+        isAge($(this))
     });
 
 });
 
+// age calculation
+function isAge(input) {
+    var birthYear = parseInt(input.val());
+    var currentYear = new Date().getFullYear();
+    var currentAge = currentYear - birthYear;
+    if (currentAge >= 0) {
+        $('div.currentAge').html(currentAge);
+    } else {
+        $('div.currentAge').html('N/A');
+    }
+}
+
+// age input numeric check
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}

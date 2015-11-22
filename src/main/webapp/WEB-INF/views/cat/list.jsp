@@ -67,7 +67,7 @@
                                             <td>${item.name}</td>
                                             <td class="w15pct">${item.breed}</td>
                                             <td class="w10pct">${item.gender}</td>
-                                            <td class="w10pct">${item.age} (${year - item.age})</td>
+                                            <td class="w10pct">${item.age} <c:if test="${item.age}">(${year - item.age})</c:if></td>
                                             <td class="w15pct">
                                                 <input type="checkbox" <c:if test="${item.neutered}">checked="checked"</c:if> disabled="disabled" />
                                             </td>
