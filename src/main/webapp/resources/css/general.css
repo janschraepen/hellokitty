@@ -83,7 +83,7 @@ html, body {
 }
 
 .application .application__content .entity .entity__list .entity__list--scrollable {
-    height: 655px;
+    height: 500px;
     overflow: scroll;
 }
 

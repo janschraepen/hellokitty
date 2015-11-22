@@ -3,6 +3,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <fmt:setLocale value="nl"/>
 <fmt:setBundle basename="be.janschraepen.hellokitty.i18n.Label" var="lang"/>
@@ -27,7 +28,14 @@
                 </tr>
                 <c:forEach var="cat" items="${entity.cats}">
                     <tr>
-                        <td>${cat.name}</td>
+                        <td>
+                            <c:url value="${actionUrl}/cat/edit" var="catDetailUrl">
+                                <c:param name="_event" value="edit" />
+                                <c:param name="_referer" value="${referer}" />
+                                <c:param name="uuid" value="${cat.id}" />
+                            </c:url>
+                            <a href="${catDetailUrl}" target="_self">${cat.name}</a>
+                        </td>
                     </tr>
                 </c:forEach>
             </table>

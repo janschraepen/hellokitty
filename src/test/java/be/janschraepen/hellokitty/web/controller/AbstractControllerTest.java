@@ -79,7 +79,7 @@ public class AbstractControllerTest {
     @Test
     public void testDoEvent_new() throws Exception {
         HttpServletRequest request = new MockHttpServletRequest();
-        ModelAndView mv = underTest.doEvent(Event.NEW, request);
+        ModelAndView mv = underTest.doEvent(Event.NEW, "_referer", request);
         assertNotNull(mv);
         assertEquals("open_edit", mv.getViewName());
     }
@@ -87,7 +87,7 @@ public class AbstractControllerTest {
     @Test
     public void testDoEvent_edit() throws Exception {
         HttpServletRequest request = new MockHttpServletRequest();
-        ModelAndView mv = underTest.doEvent(Event.EDIT, request);
+        ModelAndView mv = underTest.doEvent(Event.EDIT, "_referer", request);
         assertNotNull(mv);
         assertEquals("open_edit", mv.getViewName());
     }
@@ -95,7 +95,7 @@ public class AbstractControllerTest {
     @Test
     public void testDoEvent_save() throws Exception {
         HttpServletRequest request = new MockHttpServletRequest();
-        ModelAndView mv = underTest.doEvent(Event.SAVE, request);
+        ModelAndView mv = underTest.doEvent(Event.SAVE, "_referer", request);
         assertNotNull(mv);
         assertEquals("save", mv.getViewName());
     }
@@ -103,7 +103,7 @@ public class AbstractControllerTest {
     @Test
     public void testDoEvent_delete() throws Exception {
         HttpServletRequest request = new MockHttpServletRequest();
-        ModelAndView mv = underTest.doEvent(Event.DELETE, request);
+        ModelAndView mv = underTest.doEvent(Event.DELETE, "_referer", request);
         assertNotNull(mv);
         assertEquals("delete", mv.getViewName());
     }
@@ -111,7 +111,7 @@ public class AbstractControllerTest {
     @Test
     public void testDoEvent_search() throws Exception {
         HttpServletRequest request = new MockHttpServletRequest();
-        ModelAndView mv = underTest.doEvent(Event.SEARCH, request);
+        ModelAndView mv = underTest.doEvent(Event.SEARCH, "_referer", request);
         assertNotNull(mv);
         assertEquals("search", mv.getViewName());
     }
@@ -119,9 +119,12 @@ public class AbstractControllerTest {
     @Test
     public void testDoEvent_back() throws Exception {
         HttpServletRequest request = new MockHttpServletRequest();
-        ModelAndView mv = underTest.doEvent(Event.BACK, request);
+        request.getSession().setAttribute("_previous", "http://previousUrl");
+        request.getSession().setAttribute("_current", "http://currentUrl");
+
+        ModelAndView mv = underTest.doEvent(Event.BACK, "_referer", request);
         assertNotNull(mv);
-        assertEquals("list", mv.getViewName());
+        assertEquals("redirect:http://previousUrl&_referer=http://currentUrl", mv.getViewName());
     }
 
     @Test
@@ -147,9 +150,10 @@ public class AbstractControllerTest {
 
         List<String> list = Arrays.asList(new String[]{"arg"});
 
-        ModelAndView mv = underTest.list(request, "viewName", "title", "description", list);
+        ModelAndView mv = underTest.list(request, "refererPath", "viewName", "title", "description", list);
         assertNotNull(mv);
         assertEquals("http://localhost:80/context", mv.getModel().get("actionUrl"));
+        assertEquals("refererPath", mv.getModel().get("referer"));
         assertEquals("viewName", mv.getViewName());
         assertEquals("title", mv.getModel().get("title"));
         assertEquals("description", mv.getModel().get("description"));
@@ -164,9 +168,10 @@ public class AbstractControllerTest {
         request.setServerPort(80);
         request.setContextPath("/context");
 
-        ModelAndView mv = underTest.detail(request, "viewName", "title", "description", "arg");
+        ModelAndView mv = underTest.detail(request, "refererPath", "viewName", "title", "description", "arg");
         assertNotNull(mv);
         assertEquals("http://localhost:80/context", mv.getModel().get("actionUrl"));
+        assertEquals("refererPath", mv.getModel().get("referer"));
         assertEquals("viewName", mv.getViewName());
         assertEquals("title", mv.getModel().get("title"));
         assertEquals("description", mv.getModel().get("description"));

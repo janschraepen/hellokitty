@@ -19,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * CatController class. Used for mapping request
@@ -47,13 +46,13 @@ public class CatController extends AbstractController<CatDTO> {
     @Override
     @RequestMapping("/cat/list")
     public ModelAndView list(HttpServletRequest request) {
-        return list(request, VIEW_LIST, TITLE, DESCRIPTION, catService.findAllCats());
+        return list(request, "/cat/list", VIEW_LIST, TITLE, DESCRIPTION, catService.findAllCats());
     }
 
     @Override
     @RequestMapping("/cat/edit")
-    public ModelAndView doEvent(@RequestParam String _event, HttpServletRequest request) {
-        ModelAndView mv = super.doEvent(_event, request);
+    public ModelAndView doEvent(@RequestParam String _event, @RequestParam String _referer, HttpServletRequest request) {
+        ModelAndView mv = super.doEvent(_event, _referer, request);
         switch (_event) {
             case Event.ADD_PERSON:
                 mv = doSavePerson(request);
@@ -68,7 +67,8 @@ public class CatController extends AbstractController<CatDTO> {
     @Override
     public ModelAndView doSearch(HttpServletRequest request) {
         String searchFor = request.getParameter(RequestParameter.SEARCH);
-        return list(request, VIEW_LIST, TITLE, DESCRIPTION, catService.findCats(searchFor));
+        String path = "/cat/edit?_event=search&search=" + searchFor;
+        return list(request, path, VIEW_LIST, TITLE, DESCRIPTION, catService.findCats(searchFor));
     }
 
     @Override
@@ -85,7 +85,8 @@ public class CatController extends AbstractController<CatDTO> {
             title = cat.getName();
         }
 
-        return detail(request, VIEW_EDIT, title, DESCRIPTION, cat);
+        String path = "/cat/edit?_event=edit&uuid=" + uuid;
+        return detail(request, path, VIEW_EDIT, title, DESCRIPTION, cat);
     }
 
     @Override
@@ -107,7 +108,8 @@ public class CatController extends AbstractController<CatDTO> {
             cat = catService.saveCat(cat);
 
             String title = cat.getName();
-            return detail(request, VIEW_EDIT, title, DESCRIPTION, cat);
+            String path = "/cat/edit?_event=edit&uuid=" + uuid;
+            return detail(request, path, VIEW_EDIT, title, DESCRIPTION, cat);
         } catch (NullPointerException e) {
             request.setAttribute(RequestAttribute.ERROR_MSG, messageSource.getMessage("error.cat.invalid.gender", null, nl_BE));
             return doOpenEdit(request);
@@ -125,7 +127,7 @@ public class CatController extends AbstractController<CatDTO> {
             catService.deleteCats(uuids);
         }
 
-        return list(request, VIEW_LIST, TITLE, DESCRIPTION, catService.findAllCats());
+        return list(request, "/cat/list", VIEW_LIST, TITLE, DESCRIPTION, catService.findAllCats());
     }
 
     /**
@@ -171,8 +173,9 @@ public class CatController extends AbstractController<CatDTO> {
 
     /**
      * upload picture for entity.
+     *
      * @param request the servlet request
-     * @param file the MultiPart file
+     * @param file    the MultiPart file
      * @return ModelAndView model and view
      */
     @RequestMapping("/cat/upload")

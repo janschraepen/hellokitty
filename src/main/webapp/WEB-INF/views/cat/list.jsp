@@ -35,6 +35,7 @@
                     <jsp:include page="./../error.jsp" />
                     <form action="${actionUrl}/cat/edit" method="POST">
                         <input type="hidden" name="_event" value="new" />
+                        <input type="hidden" name="_referer" value="${referer}" />
                         <div class="entity_search">
                             <input type="text" name="search"/>
                             <input type="button" value="Zoeken" action="search" />

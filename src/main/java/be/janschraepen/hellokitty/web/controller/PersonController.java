@@ -39,13 +39,13 @@ public class PersonController extends AbstractController<PersonDTO> {
     @Override
     @RequestMapping("/person/list")
     public ModelAndView list(HttpServletRequest request) {
-        return list(request, VIEW_LIST, TITLE, DESCRIPTION, personService.findAllPersons());
+        return list(request, "/person/list", VIEW_LIST, TITLE, DESCRIPTION, personService.findAllPersons());
     }
 
     @Override
     @RequestMapping("/person/edit")
-    public ModelAndView doEvent(@RequestParam String _event, HttpServletRequest request) {
-        ModelAndView mv = super.doEvent(_event, request);
+    public ModelAndView doEvent(@RequestParam String _event, @RequestParam String _referer, HttpServletRequest request) {
+        ModelAndView mv = super.doEvent(_event, _referer, request);
         switch (_event) {
             case Event.DELETE_CONTACT:
                 mv = doDeleteContact(request);
@@ -63,7 +63,8 @@ public class PersonController extends AbstractController<PersonDTO> {
     @Override
     public ModelAndView doSearch(HttpServletRequest request) {
         String searchFor = request.getParameter(RequestParameter.SEARCH);
-        return list(request, VIEW_LIST, TITLE, DESCRIPTION, personService.findPersons(searchFor));
+        String path = "/person/edit?_event=search&search=" + searchFor;
+        return list(request, path, VIEW_LIST, TITLE, DESCRIPTION, personService.findPersons(searchFor));
     }
 
     @Override
@@ -80,7 +81,8 @@ public class PersonController extends AbstractController<PersonDTO> {
             title = person.getFirstName() + " " + person.getLastName();
         }
 
-        return detail(request, VIEW_EDIT, title, DESCRIPTION, person);
+        String path = "/person/edit?_event=edit&uuid=" + uuid;
+        return detail(request, path, VIEW_EDIT, title, DESCRIPTION, person);
     }
 
     @Override
@@ -97,7 +99,8 @@ public class PersonController extends AbstractController<PersonDTO> {
             person = personService.savePerson(person);
 
             String title = person.getFirstName() + " " + person.getLastName();
-            return detail(request, VIEW_EDIT, title, DESCRIPTION, person);
+            String path = "/person/edit?_event=edit&uuid=" + uuid;
+            return detail(request, path, VIEW_EDIT, title, DESCRIPTION, person);
         } catch (ConstraintViolationException e) {
             request.setAttribute(RequestAttribute.ERROR_MSG, handleConstraintViolations(e));
             return doOpenEdit(request);
@@ -113,7 +116,7 @@ public class PersonController extends AbstractController<PersonDTO> {
             personService.deletePersons(uuids);
         }
 
-        return list(request, VIEW_LIST, TITLE, DESCRIPTION, personService.findAllPersons());
+        return list(request, "/person/list", VIEW_LIST, TITLE, DESCRIPTION, personService.findAllPersons());
     }
 
     /**

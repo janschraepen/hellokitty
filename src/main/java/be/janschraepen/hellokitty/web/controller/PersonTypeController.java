@@ -36,19 +36,20 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
     @Override
     @RequestMapping("/person/type/list")
     public ModelAndView list(HttpServletRequest request) {
-        return list(request, VIEW_LIST, TITLE, DESCRIPTION, personTypeService.findAllPersonTypes());
+        return list(request, "/person/type/list", VIEW_LIST, TITLE, DESCRIPTION, personTypeService.findAllPersonTypes());
     }
 
     @Override
     @RequestMapping("/person/type/edit")
-    public ModelAndView doEvent(@RequestParam String _event, HttpServletRequest request) {
-        return super.doEvent(_event, request);
+    public ModelAndView doEvent(@RequestParam String _event, @RequestParam String _referer, HttpServletRequest request) {
+        return super.doEvent(_event, _referer, request);
     }
 
     @Override
     public ModelAndView doSearch(HttpServletRequest request) {
         String searchFor = request.getParameter(RequestParameter.SEARCH);
-        return list(request, VIEW_LIST, TITLE, DESCRIPTION, personTypeService.findPersonTypes(searchFor));
+        String path = "/person/type/edit?_event=search&search=" + searchFor;
+        return list(request, path, VIEW_LIST, TITLE, DESCRIPTION, personTypeService.findPersonTypes(searchFor));
     }
 
     @Override
@@ -65,7 +66,8 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
             title = personType.getName();
         }
 
-        return detail(request, VIEW_EDIT, title, DESCRIPTION, personType);
+        String path = "/person/type/edit?_event=edit&uuid=" + uuid;
+        return detail(request, path, VIEW_EDIT, title, DESCRIPTION, personType);
     }
 
     @Override
@@ -80,7 +82,8 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
             personType = personTypeService.savePersonType(personType);
 
             title = personType.getName();
-            return detail(request, VIEW_EDIT, title, DESCRIPTION, personType);
+            String path = "/person/type/edit?_event=edit&uuid=" + uuid;
+            return detail(request, path, VIEW_EDIT, title, DESCRIPTION, personType);
         } catch (CannotModifyPersonTypeException e) {
             request.setAttribute(RequestAttribute.ERROR_MSG, messageSource.getMessage("error.personType.systemValues.save", null, nl_BE));
             return doOpenEdit(request);
@@ -101,7 +104,7 @@ public class PersonTypeController extends AbstractController<PersonTypeDTO> {
         } catch (CannotModifyPersonTypeException e) {
             request.setAttribute(RequestAttribute.ERROR_MSG, messageSource.getMessage("error.personType.systemValues.delete", null, nl_BE));
         }
-        return list(request, VIEW_LIST, TITLE, DESCRIPTION, personTypeService.findAllPersonTypes());
+        return list(request, "/person/type/list", VIEW_LIST, TITLE, DESCRIPTION, personTypeService.findAllPersonTypes());
     }
 
 }

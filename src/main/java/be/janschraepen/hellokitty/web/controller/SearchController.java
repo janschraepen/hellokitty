@@ -39,19 +39,20 @@ public class SearchController extends AbstractController<CatPersonDTO> {
     @Override
     @RequestMapping("/search/list")
     public ModelAndView list(HttpServletRequest request) {
-        return list(request, VIEW_LIST, TITLE, DESCRIPTION, new ArrayList<>());
+        return list(request, "/search/list", VIEW_LIST, TITLE, DESCRIPTION, new ArrayList<>());
     }
 
     @Override
     @RequestMapping("/search/edit")
-    public ModelAndView doEvent(@RequestParam String _event, HttpServletRequest request) {
-        return super.doEvent(_event, request);
+    public ModelAndView doEvent(@RequestParam String _event, @RequestParam String _referer, HttpServletRequest request) {
+        return super.doEvent(_event, _referer, request);
     }
 
     @Override
     public ModelAndView doSearch(HttpServletRequest request) {
         String searchFor = request.getParameter(RequestParameter.SEARCH);
-        return list(request, VIEW_LIST, TITLE, DESCRIPTION, catService.findCatPersons(searchFor));
+        String path = "/search/edit?_event=search&search=" + searchFor;
+        return list(request, path, VIEW_LIST, TITLE, DESCRIPTION, catService.findCatPersons(searchFor));
     }
 
     @Override

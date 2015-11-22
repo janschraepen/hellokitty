@@ -40,6 +40,7 @@
                         <div id="tabs-common">
                             <form action="${actionUrl}/person/type/edit" method="POST">
                                 <input type="hidden" name="_event" value="save" />
+                                <input type="hidden" name="_referer" value="${referer}" />
                                 <input type="hidden" name="uuid" value="${entity.id}" />
 
                                 <div class="entity_actions">
