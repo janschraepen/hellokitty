@@ -25,7 +25,7 @@ public class PageRefererManagerTest {
 
         String result = underTest.getPrevious(request);
         assertNotNull(result);
-        assertEquals("http://previousUrl&_referer=http://currentUrl", result);
+        assertEquals("http://previousUrl?_referer=http://currentUrl", result);
     }
 
     @Test

@@ -1,6 +1,7 @@
 package be.janschraepen.hellokitty.util;
 
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,7 +21,8 @@ public class PageRefererManager {
      */
     public static String getPrevious(HttpServletRequest request) {
         String previous = (String) SessionManager.get(request, PREVIOUS_PAGE);
-        previous += "&_referer=" + StringEscapeUtils.escapeHtml4(getCurrent(request));
+        previous += StringUtils.contains(previous, "?") ? "&" : "?";
+        previous += "_referer=" + StringEscapeUtils.escapeHtml4(getCurrent(request));
         return previous;
     }
 
