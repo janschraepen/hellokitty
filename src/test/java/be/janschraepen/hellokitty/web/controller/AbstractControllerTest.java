@@ -124,7 +124,7 @@ public class AbstractControllerTest {
 
         ModelAndView mv = underTest.doEvent(Event.BACK, "_referer", request);
         assertNotNull(mv);
-        assertEquals("redirect:http://previousUrl&_referer=http://currentUrl", mv.getViewName());
+        assertEquals("redirect:http://previousUrl?_referer=http://currentUrl", mv.getViewName());
     }
 
     @Test
