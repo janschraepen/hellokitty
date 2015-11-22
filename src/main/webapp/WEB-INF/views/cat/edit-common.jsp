@@ -42,6 +42,7 @@
                     <td class="val">
                         <input type="radio" name="gender" value="M" <c:if test="${entity.gender.name() == 'M'}">checked</c:if> /><fmt:message key="label.gender.m" bundle="${lang}"/>
                         <input type="radio" name="gender" value="V" <c:if test="${entity.gender.name() == 'V'}">checked</c:if> /><fmt:message key="label.gender.v" bundle="${lang}"/>
+                        <input type="radio" name="gender" value="X" <c:if test="${entity.gender.name() == 'X'}">checked</c:if> /><fmt:message key="label.gender.unknown" bundle="${lang}"/>
                     </td>
                 </tr>
                 <tr>

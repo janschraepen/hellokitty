@@ -7,7 +7,8 @@ package be.janschraepen.hellokitty.domain.cat;
 public enum Gender {
 
     M("enum.male"),
-    V("enum.female");
+    V("enum.female"),
+    X("enum.unknown");
 
     private String labelKey;
 
