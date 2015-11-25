@@ -10,6 +10,7 @@
 
 <form action="${actionUrl}/person/edit" method="POST">
     <input type="hidden" name="_event" value="" />
+    <input type="hidden" name="_referer" value="${referer}" />
     <input type="hidden" name="uuid" value="${entity.id}" />
 
     <div class="entity_cat">

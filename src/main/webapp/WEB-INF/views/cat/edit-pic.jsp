@@ -9,6 +9,7 @@
 
 <form action="${actionUrl}/cat/upload" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="_event" value="" />
+    <input type="hidden" name="_referer" value="${referer}" />
     <input type="hidden" name="uuid" value="${entity.id}" />
 
     <div class="entity_pic">
