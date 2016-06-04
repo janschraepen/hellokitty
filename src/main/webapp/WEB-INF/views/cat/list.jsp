@@ -67,7 +67,12 @@
                                             <td>${item.name}</td>
                                             <td class="w15pct">${item.breed}</td>
                                             <td class="w10pct"><c:if test="${item.gender != 'X'}">${item.gender}</c:if></td>
-                                            <td class="w10pct">${item.age} <c:if test="${item.age}">(${year - item.age})</c:if></td>
+                                            <td class="w10pct">
+                                                <fmt:parseNumber value="${item.age}" var="parsedAge"/>
+                                                <c:if test="${parsedAge > 0}">
+                                                    ${item.age} (${year - item.age})
+                                                </c:if>
+                                            </td>
                                             <td class="w15pct">
                                                 <input type="checkbox" <c:if test="${item.neutered}">checked="checked"</c:if> disabled="disabled" />
                                             </td>
