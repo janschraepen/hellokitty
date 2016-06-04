@@ -20,12 +20,43 @@
                     <option value="${personType.id}">${personType.name}</option>
                 </c:forEach>
             </select>
-            <select name="person">
-                <option value="-1"></option>
-                <c:forEach items="${persons}" var="person">
-                    <option value="${person.id}">${person.lastName} ${person.firstName} | ${person.addressLine1} ${person.addressLine2}</option>
-                </c:forEach>
-            </select>
+            <input id="personAutocomplete">
+            <input id="personId" type="hidden" name="person" value="-1"/>
+            <script>
+                $(function() {
+                    var listOfPersons = [
+                        <c:forEach items="${persons}" var="person">
+                            {
+                                "pk": "${person.id}",
+                                "label": "${person.lastName} ${person.firstName}",
+                                "address": "${person.addressLine1} ${person.addressLine2}"
+                            },
+                        </c:forEach>
+                        {
+                            "pk": "-1",
+                            "label": "",
+                            "address": ""
+                        }
+                    ];
+                    $("#personAutocomplete").autocomplete({
+                        minLength: 0,
+                        source: listOfPersons,
+                        focus: function(event, ui) {
+                            $("#personAutocomplete" ).val(ui.item.label);
+                            return false;
+                        },
+                        select: function(event, ui) {
+                            $("#personAutocomplete").val(ui.item.label);
+                            $("#personId").val( ui.item.pk );
+                            return false;
+                        }
+                    }).autocomplete("instance")._renderItem = function(ul, item) {
+                        return $( "<li>" )
+                                .append("<a>" + item.label + "<br><span class=\"autocomplete-subtext\">" + item.address + "</span></a>")
+                                .appendTo(ul);
+                    };
+                });
+            </script>
             <input type="button" value="Toevoegen" action="add-person" />
         </div>
     </div>

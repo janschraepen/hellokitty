@@ -9,12 +9,14 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.data.domain.Sort;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -86,7 +88,7 @@ public class PersonServiceImplTest {
         Person person_1 = createPerson("firstName_1", "lastName_1", "addressLine1_1", "addressLine2_1");
         Person person_2 = createPerson("firstName_2", "lastName_2", "addressLine1_2", "addressLine2_2");
 
-        when(personRepository.findAll()).thenReturn(Arrays.asList(person_1, person_2));
+        when(personRepository.findAll(any(Sort.class))).thenReturn(Arrays.asList(person_1, person_2));
 
         List<PersonDTO> list = underTest.findAllPersons();
         assertNotNull(list);

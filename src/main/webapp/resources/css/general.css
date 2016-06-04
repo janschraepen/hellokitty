@@ -281,3 +281,8 @@ table th.w50pct {
     padding: 25px 0 0 0;
     background: none;
 }
+
+/* custom autocomplete styling */
+.autocomplete-subtext {
+    font-size: 10px;
+}

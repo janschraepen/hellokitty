@@ -7,6 +7,7 @@ import be.janschraepen.hellokitty.services.PersonService;
 import be.janschraepen.hellokitty.util.EmailExporter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolationException;
@@ -44,7 +45,8 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<PersonDTO> findAllPersons() {
-        List<Person> persons = personRepository.findAll();
+        Sort sort = new Sort(Sort.Direction.ASC, "lastName", "firstName");
+        List<Person> persons = personRepository.findAll(sort);
         return ObjectFactory.getInstance().createListPersonDTOs(persons);
     }
 
